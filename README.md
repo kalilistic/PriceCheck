@@ -12,7 +12,7 @@ Dalamud plugin to quickly check item prices. Simply hover over an item in your i
 **/pricecheckconfig** or **/pcheckconfig** to open the configuration options.<br>
 
 ## Configuration
-**Enabled** - toggle the plugin off/on.
+**Enabled** - toggle the plugin off/on.<br>
 **Show Overlay** - show price check results in overlay window.<br>
 **Show in Chat** - show price check results in chat (echo).<br>
 **Keybind** - set your modifier and primary keybinds (e.g. SHIFT+Z).<br>
