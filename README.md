@@ -8,14 +8,14 @@ Dalamud plugin to quickly check item prices. Simply hover over an item in your i
 
 ## Commands
 
-/pricecheck or /pcheck to open the overlay.
-/pricecheckconfig or /pcheckconfig to open the configuration options.
+**/pricecheck** or **/pcheck** to open the overlay.<br>
+**/pricecheckconfig** or **/pcheckconfig** to open the configuration options.<br>
 
 ## Configuration
-* Enabled - toggle the plugin off/on.
-* Show Overlay - show price check results in overlay window.
-* Show in Chat - show price check results in chat (echo).
-* Keybind - set your modifier and primary keybinds (e.g. SHIFT+Z).
-* Minimum Price - set minimum price at which actual average will be displayed.
-* Max Upload Days - set maximum age to avoid using old data.
-* Max Items in Overlay - set max number of items in overlay at a time.
+**Enabled** - toggle the plugin off/on.
+**Show Overlay** - show price check results in overlay window.<br>
+**Show in Chat** - show price check results in chat (echo).<br>
+**Keybind** - set your modifier and primary keybinds (e.g. SHIFT+Z).<br>
+**Minimum Price** - set minimum price at which actual average will be displayed.<br>
+**Max Upload Days** - set maximum age to avoid using old data.<br>
+**Max Items in Overlay** - set max number of items in overlay at a time.<br>
