@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Dalamud.Game.Chat;
 using Dalamud.Plugin;
 using Lumina.Excel.GeneratedSheets;
@@ -112,7 +113,7 @@ namespace PriceCheck
 			if (itemId == 0) return;
 			if (!IsLocalPlayerReady()) return;
 			if (!IsKeyBindPressed()) return;
-			ItemDetected?.Invoke(this, itemId);
+			Task.Run(() => { ItemDetected?.Invoke(this, itemId); });
 		}
 	}
 }

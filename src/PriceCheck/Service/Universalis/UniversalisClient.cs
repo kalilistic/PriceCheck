@@ -19,7 +19,10 @@ namespace PriceCheck
 		public UniversalisClient(IPluginWrapper plugin)
 		{
 			_plugin = plugin;
-			_httpClient = new HttpClient();
+			_httpClient = new HttpClient
+			{
+				Timeout = TimeSpan.FromMilliseconds(plugin.GetConfig().RequestTimeout)
+			};
 			_cache = new MemoryCache(new MemoryCacheOptions
 			{
 				CompactionPercentage = .50,
@@ -36,7 +39,7 @@ namespace PriceCheck
 			_cache.Set(requestKey, marketBoardFromAPI, new MemoryCacheEntryOptions
 			{
 				Size = 1,
-				SlidingExpiration = TimeSpan.FromMinutes(60)
+				SlidingExpiration = TimeSpan.FromMinutes(_plugin.GetConfig().CacheExpiration)
 			});
 			return marketBoardFromAPI;
 		}
@@ -49,7 +52,19 @@ namespace PriceCheck
 
 		private MarketBoardData GetMarketBoardData(uint? worldId, ulong itemId)
 		{
-			var result = GetMarketBoardDataAsync(worldId, itemId).Result;
+			HttpResponseMessage result;
+			try
+			{
+				result = GetMarketBoardDataAsync(worldId, itemId).Result;
+			}
+			catch (Exception ex)
+			{
+				_plugin.LogError(ex,
+					"Failed to retrieve data from Universalis for itemId {0} / worldId {1}.",
+					itemId, worldId);
+				return null;
+			}
+
 			if (result.StatusCode != HttpStatusCode.OK)
 			{
 				_plugin.LogError(

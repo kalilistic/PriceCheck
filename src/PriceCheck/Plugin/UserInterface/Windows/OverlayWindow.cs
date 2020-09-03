@@ -45,7 +45,6 @@ namespace PriceCheck
 					{
 						ImGui.Text("Waiting for items.");
 					}
-
 				}
 			}
 
