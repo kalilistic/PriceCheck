@@ -40,25 +40,11 @@ Task("Build")
         MSBuild ("./src/PriceCheck/PriceCheck.csproj", settings => settings.SetConfiguration (configuration));
 });
 
-Task("Cleanup")
-    .IsDependentOn ("Build")
-    .Does(() => {
-        var assemblyInfoPath1 = MakeAbsolute(File("./src/PriceCheck/Properties/AssemblyInfo.cs"));
-        var assemblyInfoPath2 = MakeAbsolute(File("./src/PriceCheck.Test/Properties/AssemblyInfo.cs"));
-        var assemblyInfoPath3 = MakeAbsolute(File("./src/PriceCheck.Mock/Properties/AssemblyInfo.cs"));
-        var assemblyInfoPath4 = MakeAbsolute(File("./src/PriceCheck.UIDev/Properties/AssemblyInfo.cs"));
-        GitCheckout("./", assemblyInfoPath1);
-        GitCheckout("./", assemblyInfoPath2);
-        GitCheckout("./", assemblyInfoPath3);
-        GitCheckout("./", assemblyInfoPath4);
-        Information("Reverted assembly info.");
-});
-
 Task("Run-Unit-Tests")
-    .IsDependentOn ("Cleanup")
+    .IsDependentOn ("Build")
     .Does (() => {
         MSBuild ("./src/PriceCheck.sln", settings =>
-            settings.SetConfiguration ("Debug"));
+            settings.SetConfiguration (configuration));
         NUnit3("./src/PriceCheck.Test/bin/PriceCheck.Test.dll", new NUnit3Settings {
                 WorkingDirectory = "./src/PriceCheck.Test/bin/",
                 StopOnError = true
@@ -91,13 +77,29 @@ Task("Publish")
         Information("Copied package into dalamud plugins workspace.");
 });
 
+Task("Cleanup")
+    .IsDependentOn ("Publish")
+    .Does(() => {
+        var assemblyInfoPath1 = MakeAbsolute(File("./src/PriceCheck/Properties/AssemblyInfo.cs"));
+        var assemblyInfoPath2 = MakeAbsolute(File("./src/PriceCheck.Test/Properties/AssemblyInfo.cs"));
+        var assemblyInfoPath3 = MakeAbsolute(File("./src/PriceCheck.Mock/Properties/AssemblyInfo.cs"));
+        var assemblyInfoPath4 = MakeAbsolute(File("./src/PriceCheck.UIDev/Properties/AssemblyInfo.cs"));
+        GitCheckout("./", assemblyInfoPath1);
+        GitCheckout("./", assemblyInfoPath2);
+        GitCheckout("./", assemblyInfoPath3);
+        GitCheckout("./", assemblyInfoPath4);
+        Information("Reverted assembly info.");
+});
+
 Task ("Default")
     .IsDependentOn ("Clean")
     .IsDependentOn ("Restore")
     .IsDependentOn ("Update-Assembly-Info")
+    .IsDependentOn ("Update-Plugin-Json")
     .IsDependentOn ("Build")
-    .IsDependentOn ("Cleanup")
+    .IsDependentOn ("Run-Unit-Tests")
     .IsDependentOn ("Install")
-    .IsDependentOn ("Publish");
+    .IsDependentOn ("Publish")
+    .IsDependentOn ("Cleanup");
 
 RunTarget ("Default");
