@@ -58,8 +58,11 @@ namespace PriceCheck
 				// set average by quality
 				pricedItem.SetAveragePrice(pricedItem.IsHQ ? marketBoard.AveragePriceHQ : marketBoard.AveragePriceNQ);
 
+				// check if price is zero
+				if (pricedItem.AveragePrice == 0) pricedItem.Result = "No data available";
+
 				// check for old data
-				if (pricedItem.LastUpdated != null)
+				if (pricedItem.Result == null && pricedItem.LastUpdated != null)
 				{
 					var currentTime = (long) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
 					var diffInSeconds = currentTime - pricedItem.LastUpdated;
@@ -69,7 +72,7 @@ namespace PriceCheck
 
 				// check vendor price
 				if (pricedItem.Result == null && pricedItem.VendorPrice >= pricedItem.AveragePrice)
-					pricedItem.Result = "Vendor buys for more";
+					pricedItem.Result = "Sell to vendor";
 
 				// check price min
 				if (pricedItem.Result == null && pricedItem.AveragePrice < _plugin.GetConfig().MinPrice)
@@ -77,10 +80,7 @@ namespace PriceCheck
 
 				// set result to price otherwise
 				if (pricedItem.Result == null)
-				{
-					var price = Math.Round(pricedItem.AveragePrice);
-					pricedItem.Result = price.ToString(CultureInfo.InvariantCulture);
-				}
+					pricedItem.Result = pricedItem.AveragePrice.ToString(CultureInfo.InvariantCulture);
 			}
 			else
 			{
