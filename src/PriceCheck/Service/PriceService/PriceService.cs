@@ -80,7 +80,7 @@ namespace PriceCheck
 
 				// set result to price otherwise
 				if (pricedItem.Result == null)
-					pricedItem.Result = pricedItem.AveragePrice.ToString(CultureInfo.InvariantCulture);
+					pricedItem.Result = pricedItem.AveragePrice.ToString("N0", CultureInfo.InvariantCulture);
 			}
 			else
 			{
