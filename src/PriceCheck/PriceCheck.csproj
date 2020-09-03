@@ -84,7 +84,7 @@
     <Reference Include="System.Xml" />
     <PackageReference Include="Costura.Fody">
       <Version>4.1.0</Version>
-	  <PrivateAssets>all</PrivateAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Fody">
       <Version>6.2.4</Version>
@@ -121,6 +121,8 @@
     <Compile Include="Plugin\UserInterface\PluginUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Properties\PriceCheck.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
