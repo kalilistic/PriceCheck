@@ -4,7 +4,6 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 
 namespace PriceCheck
@@ -12,7 +11,6 @@ namespace PriceCheck
 	public class UniversalisClient : IUniversalisClient
 	{
 		private const string Endpoint = "https://universalis.app/api/";
-		private readonly MemoryCache _cache;
 		private readonly HttpClient _httpClient;
 		private readonly IPluginWrapper _plugin;
 
@@ -23,30 +21,16 @@ namespace PriceCheck
 			{
 				Timeout = TimeSpan.FromMilliseconds(plugin.GetConfig().RequestTimeout)
 			};
-			_cache = new MemoryCache(new MemoryCacheOptions
-			{
-				CompactionPercentage = .50,
-				SizeLimit = 1000
-			});
 		}
 
 		public MarketBoardData GetMarketBoard(uint? worldId, ulong itemId)
 		{
-			var requestKey = Convert.ToInt64(string.Empty + worldId + itemId);
-			var marketBoardFromCache = _cache.Get(requestKey);
-			if (marketBoardFromCache != null) return (MarketBoardData) marketBoardFromCache;
 			var marketBoardFromAPI = GetMarketBoardData(worldId, itemId);
-			_cache.Set(requestKey, marketBoardFromAPI, new MemoryCacheEntryOptions
-			{
-				Size = 1,
-				SlidingExpiration = TimeSpan.FromMinutes(_plugin.GetConfig().CacheExpiration)
-			});
 			return marketBoardFromAPI;
 		}
 
 		public void Dispose()
 		{
-			_cache.Dispose();
 			_httpClient.Dispose();
 		}
 

@@ -10,7 +10,6 @@
 		public int MaxUploadDays { get; set; } = 60;
 		public int MaxItemsInOverlay { get; set; } = 10;
 		public int RequestTimeout { get; set; } = 5000;
-		public int CacheExpiration { get; set; } = 60;
 		public ModifierKey.Enum ModifierKey { get; set; } = PriceCheck.ModifierKey.Enum.VkShift;
 		public PrimaryKey.Enum PrimaryKey { get; set; } = PriceCheck.PrimaryKey.Enum.VkZ;
 
