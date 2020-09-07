@@ -108,9 +108,9 @@ namespace PriceCheck.Mock
 			return Config;
 		}
 
-		public void SendEcho(string message)
+		public void SendEcho(PricedItem pricedItem)
 		{
-			Log(message);
+			Log(pricedItem.DisplayName);
 		}
 
 		public string GetHQIcon()

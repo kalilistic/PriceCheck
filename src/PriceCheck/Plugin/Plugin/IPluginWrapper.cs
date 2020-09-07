@@ -18,7 +18,7 @@ namespace PriceCheck
 		void LogError(string messageTemplate, params object[] values);
 		void LogError(Exception exception, string messageTemplate, params object[] values);
 		Configuration GetConfig();
-		void SendEcho(string message);
+		void SendEcho(PricedItem pricedItem);
 		string GetHQIcon();
 	}
 }

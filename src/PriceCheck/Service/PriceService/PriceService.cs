@@ -126,7 +126,7 @@ namespace PriceCheck
 
 		internal void SendEcho(PricedItem pricedItem)
 		{
-			if (_plugin.GetConfig().ShowInChat) _plugin.SendEcho("[" + pricedItem.ItemName + "] " + pricedItem.Message);
+			if (_plugin.GetConfig().ShowInChat) _plugin.SendEcho(pricedItem);
 		}
 
 		internal void SetDisplayName(PricedItem pricedItem)

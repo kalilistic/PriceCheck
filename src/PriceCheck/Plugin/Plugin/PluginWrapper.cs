@@ -1,5 +1,6 @@
 ﻿// ReSharper disable InvertIf
 // ReSharper disable DelegateSubtraction
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Dalamud.Game.Chat;
+using Dalamud.Game.Chat.SeStringHandling;
+using Dalamud.Game.Chat.SeStringHandling.Payloads;
 using Dalamud.Plugin;
 using Lumina.Excel.GeneratedSheets;
 
@@ -32,15 +35,29 @@ namespace PriceCheck
 			return _configuration;
 		}
 
-		public void SendEcho(string message)
+		public void SendEcho(PricedItem pricedItem)
 		{
-			_pluginInterface.Framework.Gui.Chat.Print("[PriceCheck] " + message);
+			var payloadList = new List<Payload>
+			{
+				new TextPayload("[PriceCheck] "),
+				new ItemPayload(_pluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ),
+				new TextPayload($"{(char) SeIconChar.LinkMarker}"),
+				new TextPayload(" " + pricedItem.DisplayName),
+				RawPayload.LinkTerminator,
+				new TextPayload(" " + GetRightArrowIcon() + " " + pricedItem.Message)
+			};
+
+			var payload = new SeString(payloadList);
+
+			_pluginInterface.Framework.Gui.Chat.PrintChat(new XivChatEntry
+			{
+				MessageBytes = payload.Encode()
+			});
 		}
 
 		public string GetHQIcon()
 		{
-			return Convert.ToChar(SeIconChar.HighQuality, CultureInfo.InvariantCulture)
-				.ToString(CultureInfo.InvariantCulture);
+			return GetSeIcon(SeIconChar.HighQuality);
 		}
 
 		public bool IsLocalPlayerReady()
@@ -106,6 +123,17 @@ namespace PriceCheck
 		public void Dispose()
 		{
 			_pluginInterface.Framework.Gui.HoveredItemChanged -= HoveredItemChanged;
+		}
+
+		public string GetRightArrowIcon()
+		{
+			return GetSeIcon(SeIconChar.ArrowRight);
+		}
+
+		private static string GetSeIcon(SeIconChar seIconChar)
+		{
+			return Convert.ToChar(seIconChar, CultureInfo.InvariantCulture)
+				.ToString(CultureInfo.InvariantCulture);
 		}
 
 		private void HoveredItemChanged(object sender, ulong itemId)
