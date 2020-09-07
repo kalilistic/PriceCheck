@@ -36,7 +36,7 @@ namespace PriceCheck
 						{
 							ImGui.Text(item.ItemName);
 							ImGui.NextColumn();
-							ImGui.Text(item.Result);
+							ImGui.Text(item.Message);
 							ImGui.NextColumn();
 							ImGui.Separator();
 						}

@@ -56,7 +56,8 @@ namespace PriceCheck
 
 		public List<Item> GetItems()
 		{
-			return _pluginInterface.Data.Excel.GetSheet<Item>().ToList();
+			return _pluginInterface.Data.Excel.GetSheet<Item>().Where(item => item.ItemSearchCategory.Row != 0)
+				.ToList();
 		}
 
 		public uint? GetLocalPlayerHomeWorld()

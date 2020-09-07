@@ -9,6 +9,7 @@ namespace PriceCheck.Mock
 {
 	public class MockPluginWrapper : IPluginWrapper
 	{
+		public MockConfig Config { get; set; } = new MockConfig();
 		public event EventHandler<ulong> ItemDetected;
 
 		public bool IsLocalPlayerReady()
@@ -39,21 +40,40 @@ namespace PriceCheck.Mock
 					RowId = 1,
 					Name = "Potato",
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
-						null, 1, Language.English)
+						null, 1, Language.English),
+					PriceLow = 100
 				},
 				new Item
 				{
 					RowId = 2,
-					Name = "Carrot",
+					Name = "Mango",
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
-						null, 2, Language.English)
+						null, 0, Language.English),
+					PriceLow = 90000
 				},
 				new Item
 				{
 					RowId = 3,
-					Name = "Kiwi",
+					Name = "Strawberry",
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
-						null, 0, Language.English)
+						null, 0, Language.English),
+					PriceLow = 25
+				},
+				new Item
+				{
+					RowId = 4,
+					Name = "Blueberry",
+					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
+						null, 0, Language.English),
+					PriceLow = 300
+				},
+				new Item
+				{
+					RowId = 5,
+					Name = "Clementine",
+					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
+						null, 0, Language.English),
+					PriceLow = 300
 				}
 			};
 		}
@@ -85,7 +105,7 @@ namespace PriceCheck.Mock
 
 		public Configuration GetConfig()
 		{
-			return new MockConfig();
+			return Config;
 		}
 
 		public void SendEcho(string message)
@@ -95,7 +115,7 @@ namespace PriceCheck.Mock
 
 		public string GetHQIcon()
 		{
-			return "(HQ)";
+			return " (HQ)";
 		}
 
 		public void OnItemDetected(ulong itemId)

@@ -81,12 +81,6 @@ namespace PriceCheck
 				return null;
 			}
 
-			if (json.lastUploadTime.Value == 0)
-			{
-				_plugin.LogInfo("No upload data available for itemId {0} / worldId {1}.", itemId, worldId);
-				return null;
-			}
-
 			try
 			{
 				var marketBoardData = new MarketBoardData

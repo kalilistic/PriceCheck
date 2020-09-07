@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PriceCheck
+﻿namespace PriceCheck
 {
 	public class PricedItem
 	{
@@ -11,14 +9,8 @@ namespace PriceCheck
 		public uint VendorPrice { get; set; }
 		public long? LastUpdated { get; set; }
 		public uint AveragePrice { get; set; }
-		public string Result { get; set; }
-
-		public void SetAveragePrice(double? averagePrice)
-		{
-			if (averagePrice == null)
-				AveragePrice = 0;
-			else
-				AveragePrice = (uint) Math.Round((double) averagePrice);
-		}
+		public string DisplayName { get; set; }
+		public string Message { get; set; }
+		public Result Result { get; set; }
 	}
 }

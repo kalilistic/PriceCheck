@@ -96,6 +96,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Result.cs" />
     <Compile Include="Model\PrimaryKey.cs" />
     <Compile Include="Model\ModifierKey.cs" />
     <Compile Include="Plugin\Attribute\AliasesAttribute.cs" />
