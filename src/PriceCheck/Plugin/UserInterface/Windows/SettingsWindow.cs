@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Numerics;
 using ImGuiNET;
 
@@ -13,6 +14,8 @@ namespace PriceCheck
 			_configuration = configuration;
 		}
 
+		public event EventHandler<bool> OverlayVisibilityUpdated;
+
 		public void DrawWindow()
 		{
 			if (!IsVisible) return;
@@ -21,6 +24,11 @@ namespace PriceCheck
 			if (ImGui.Begin("PriceCheck Settings", ref IsVisible,
 				ImGuiWindowFlags.AlwaysAutoResize))
 			{
+				ImGui.Separator();
+				ImGui.Text("General");
+				ImGui.Separator();
+				ImGui.Spacing();
+
 				var enabled = _configuration.Enabled;
 				if (ImGui.Checkbox("Enabled##PriceCheckEnabled", ref enabled))
 				{
@@ -32,6 +40,7 @@ namespace PriceCheck
 				if (ImGui.Checkbox("Show Overlay##PriceCheckShowOverlay", ref showOverlay))
 				{
 					_configuration.ShowOverlay = showOverlay;
+					OverlayVisibilityUpdated?.Invoke(this, showOverlay);
 					_configuration.Save();
 				}
 
@@ -42,8 +51,28 @@ namespace PriceCheck
 					_configuration.Save();
 				}
 
+				var showPrices = _configuration.ShowPrices;
+				if (ImGui.Checkbox("Show Prices##PriceCheckShowPrices", ref showPrices))
+				{
+					_configuration.ShowPrices = showPrices;
+					_configuration.Save();
+				}
+
 				ImGui.Spacing();
+				ImGui.Separator();
 				ImGui.Text("Keybind");
+				ImGui.Separator();
+				ImGui.Spacing();
+
+				var keybindEnabled = _configuration.KeybindEnabled;
+				if (ImGui.Checkbox("Enabled##PriceCheckKeybindEnabled", ref keybindEnabled))
+				{
+					_configuration.KeybindEnabled = keybindEnabled;
+					_configuration.Save();
+				}
+
+				ImGui.Spacing();
+				ImGui.Text("Modifier");
 				var modifierKey = ModifierKey.EnumToIndex(_configuration.ModifierKey);
 				if (ImGui.Combo("##PriceCheckModifierKey", ref modifierKey, ModifierKey.Names.ToArray(),
 					ModifierKey.Names.Length))
@@ -52,6 +81,8 @@ namespace PriceCheck
 					_configuration.Save();
 				}
 
+				ImGui.Spacing();
+				ImGui.Text("Primary");
 				var primaryKey = PrimaryKey.EnumToIndex(_configuration.PrimaryKey);
 				if (ImGui.Combo("##PriceCheckPrimaryKey", ref primaryKey, PrimaryKey.Names.ToArray(),
 					PrimaryKey.Names.Length))
@@ -59,6 +90,11 @@ namespace PriceCheck
 					_configuration.PrimaryKey = PrimaryKey.IndexToEnum(primaryKey);
 					_configuration.Save();
 				}
+
+				ImGui.Spacing();
+				ImGui.Separator();
+				ImGui.Text("Thresholds");
+				ImGui.Separator();
 
 				ImGui.Spacing();
 				ImGui.Text("Minimum Price");

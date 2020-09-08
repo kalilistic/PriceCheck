@@ -19,6 +19,7 @@ namespace PriceCheck
 	{
 		private readonly PluginConfiguration _configuration;
 		private readonly DalamudPluginInterface _pluginInterface;
+		public uint HomeWorldId;
 
 		public PluginWrapper(DalamudPluginInterface pluginInterface)
 		{
@@ -62,7 +63,7 @@ namespace PriceCheck
 
 		public bool IsLocalPlayerReady()
 		{
-			if (_pluginInterface.ClientState.LocalPlayer == null)
+			if (_pluginInterface.ClientState?.LocalPlayer == null)
 			{
 				LogInfo("Local player is not available.");
 				return false;
@@ -79,6 +80,8 @@ namespace PriceCheck
 
 		public uint? GetLocalPlayerHomeWorld()
 		{
+			if (HomeWorldId != 0) return HomeWorldId;
+			if (!IsLocalPlayerReady()) return null;
 			if (_pluginInterface.ClientState.LocalPlayer.HomeWorld == null ||
 			    _pluginInterface.ClientState.LocalPlayer.HomeWorld.Id == 0)
 			{
@@ -86,11 +89,13 @@ namespace PriceCheck
 				return null;
 			}
 
-			return _pluginInterface.ClientState.LocalPlayer.HomeWorld.Id;
+			HomeWorldId = _pluginInterface.ClientState.LocalPlayer.HomeWorld.Id;
+			return HomeWorldId;
 		}
 
 		public bool IsKeyBindPressed()
 		{
+			if (!_configuration.KeybindEnabled) return true;
 			return _pluginInterface.ClientState.KeyState[(byte) _configuration.ModifierKey] &&
 			       _pluginInterface.ClientState.KeyState[(byte) _configuration.PrimaryKey];
 		}

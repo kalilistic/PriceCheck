@@ -142,7 +142,9 @@ namespace PriceCheck
 			if (pricedItem.Result == null)
 			{
 				pricedItem.Result = Result.Success;
-				pricedItem.Message = pricedItem.AveragePrice.ToString("N0", CultureInfo.InvariantCulture);
+				pricedItem.Message = _plugin.GetConfig().ShowPrices
+					? pricedItem.AveragePrice.ToString("N0", CultureInfo.InvariantCulture)
+					: pricedItem.Result.ToString();
 			}
 			else
 			{

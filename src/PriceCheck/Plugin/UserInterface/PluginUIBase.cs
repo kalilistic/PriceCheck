@@ -16,10 +16,16 @@ namespace PriceCheck
 			OverlayWindow = new OverlayWindow(configuration, priceService);
 			SettingsWindow = new SettingsWindow(configuration);
 			OverlayWindow.IsVisible = configuration.ShowOverlay;
+			SettingsWindow.OverlayVisibilityUpdated += UpdateOverlayVisibility;
 		}
 
 		public void Dispose()
 		{
+		}
+
+		private void UpdateOverlayVisibility(object sender, bool e)
+		{
+			OverlayWindow.IsVisible = e;
 		}
 
 		public void Draw()
