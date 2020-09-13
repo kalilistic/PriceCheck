@@ -2,6 +2,7 @@
 // ReSharper disable DelegateSubtraction
 
 using System;
+using CheapLoc;
 using Dalamud.Plugin;
 
 namespace PriceCheck
@@ -28,6 +29,7 @@ namespace PriceCheck
 			_commandManager = new PluginCommandManager<Plugin>(this, _pluginInterface);
 			_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
 			_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
+			HandleFreshInstall();
 		}
 
 		public void Dispose()
@@ -48,6 +50,16 @@ namespace PriceCheck
 			_pluginInterface.Dispose();
 		}
 
+		private void HandleFreshInstall()
+		{
+			if (!_plugin.GetConfig().FreshInstall) return;
+			_plugin.PrintMessage(Loc.Localize("Install", "Thank you for installing PriceCheck!"));
+			_plugin.PrintHelpMessage();
+			_plugin.GetConfig().FreshInstall = false;
+			_plugin.GetConfig().Save();
+			_pluginUI.MainWindow.IsVisible = true;
+		}
+
 		private void DrawUI()
 		{
 			_pluginUI.Draw();
@@ -64,8 +76,7 @@ namespace PriceCheck
 		public void TogglePriceCheck(string command, string args)
 		{
 			_plugin.LogInfo("Running command {0} with args {1}", command, args);
-			_plugin.GetConfig().ShowMain = !_plugin.GetConfig().ShowMain;
-			_pluginUI.MainWindow.IsVisible = !_pluginUI.MainWindow.IsVisible;
+			_pluginUI.MainWindow.IsVisible = true;
 		}
 
 		[Command("/pricecheckoverlay")]

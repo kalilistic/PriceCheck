@@ -117,9 +117,14 @@ namespace PriceCheck.Mock
 			return Config;
 		}
 
-		public void SendEcho(PricedItem pricedItem)
+		public void PrintItemMessage(PricedItem pricedItem)
 		{
 			Log(pricedItem.DisplayName);
+		}
+
+		public void PrintMessage(string message)
+		{
+			throw new NotImplementedException();
 		}
 
 		public string GetHQIcon()
@@ -133,6 +138,11 @@ namespace PriceCheck.Mock
 		}
 
 		public Localization GetLoc()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void PrintHelpMessage()
 		{
 			throw new NotImplementedException();
 		}

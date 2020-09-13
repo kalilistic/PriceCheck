@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Numerics;
 using CheapLoc;
 using ImGuiNET;
@@ -36,6 +37,18 @@ namespace PriceCheck
 				if (ImGui.Button(Loc.Localize("ToggleSettings", "Settings") + "###PriceCheck_Settings_Button",
 					new Vector2(100, 30)))
 					SettingsVisibilityUpdated?.Invoke(this, true);
+
+				if (ImGui.Button(Loc.Localize("OpenTranslate", "Translate") + "###PriceCheck_Translate_Button",
+					new Vector2(100, 30)))
+					Process.Start("https://crowdin.com/project/pricecheck");
+
+				if (ImGui.Button(Loc.Localize("OpenGithub", "Github") + "###PriceCheck_Github_Button",
+					new Vector2(100, 30)))
+					Process.Start("https://github.com/kalilistic/PriceCheck");
+
+				if (ImGui.Button(Loc.Localize("PrintHelp", "Help") + "###PriceCheck_Help_Button",
+					new Vector2(100, 30)))
+					_plugin.PrintHelpMessage();
 			}
 
 			ImGui.End();

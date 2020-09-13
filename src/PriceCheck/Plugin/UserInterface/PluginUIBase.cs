@@ -32,8 +32,8 @@ namespace PriceCheck
 
 		private void SetWindowVisibility()
 		{
-			MainWindow.IsVisible = true;
 			OverlayWindow.IsVisible = Plugin.GetConfig().ShowOverlay;
+			MainWindow.IsVisible = false;
 			SettingsWindow.IsVisible = false;
 		}
 

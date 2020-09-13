@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using CheapLoc;
 using Dalamud.Game.Chat;
 using Dalamud.Game.Chat.SeStringHandling;
 using Dalamud.Game.Chat.SeStringHandling.Payloads;
@@ -17,6 +18,7 @@ namespace PriceCheck
 {
 	public class PluginWrapper : IPluginWrapper
 	{
+		private const ushort MessageColorKey = 566;
 		private readonly Localization _localization;
 		private readonly DalamudPluginInterface _pluginInterface;
 		private PluginConfiguration _configuration;
@@ -33,6 +35,12 @@ namespace PriceCheck
 		public event EventHandler<ulong> ItemDetected;
 
 
+		public void PrintHelpMessage()
+		{
+			PrintMessage(Loc.Localize("HelpMessage",
+				"To check prices, hover over an item in your inventory or linked in chat while holding your keybind. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use this information to decide what to do with your items. Check out GitHub for more info."));
+		}
+
 		public Localization GetLoc()
 		{
 			return _localization;
@@ -48,7 +56,25 @@ namespace PriceCheck
 			_localization.ExportLocalizable();
 		}
 
-		public void SendEcho(PricedItem pricedItem)
+		public void PrintMessage(string message)
+		{
+			var payloadList = new List<Payload>
+			{
+				new TextPayload("[PriceCheck] "),
+				new UIForegroundPayload(_pluginInterface.Data, MessageColorKey),
+				new TextPayload(message),
+				new UIForegroundPayload(_pluginInterface.Data, 0)
+			};
+
+			var payload = new SeString(payloadList);
+
+			_pluginInterface.Framework.Gui.Chat.PrintChat(new XivChatEntry
+			{
+				MessageBytes = payload.Encode()
+			});
+		}
+
+		public void PrintItemMessage(PricedItem pricedItem)
 		{
 			var payloadList = new List<Payload>
 			{
