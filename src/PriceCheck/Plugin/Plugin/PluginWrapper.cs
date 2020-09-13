@@ -134,6 +134,8 @@ namespace PriceCheck
 		public bool IsKeyBindPressed()
 		{
 			if (!_configuration.KeybindEnabled) return true;
+			if (_configuration.PrimaryKey == PrimaryKey.Enum.VkNone)
+				return _pluginInterface.ClientState.KeyState[(byte) _configuration.ModifierKey];
 			return _pluginInterface.ClientState.KeyState[(byte) _configuration.ModifierKey] &&
 			       _pluginInterface.ClientState.KeyState[(byte) _configuration.PrimaryKey];
 		}

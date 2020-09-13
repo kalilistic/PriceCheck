@@ -6,6 +6,7 @@ namespace PriceCheck
 	{
 		public enum Enum : byte
 		{
+			VkNone,
 			Vk0 = 0x30,
 			Vk1,
 			Vk2,
@@ -46,6 +47,7 @@ namespace PriceCheck
 
 		public static readonly string[] Names =
 		{
+			"None",
 			"0",
 			"1",
 			"2",
