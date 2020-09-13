@@ -2,22 +2,29 @@
 {
 	public class Result
 	{
-		public static Result Success = new Result("Sell on marketboard");
-		public static Result FailedToGetData = new Result("Failed to get data");
-		public static Result NoDataAvailable = new Result("No data available");
-		public static Result NoRecentDataAvailable = new Result("No recent data");
-		public static Result BelowVendor = new Result("Sell to vendor");
-		public static Result BelowMinimum = new Result("Below minimum price");
-		private readonly string _typeKeyWord;
+		public static Result Success = new Result("Sell on marketboard", 45);
+		public static Result FailedToGetData = new Result("Failed to get data", 17);
+		public static Result NoDataAvailable = new Result("No data available", 17);
+		public static Result NoRecentDataAvailable = new Result("No recent data", 17);
+		public static Result BelowVendor = new Result("Sell to vendor", 25);
+		public static Result BelowMinimum = new Result("Below minimum price", 25);
+		private readonly ushort _colorKey;
+		private readonly string _description;
 
-		private Result(string typeKeyWord)
+		private Result(string resultDesc, ushort colorKey)
 		{
-			_typeKeyWord = typeKeyWord;
+			_description = resultDesc;
+			_colorKey = colorKey;
 		}
 
 		public override string ToString()
 		{
-			return _typeKeyWord;
+			return _description;
+		}
+
+		public ushort ColorKey()
+		{
+			return _colorKey;
 		}
 	}
 }

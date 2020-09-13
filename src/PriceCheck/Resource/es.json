@@ -4,7 +4,7 @@
             "To check prices, hover over an item in your inventory or linked in chat while holding your keybind. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use this information to decide what to do with your items. Check out GitHub for more info.",
         "description": "PluginWrapper.PrintHelpMessage"
     },
-    "Install": {
+    "InstallThankYou": {
         "message": "Thank you for installing PriceCheck!",
         "description": "Plugin.HandleFreshInstall"
     },
@@ -50,6 +50,10 @@
     },
     "ShowInChat": {
         "message": "Show in Chat",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "UseChatColors": {
+        "message": "Use Chat Colors",
         "description": "SettingsWindow.DrawWindow"
     },
     "ShowPrices": {

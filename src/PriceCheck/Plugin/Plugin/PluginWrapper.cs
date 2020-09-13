@@ -18,7 +18,6 @@ namespace PriceCheck
 {
 	public class PluginWrapper : IPluginWrapper
 	{
-		private const ushort MessageColorKey = 566;
 		private readonly Localization _localization;
 		private readonly DalamudPluginInterface _pluginInterface;
 		private PluginConfiguration _configuration;
@@ -58,40 +57,25 @@ namespace PriceCheck
 
 		public void PrintMessage(string message)
 		{
-			var payloadList = new List<Payload>
-			{
-				new TextPayload("[PriceCheck] "),
-				new UIForegroundPayload(_pluginInterface.Data, MessageColorKey),
-				new TextPayload(message),
-				new UIForegroundPayload(_pluginInterface.Data, 0)
-			};
-
-			var payload = new SeString(payloadList);
-
-			_pluginInterface.Framework.Gui.Chat.PrintChat(new XivChatEntry
-			{
-				MessageBytes = payload.Encode()
-			});
+			var payloadList = BuildMessagePayload();
+			payloadList.Add(new UIForegroundPayload(_pluginInterface.Data, 566));
+			payloadList.Add(new TextPayload(message));
+			payloadList.Add(new UIForegroundPayload(_pluginInterface.Data, 0));
+			SendMessagePayload(payloadList);
 		}
 
 		public void PrintItemMessage(PricedItem pricedItem)
 		{
-			var payloadList = new List<Payload>
-			{
-				new TextPayload("[PriceCheck] "),
-				new ItemPayload(_pluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ),
-				new TextPayload($"{(char) SeIconChar.LinkMarker}"),
-				new TextPayload(" " + pricedItem.DisplayName),
-				RawPayload.LinkTerminator,
-				new TextPayload(" " + GetRightArrowIcon() + " " + pricedItem.Message)
-			};
-
-			var payload = new SeString(payloadList);
-
-			_pluginInterface.Framework.Gui.Chat.PrintChat(new XivChatEntry
-			{
-				MessageBytes = payload.Encode()
-			});
+			var payloadList = BuildMessagePayload();
+			if (_configuration.UseChatColors)
+				payloadList.Add(new UIForegroundPayload(_pluginInterface.Data, pricedItem.Result.ColorKey()));
+			payloadList.Add(new ItemPayload(_pluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ));
+			payloadList.Add(new TextPayload($"{(char) SeIconChar.LinkMarker}"));
+			payloadList.Add(new TextPayload(" " + pricedItem.DisplayName));
+			payloadList.Add(RawPayload.LinkTerminator);
+			payloadList.Add(new TextPayload(" " + GetRightArrowIcon() + " " + pricedItem.Message));
+			if (_configuration.UseChatColors) payloadList.Add(new UIForegroundPayload(_pluginInterface.Data, 0));
+			SendMessagePayload(payloadList);
 		}
 
 		public string GetHQIcon()
@@ -168,6 +152,24 @@ namespace PriceCheck
 		public void Dispose()
 		{
 			_pluginInterface.Framework.Gui.HoveredItemChanged -= HoveredItemChanged;
+		}
+
+		private List<Payload> BuildMessagePayload()
+		{
+			return new List<Payload>
+			{
+				new UIForegroundPayload(_pluginInterface.Data, 0),
+				new TextPayload("[PriceCheck] ")
+			};
+		}
+
+		private void SendMessagePayload(List<Payload> payloadList)
+		{
+			var payload = new SeString(payloadList);
+			_pluginInterface.Framework.Gui.Chat.PrintChat(new XivChatEntry
+			{
+				MessageBytes = payload.Encode()
+			});
 		}
 
 		private void LoadConfig()

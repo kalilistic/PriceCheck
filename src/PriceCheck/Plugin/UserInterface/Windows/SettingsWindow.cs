@@ -56,6 +56,15 @@ namespace PriceCheck
 					_plugin.GetConfig().Save();
 				}
 
+				var useChatColors = _plugin.GetConfig().UseChatColors;
+				if (ImGui.Checkbox(
+					Loc.Localize("UseChatColors", "Use Chat Colors") + "###PriceCheck_UseChatColors_Checkbox",
+					ref useChatColors))
+				{
+					_plugin.GetConfig().UseChatColors = useChatColors;
+					_plugin.GetConfig().Save();
+				}
+
 				var showPrices = _plugin.GetConfig().ShowPrices;
 				if (ImGui.Checkbox(Loc.Localize("ShowPrices", "Show Prices") + "###PriceCheck_ShowPrices_Checkbox",
 					ref showPrices))

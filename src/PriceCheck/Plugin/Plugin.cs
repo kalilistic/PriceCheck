@@ -53,7 +53,7 @@ namespace PriceCheck
 		private void HandleFreshInstall()
 		{
 			if (!_plugin.GetConfig().FreshInstall) return;
-			_plugin.PrintMessage(Loc.Localize("Install", "Thank you for installing PriceCheck!"));
+			_plugin.PrintMessage(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
 			_plugin.PrintHelpMessage();
 			_plugin.GetConfig().FreshInstall = false;
 			_plugin.GetConfig().Save();

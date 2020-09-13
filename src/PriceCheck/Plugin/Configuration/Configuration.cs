@@ -10,6 +10,7 @@
 		public bool Enabled { get; set; } = true;
 		public bool ShowOverlay { get; set; } = true;
 		public bool ShowInChat { get; set; } = true;
+		public bool UseChatColors { get; set; } = true;
 		public bool ShowPrices { get; set; } = true;
 		public int PluginLanguage { get; set; } = 0;
 
