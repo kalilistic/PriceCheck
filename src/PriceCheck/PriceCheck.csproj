@@ -101,6 +101,7 @@
     <Compile Include="Plugin\Plugin\PluginWrapper.cs" />
     <Compile Include="Model\PricedItem.cs" />
     <Compile Include="Plugin\Plugin.cs" />
+    <Compile Include="Plugin\UserInterface\Windows\MainWindow.cs" />
     <Compile Include="Service\Localization\ILocalization.cs" />
     <Compile Include="Service\Localization\Localization.cs" />
     <Compile Include="Service\PriceService\IPriceService.cs" />

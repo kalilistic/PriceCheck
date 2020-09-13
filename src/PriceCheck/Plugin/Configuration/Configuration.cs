@@ -4,6 +4,7 @@
 	{
 		public int Version { get; set; } = 0;
 		public int RequestTimeout { get; set; } = 5000;
+		public bool ShowMain { get; set; } = true;
 
 		// General
 		public bool Enabled { get; set; } = true;

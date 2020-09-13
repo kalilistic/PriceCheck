@@ -60,11 +60,21 @@ namespace PriceCheck
 
 		[Command("/pricecheck")]
 		[Aliases("/pcheck")]
+		[HelpMessage("Show price check.")]
+		public void TogglePriceCheck(string command, string args)
+		{
+			_plugin.LogInfo("Running command {0} with args {1}", command, args);
+			_plugin.GetConfig().ShowMain = !_plugin.GetConfig().ShowMain;
+			_pluginUI.MainWindow.IsVisible = !_pluginUI.MainWindow.IsVisible;
+		}
+
+		[Command("/pricecheckoverlay")]
+		[Aliases("/pcheckoverlay")]
 		[HelpMessage("Show price check overlay.")]
 		public void ToggleOverlay(string command, string args)
 		{
 			_plugin.LogInfo("Running command {0} with args {1}", command, args);
-			_plugin.GetConfig().ShowOverlay = true;
+			_plugin.GetConfig().ShowOverlay = !_plugin.GetConfig().ShowOverlay;
 			_pluginUI.OverlayWindow.IsVisible = !_pluginUI.OverlayWindow.IsVisible;
 		}
 

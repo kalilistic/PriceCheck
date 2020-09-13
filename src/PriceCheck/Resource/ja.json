@@ -1,4 +1,16 @@
 {
+    "MainWindow": {
+        "message": "PriceCheck",
+        "description": "MainWindow.DrawWindow"
+    },
+    "ToggleOverlay": {
+        "message": "Overlay",
+        "description": "MainWindow.DrawWindow"
+    },
+    "ToggleSettings": {
+        "message": "Settings",
+        "description": "MainWindow.DrawWindow"
+    },
     "SettingsWindow": {
         "message": "PriceCheck Settings",
         "description": "SettingsWindow.DrawWindow"
