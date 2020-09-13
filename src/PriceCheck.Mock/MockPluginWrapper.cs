@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Lumina.Data;
 using Lumina.Excel;
 using Lumina.Excel.GeneratedSheets;
@@ -9,6 +10,14 @@ namespace PriceCheck.Mock
 {
 	public class MockPluginWrapper : IPluginWrapper
 	{
+		[SuppressMessage("CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>")]
+		private readonly Localization _localization;
+
+		public MockPluginWrapper()
+		{
+			_localization = new Localization(this);
+		}
+
 		public MockConfig Config { get; set; } = new MockConfig();
 		public event EventHandler<ulong> ItemDetected;
 
@@ -118,14 +127,24 @@ namespace PriceCheck.Mock
 			return " (HQ)";
 		}
 
-		public void OnItemDetected(ulong itemId)
+		public void ExportLocalizable()
 		{
-			ItemDetected?.Invoke(this, itemId);
+			throw new NotImplementedException();
+		}
+
+		public Localization GetLoc()
+		{
+			throw new NotImplementedException();
 		}
 
 		private static void Log(string messageTemplate)
 		{
 			Trace.WriteLine("LOG: " + messageTemplate);
+		}
+
+		protected virtual void OnItemDetected(ulong e)
+		{
+			ItemDetected?.Invoke(this, e);
 		}
 	}
 }

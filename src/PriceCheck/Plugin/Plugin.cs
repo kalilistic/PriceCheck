@@ -24,7 +24,7 @@ namespace PriceCheck
 			_plugin = new PluginWrapper(pluginInterface);
 			_universalisClient = new UniversalisClient(_plugin);
 			_priceService = new PriceService(_plugin, _universalisClient);
-			_pluginUI = new PluginUI(_plugin.GetConfig(), _priceService);
+			_pluginUI = new PluginUI(_plugin, _priceService);
 			_commandManager = new PluginCommandManager<Plugin>(this, _pluginInterface);
 			_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
 			_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
@@ -75,6 +75,15 @@ namespace PriceCheck
 		{
 			_plugin.LogInfo("Running command {0} with args {1}", command, args);
 			_pluginUI.SettingsWindow.IsVisible = !_pluginUI.SettingsWindow.IsVisible;
+		}
+
+		[Command("/pricecheckexportlocalizable")]
+		[Aliases("/pcheckexloc")]
+		[DoNotShowInHelp]
+		public void ExportLocalizable(string command, string args)
+		{
+			_plugin.LogInfo("Running command {0} with args {1}", command, args);
+			_plugin.ExportLocalizable();
 		}
 	}
 }

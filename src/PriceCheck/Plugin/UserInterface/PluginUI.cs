@@ -2,7 +2,7 @@
 {
 	public class PluginUI : PluginUIBase
 	{
-		public PluginUI(Configuration configuration, IPriceService priceService) : base(configuration, priceService)
+		public PluginUI(IPluginWrapper plugin, IPriceService priceService) : base(plugin, priceService)
 		{
 		}
 	}

@@ -17,23 +17,35 @@ namespace PriceCheck
 {
 	public class PluginWrapper : IPluginWrapper
 	{
-		private readonly PluginConfiguration _configuration;
+		private readonly Localization _localization;
 		private readonly DalamudPluginInterface _pluginInterface;
+		private PluginConfiguration _configuration;
 		public uint HomeWorldId;
 
 		public PluginWrapper(DalamudPluginInterface pluginInterface)
 		{
 			_pluginInterface = pluginInterface;
-			_configuration = _pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
-			_configuration.Initialize(_pluginInterface);
+			LoadConfig();
+			_localization = new Localization(this);
 			_pluginInterface.Framework.Gui.HoveredItemChanged += HoveredItemChanged;
 		}
 
 		public event EventHandler<ulong> ItemDetected;
 
+
+		public Localization GetLoc()
+		{
+			return _localization;
+		}
+
 		public Configuration GetConfig()
 		{
 			return _configuration;
+		}
+
+		public void ExportLocalizable()
+		{
+			_localization.ExportLocalizable();
 		}
 
 		public void SendEcho(PricedItem pricedItem)
@@ -128,6 +140,22 @@ namespace PriceCheck
 		public void Dispose()
 		{
 			_pluginInterface.Framework.Gui.HoveredItemChanged -= HoveredItemChanged;
+		}
+
+		private void LoadConfig()
+		{
+			try
+			{
+				_configuration = _pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
+			}
+			catch (Exception)
+			{
+				LogError("Failed to load config so creating new one.");
+				_configuration = new PluginConfiguration();
+				_configuration.Save();
+			}
+
+			_configuration.Initialize(_pluginInterface);
 		}
 
 		public string GetRightArrowIcon()

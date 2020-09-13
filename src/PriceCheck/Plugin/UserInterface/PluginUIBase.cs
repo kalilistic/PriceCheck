@@ -4,18 +4,18 @@ namespace PriceCheck
 {
 	public class PluginUIBase : IDisposable
 	{
-		public Configuration Configuration;
 		public OverlayWindow OverlayWindow;
+		public IPluginWrapper Plugin;
 		public IPriceService PriceService;
 		public SettingsWindow SettingsWindow;
 
-		public PluginUIBase(Configuration configuration, IPriceService priceService)
+		public PluginUIBase(IPluginWrapper plugin, IPriceService priceService)
 		{
-			Configuration = configuration;
+			Plugin = plugin;
 			PriceService = priceService;
-			OverlayWindow = new OverlayWindow(configuration, priceService);
-			SettingsWindow = new SettingsWindow(configuration);
-			OverlayWindow.IsVisible = configuration.ShowOverlay;
+			OverlayWindow = new OverlayWindow(Plugin, PriceService);
+			SettingsWindow = new SettingsWindow(Plugin);
+			OverlayWindow.IsVisible = Plugin.GetConfig().ShowOverlay;
 			SettingsWindow.OverlayVisibilityUpdated += UpdateOverlayVisibility;
 		}
 

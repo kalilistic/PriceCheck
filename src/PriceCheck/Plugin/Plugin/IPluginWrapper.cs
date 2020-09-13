@@ -20,5 +20,7 @@ namespace PriceCheck
 		Configuration GetConfig();
 		void SendEcho(PricedItem pricedItem);
 		string GetHQIcon();
+		void ExportLocalizable();
+		Localization GetLoc();
 	}
 }

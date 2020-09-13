@@ -1,16 +1,17 @@
 ﻿using System.Numerics;
+using CheapLoc;
 using ImGuiNET;
 
 namespace PriceCheck
 {
 	public class OverlayWindow : WindowBase
 	{
-		private readonly Configuration _configuration;
+		private readonly IPluginWrapper _plugin;
 		private readonly IPriceService _priceService;
 
-		public OverlayWindow(Configuration configuration, IPriceService priceService)
+		public OverlayWindow(IPluginWrapper plugin, IPriceService priceService)
 		{
-			_configuration = configuration;
+			_plugin = plugin;
 			_priceService = priceService;
 		}
 
@@ -19,12 +20,13 @@ namespace PriceCheck
 			if (!IsVisible) return;
 
 			ImGui.SetNextWindowSize(new Vector2(375, 330), ImGuiCond.FirstUseEver);
-			if (ImGui.Begin("PriceCheck Overlay", ref IsVisible,
+			if (ImGui.Begin(Loc.Localize("OverlayWindow", "PriceCheck Overlay") + "###PriceCheck_Overlay_Window",
+				ref IsVisible,
 				ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
 			{
-				if (!_configuration.Enabled)
+				if (!_plugin.GetConfig().Enabled)
 				{
-					ImGui.Text("Plugin is disabled.");
+					ImGui.Text(Loc.Localize("PluginDisabled", "Plugin is disabled."));
 				}
 				else
 				{
@@ -43,7 +45,7 @@ namespace PriceCheck
 					}
 					else
 					{
-						ImGui.Text("Waiting for items.");
+						ImGui.Text(Loc.Localize("WaitingForItems", "Waiting for items."));
 					}
 				}
 			}

@@ -15,7 +15,7 @@ namespace PriceCheck.Test
 		[TearDown]
 		public void TearDown()
 		{
-			_client.Dispose();
+			_client?.Dispose();
 		}
 
 		private IUniversalisClient _client;
@@ -33,14 +33,6 @@ namespace PriceCheck.Test
 		{
 			var result = _client.GetMarketBoard(63, 6760);
 			Assert.NotNull(result.LastCheckTime);
-		}
-
-		[Test]
-		public void GetSummaryWithCache_IT_ReturnsSummaryFromCache()
-		{
-			var result1 = _client.GetMarketBoard(63, 29436);
-			var result2 = _client.GetMarketBoard(63, 29436);
-			Assert.AreEqual(result1.LastCheckTime, result2.LastCheckTime);
 		}
 	}
 }

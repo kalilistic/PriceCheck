@@ -10,6 +10,7 @@
 		public bool ShowOverlay { get; set; } = true;
 		public bool ShowInChat { get; set; } = true;
 		public bool ShowPrices { get; set; } = true;
+		public int PluginLanguage { get; set; } = 0;
 
 		// Keybind
 		public bool KeybindEnabled { get; set; } = true;

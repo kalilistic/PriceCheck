@@ -1,0 +1,74 @@
+{
+    "SettingsWindow": {
+        "message": "PriceCheck Settings",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "General": {
+        "message": "General",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "PluginEnabled": {
+        "message": "Enabled",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "ShowOverlay": {
+        "message": "Show Overlay",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "ShowInChat": {
+        "message": "Show in Chat",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "ShowPrices": {
+        "message": "Show Prices",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "Language": {
+        "message": "Language",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "Keybind": {
+        "message": "Keybind",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "KeybindEnabled": {
+        "message": "Enabled",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "ModifierKeybind": {
+        "message": "Modifier",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "PrimaryKeybind": {
+        "message": "Primary",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "Thresholds": {
+        "message": "Thresholds",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "MinimumPrice": {
+        "message": "Minimum Price",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "MaxUploadDays": {
+        "message": "Max Upload Days",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "MaxItems": {
+        "message": "Max Items in Overlay",
+        "description": "SettingsWindow.DrawWindow"
+    },
+    "OverlayWindow": {
+        "message": "PriceCheck Overlay",
+        "description": "OverlayWindow.DrawWindow"
+    },
+    "PluginDisabled": {
+        "message": "Plugin is disabled.",
+        "description": "OverlayWindow.DrawWindow"
+    },
+    "WaitingForItems": {
+        "message": "Waiting for items.",
+        "description": "OverlayWindow.DrawWindow"
+    }
+}

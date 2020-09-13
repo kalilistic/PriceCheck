@@ -74,11 +74,19 @@
       <HintPath Condition="Exists('..\..\..\Dalamud\Dalamud\bin\Debug')">..\..\..\Dalamud\Dalamud\bin\Debug\Newtonsoft.Json.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="CheapLoc">
+      <HintPath Condition="Exists('$(AppData)\XIVLauncher\addon\Hooks')">$(AppData)\XIVLauncher\addon\Hooks\CheapLoc.dll</HintPath>
+      <HintPath Condition="Exists('$(DalamudHooks)')">$(DalamudHooks)\CheapLoc.dll</HintPath>
+      <HintPath Condition="Exists('..\..\Dalamud\Dalamud\bin\Debug')">..\..\Dalamud\Dalamud\bin\Debug\CheapLoc.dll</HintPath>
+      <HintPath Condition="Exists('..\..\..\Dalamud\Dalamud\bin\Debug')">..\..\..\Dalamud\Dalamud\bin\Debug\CheapLoc.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\PluginLanguage.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Model\PrimaryKey.cs" />
     <Compile Include="Model\ModifierKey.cs" />
@@ -93,6 +101,8 @@
     <Compile Include="Plugin\Plugin\PluginWrapper.cs" />
     <Compile Include="Model\PricedItem.cs" />
     <Compile Include="Plugin\Plugin.cs" />
+    <Compile Include="Service\Localization\ILocalization.cs" />
+    <Compile Include="Service\Localization\Localization.cs" />
     <Compile Include="Service\PriceService\IPriceService.cs" />
     <Compile Include="Service\PriceService\PriceService.cs" />
     <Compile Include="Service\Universalis\IUniversalisClient.cs" />
@@ -107,6 +117,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PriceCheck.json" />
+    <EmbeddedResource Include="Resource\de.json" />
+    <EmbeddedResource Include="Resource\es.json" />
+    <EmbeddedResource Include="Resource\fr.json" />
+    <EmbeddedResource Include="Resource\it.json" />
+    <EmbeddedResource Include="Resource\ja.json" />
+    <EmbeddedResource Include="Resource\no.json" />
+    <EmbeddedResource Include="Resource\pt.json" />
+    <EmbeddedResource Include="Resource\ru.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
