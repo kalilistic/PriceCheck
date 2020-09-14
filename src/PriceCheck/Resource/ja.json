@@ -1,27 +1,27 @@
 {
     "SellOnMarketboard": {
         "message": "Sell on marketboard",
-        "description": "Result..cctor"
+        "description": "Result.UpdateLanguage"
     },
     "FailedToGetData": {
         "message": "Failed to get data",
-        "description": "Result..cctor"
+        "description": "Result.UpdateLanguage"
     },
     "NoDataAvailable": {
         "message": "No data available",
-        "description": "Result..cctor"
+        "description": "Result.UpdateLanguage"
     },
     "NoRecentDataAvailable": {
         "message": "No recent data",
-        "description": "Result..cctor"
+        "description": "Result.UpdateLanguage"
     },
     "BelowVendor": {
         "message": "Sell to vendor",
-        "description": "Result..cctor"
+        "description": "Result.UpdateLanguage"
     },
     "BelowMinimum": {
         "message": "Below minimum price",
-        "description": "Result..cctor"
+        "description": "Result.UpdateLanguage"
     },
     "HelpMessage": {
         "message": "To check prices, hover over an item in your inventory or linked in chat while holding your keybind. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use this information to decide what to do with your items. Check out GitHub for more info.",

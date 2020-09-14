@@ -21,6 +21,7 @@ namespace PriceCheck
 			var languageCode = GetLanguageCode();
 			_plugin.LogInfo("Attempting to load lang {0}", languageCode);
 			SetupLanguage(languageCode);
+			Result.UpdateLanguage();
 		}
 
 		internal void SetupLanguage(string languageCode)
