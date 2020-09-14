@@ -21,11 +21,6 @@ namespace PriceCheck.Mock
 		public MockConfig Config { get; set; } = new MockConfig();
 		public event EventHandler<ulong> ItemDetected;
 
-		public bool IsLocalPlayerReady()
-		{
-			return true;
-		}
-
 		public uint? GetLocalPlayerHomeWorld()
 		{
 			return 63;
@@ -145,6 +140,11 @@ namespace PriceCheck.Mock
 		public void PrintHelpMessage()
 		{
 			throw new NotImplementedException();
+		}
+
+		public bool IsLocalPlayerReady()
+		{
+			return true;
 		}
 
 		private static void Log(string messageTemplate)

@@ -7,7 +7,6 @@ namespace PriceCheck
 	public interface IPluginWrapper
 	{
 		event EventHandler<ulong> ItemDetected;
-		bool IsLocalPlayerReady();
 		uint? GetLocalPlayerHomeWorld();
 		bool IsKeyBindPressed();
 		void Dispose();

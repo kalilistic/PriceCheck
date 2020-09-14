@@ -18,21 +18,22 @@ namespace PriceCheck
 {
 	public class PluginWrapper : IPluginWrapper
 	{
+		private readonly List<Item> _items;
 		private readonly Localization _localization;
 		private readonly DalamudPluginInterface _pluginInterface;
 		private PluginConfiguration _configuration;
-		public uint HomeWorldId;
 
 		public PluginWrapper(DalamudPluginInterface pluginInterface)
 		{
 			_pluginInterface = pluginInterface;
 			LoadConfig();
 			_localization = new Localization(this);
+			_items = _pluginInterface.Data.Excel.GetSheet<Item>()
+				.Where(item => item.ItemSearchCategory.Row != 0 && !string.IsNullOrEmpty(item.Name)).ToList();
 			_pluginInterface.Framework.Gui.HoveredItemChanged += HoveredItemChanged;
 		}
 
 		public event EventHandler<ulong> ItemDetected;
-
 
 		public void PrintHelpMessage()
 		{
@@ -83,36 +84,14 @@ namespace PriceCheck
 			return GetSeIcon(SeIconChar.HighQuality);
 		}
 
-		public bool IsLocalPlayerReady()
-		{
-			if (_pluginInterface.ClientState?.LocalPlayer == null)
-			{
-				LogInfo("Local player is not available.");
-				return false;
-			}
-
-			return true;
-		}
-
 		public List<Item> GetItems()
 		{
-			return _pluginInterface.Data.Excel.GetSheet<Item>().Where(item => item.ItemSearchCategory.Row != 0)
-				.ToList();
+			return _items;
 		}
 
 		public uint? GetLocalPlayerHomeWorld()
 		{
-			if (HomeWorldId != 0) return HomeWorldId;
-			if (!IsLocalPlayerReady()) return null;
-			if (_pluginInterface.ClientState.LocalPlayer.HomeWorld == null ||
-			    _pluginInterface.ClientState.LocalPlayer.HomeWorld.Id == 0)
-			{
-				LogInfo("Local player home world is not available.");
-				return null;
-			}
-
-			HomeWorldId = _pluginInterface.ClientState.LocalPlayer.HomeWorld.Id;
-			return HomeWorldId;
+			return _pluginInterface.ClientState.LocalPlayer.HomeWorld.Id;
 		}
 
 		public bool IsKeyBindPressed()
@@ -201,9 +180,10 @@ namespace PriceCheck
 
 		private void HoveredItemChanged(object sender, ulong itemId)
 		{
-			if (!_configuration.Enabled) return;
 			if (itemId == 0) return;
-			if (!IsLocalPlayerReady()) return;
+			if (!_configuration.Enabled) return;
+			if (!_pluginInterface.Data.IsDataReady) return;
+			if (_pluginInterface?.ClientState?.LocalPlayer?.HomeWorld == null) return;
 			if (!IsKeyBindPressed()) return;
 			Task.Run(() => { ItemDetected?.Invoke(this, itemId); });
 		}
