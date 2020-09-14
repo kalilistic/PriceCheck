@@ -83,6 +83,7 @@ namespace PriceCheck
 					_plugin.GetConfig().PluginLanguage = pluginLanguage;
 					_plugin.GetConfig().Save();
 					_plugin.GetLoc().SetLanguage();
+					Result.UpdateLanguage();
 				}
 
 				ImGui.Spacing();
