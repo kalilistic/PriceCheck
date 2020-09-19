@@ -24,7 +24,7 @@ namespace PriceCheck
 			ImGui.SetNextWindowSizeConstraints(new Vector2(140, 200), new Vector2(float.MaxValue, float.MaxValue));
 			if (ImGui.Begin(Loc.Localize("SettingsWindow", "PriceCheck Settings") + "###PriceCheck_Settings_Window",
 				ref IsVisible,
-				ImGuiWindowFlags.AlwaysAutoResize))
+				ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoScrollbar))
 			{
 				ImGui.Separator();
 				ImGui.Text(Loc.Localize("General", "General"));
