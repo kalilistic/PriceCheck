@@ -57,6 +57,7 @@ namespace PriceCheck
 			_plugin.PrintHelpMessage();
 			_plugin.GetConfig().FreshInstall = false;
 			_plugin.GetConfig().Save();
+			_pluginUI.SettingsWindow.IsVisible = true;
 		}
 
 		private void DrawUI()
