@@ -24,36 +24,12 @@
         "description": "Result.UpdateLanguage"
     },
     "HelpMessage": {
-        "message": "To check prices, hover over an item in your inventory or linked in chat while holding your keybind. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use this information to decide what to do with your items. Check out GitHub for more info.",
+        "message": "To check prices, hold your keybind and then hover over an item in your inventory or linked in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, reach out on discord or open an issue on GitHub. If you want to help add translations, you can submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings.",
         "description": "PluginWrapper.PrintHelpMessage"
     },
     "InstallThankYou": {
         "message": "Thank you for installing PriceCheck!",
         "description": "Plugin.HandleFreshInstall"
-    },
-    "MainWindow": {
-        "message": "PriceCheck",
-        "description": "MainWindow.DrawWindow"
-    },
-    "ToggleOverlay": {
-        "message": "Overlay",
-        "description": "MainWindow.DrawWindow"
-    },
-    "ToggleSettings": {
-        "message": "Settings",
-        "description": "MainWindow.DrawWindow"
-    },
-    "OpenTranslate": {
-        "message": "Translate",
-        "description": "MainWindow.DrawWindow"
-    },
-    "OpenGithub": {
-        "message": "Github",
-        "description": "MainWindow.DrawWindow"
-    },
-    "PrintHelp": {
-        "message": "Help",
-        "description": "MainWindow.DrawWindow"
     },
     "SettingsWindow": {
         "message": "PriceCheck Settings",
@@ -61,63 +37,83 @@
     },
     "General": {
         "message": "General",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawTabs"
     },
-    "PluginEnabled": {
-        "message": "Enabled",
-        "description": "SettingsWindow.DrawWindow"
+    "Overlay": {
+        "message": "Overlay",
+        "description": "SettingsWindow.DrawTabs"
     },
-    "ShowOverlay": {
-        "message": "Show Overlay",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "ShowInChat": {
-        "message": "Show in Chat",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "UseChatColors": {
-        "message": "Use Chat Colors",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "ShowPrices": {
-        "message": "Show Prices",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "Language": {
-        "message": "Language",
-        "description": "SettingsWindow.DrawWindow"
+    "Chat": {
+        "message": "Chat",
+        "description": "SettingsWindow.DrawTabs"
     },
     "Keybind": {
         "message": "Keybind",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "KeybindEnabled": {
-        "message": "Enabled",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "ModifierKeybind": {
-        "message": "Modifier",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "PrimaryKeybind": {
-        "message": "Primary",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawTabs"
     },
     "Thresholds": {
         "message": "Thresholds",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "PluginEnabled": {
+        "message": "Plugin Enabled",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowPrices": {
+        "message": "Show Prices",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "Language": {
+        "message": "Language",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "OpenTranslate": {
+        "message": "Translate",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "OpenGithub": {
+        "message": "Github",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PrintHelp": {
+        "message": "Help",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowOverlay": {
+        "message": "Show Overlay",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "MaxItems": {
+        "message": "Max Items",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "ShowInChat": {
+        "message": "Show in Chat",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseChatColors": {
+        "message": "Use Chat Colors",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "KeybindEnabled": {
+        "message": "Use Keybind",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "ModifierKeybind": {
+        "message": "Modifier",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "PrimaryKeybind": {
+        "message": "Primary",
+        "description": "SettingsWindow.DrawKeybind"
     },
     "MinimumPrice": {
         "message": "Minimum Price",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawThresholds"
     },
     "MaxUploadDays": {
         "message": "Max Upload Days",
-        "description": "SettingsWindow.DrawWindow"
-    },
-    "MaxItems": {
-        "message": "Max Items in Overlay",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawThresholds"
     },
     "OverlayWindow": {
         "message": "PriceCheck Overlay",
