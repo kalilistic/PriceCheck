@@ -57,7 +57,6 @@ namespace PriceCheck
 			_plugin.PrintHelpMessage();
 			_plugin.GetConfig().FreshInstall = false;
 			_plugin.GetConfig().Save();
-			_pluginUI.MainWindow.IsVisible = true;
 		}
 
 		private void DrawUI()
@@ -74,15 +73,6 @@ namespace PriceCheck
 		[Aliases("/pcheck")]
 		[HelpMessage("Show price check.")]
 		public void TogglePriceCheck(string command, string args)
-		{
-			_plugin.LogInfo("Running command {0} with args {1}", command, args);
-			_pluginUI.MainWindow.IsVisible = true;
-		}
-
-		[Command("/pricecheckoverlay")]
-		[Aliases("/pcheckoverlay")]
-		[HelpMessage("Show price check overlay.")]
-		public void ToggleOverlay(string command, string args)
 		{
 			_plugin.LogInfo("Running command {0} with args {1}", command, args);
 			_plugin.GetConfig().ShowOverlay = !_plugin.GetConfig().ShowOverlay;

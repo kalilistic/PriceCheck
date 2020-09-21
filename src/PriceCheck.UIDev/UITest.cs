@@ -12,7 +12,6 @@ namespace PriceCheck.UIDev
 		public void Initialize(SimpleImGuiScene scene)
 		{
 			scene.OnBuildUI += Draw;
-			MainWindow.IsVisible = true;
 			OverlayWindow.IsVisible = true;
 			SettingsWindow.IsVisible = true;
 		}

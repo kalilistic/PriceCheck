@@ -12,7 +12,7 @@ namespace PriceCheck
 		public static Result BelowMinimum;
 		private readonly ushort _colorKey;
 		private readonly string _description;
-		
+
 		private Result(string resultDesc, ushort colorKey)
 		{
 			_description = resultDesc;

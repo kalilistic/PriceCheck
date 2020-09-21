@@ -4,7 +4,6 @@ namespace PriceCheck
 {
 	public class PluginUIBase : IDisposable
 	{
-		public MainWindow MainWindow;
 		public OverlayWindow OverlayWindow;
 		public IPluginWrapper Plugin;
 		public IPriceService PriceService;
@@ -25,7 +24,6 @@ namespace PriceCheck
 
 		private void BuildWindows()
 		{
-			MainWindow = new MainWindow(Plugin);
 			OverlayWindow = new OverlayWindow(Plugin, PriceService);
 			SettingsWindow = new SettingsWindow(Plugin);
 		}
@@ -33,14 +31,11 @@ namespace PriceCheck
 		private void SetWindowVisibility()
 		{
 			OverlayWindow.IsVisible = Plugin.GetConfig().ShowOverlay;
-			MainWindow.IsVisible = false;
 			SettingsWindow.IsVisible = false;
 		}
 
 		private void AddEventHandlers()
 		{
-			MainWindow.OverlayVisibilityUpdated += UpdateOverlayVisibility;
-			MainWindow.SettingsVisibilityUpdated += UpdateSettingsVisibility;
 			SettingsWindow.OverlayVisibilityUpdated += UpdateOverlayVisibility;
 		}
 
@@ -49,14 +44,8 @@ namespace PriceCheck
 			OverlayWindow.IsVisible = e;
 		}
 
-		private void UpdateSettingsVisibility(object sender, bool e)
-		{
-			SettingsWindow.IsVisible = !SettingsWindow.IsVisible;
-		}
-
 		public void Draw()
 		{
-			MainWindow.DrawWindow();
 			OverlayWindow.DrawWindow();
 			SettingsWindow.DrawWindow();
 		}
