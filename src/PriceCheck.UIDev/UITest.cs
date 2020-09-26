@@ -5,7 +5,7 @@ namespace PriceCheck.UIDev
 {
 	internal class UITest : PluginUIBase, IPluginUIMock
 	{
-		public UITest(IPluginWrapper plugin, IPriceService priceService) : base(plugin, priceService)
+		public UITest(IPriceCheckPlugin priceCheckPlugin) : base(priceCheckPlugin)
 		{
 		}
 
@@ -18,9 +18,8 @@ namespace PriceCheck.UIDev
 
 		public static void Main()
 		{
-			var plugin = new MockPluginWrapper();
-			var priceService = new MockPriceService();
-			UIBootstrap.Initialize(new UITest(plugin, priceService));
+			var plugin = new MockPriceCheckPlugin();
+			UIBootstrap.Initialize(new UITest(plugin));
 		}
 	}
 }

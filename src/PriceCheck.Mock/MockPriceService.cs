@@ -28,5 +28,10 @@ namespace PriceCheck.Mock
 				}
 			};
 		}
+
+		public void Dispose()
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace PriceCheck
 {
-	public abstract class Configuration
+	public abstract class PriceCheckConfig
 	{
 		public int Version { get; set; } = 0;
 		public int RequestTimeout { get; set; } = 5000;
@@ -23,7 +23,5 @@
 		public int MinPrice { get; set; } = 1000;
 		public int MaxUploadDays { get; set; } = 60;
 		public int MaxItemsInOverlay { get; set; } = 10;
-
-		public abstract void Save();
 	}
 }

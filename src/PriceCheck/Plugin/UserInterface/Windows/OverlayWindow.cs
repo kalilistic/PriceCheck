@@ -6,14 +6,12 @@ namespace PriceCheck
 {
 	public class OverlayWindow : WindowBase
 	{
-		private readonly IPluginWrapper _plugin;
-		private readonly IPriceService _priceService;
+		private readonly IPriceCheckPlugin _priceCheckPlugin;
 		private float _uiScale;
 
-		public OverlayWindow(IPluginWrapper plugin, IPriceService priceService)
+		public OverlayWindow(IPriceCheckPlugin priceCheckPlugin)
 		{
-			_plugin = plugin;
-			_priceService = priceService;
+			_priceCheckPlugin = priceCheckPlugin;
 		}
 
 		public void DrawWindow()
@@ -25,13 +23,13 @@ namespace PriceCheck
 				ref IsVisible,
 				ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
 			{
-				if (!_plugin.GetConfig().Enabled)
+				if (!_priceCheckPlugin.Configuration.Enabled)
 				{
-					ImGui.Text(Loc.Localize("PluginDisabled", "Plugin is disabled."));
+					ImGui.Text(Loc.Localize("PluginDisabled", "PriceCheckPlugin is disabled."));
 				}
 				else
 				{
-					var items = _priceService.GetItems();
+					var items = _priceCheckPlugin.PriceService.GetItems();
 					if (items != null && items.Count > 0)
 					{
 						ImGui.Columns(2);

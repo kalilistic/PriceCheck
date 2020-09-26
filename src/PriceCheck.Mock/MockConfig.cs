@@ -1,9 +1,6 @@
 ﻿namespace PriceCheck.Mock
 {
-	public class MockConfig : Configuration
+	public class MockConfig : PriceCheckConfig
 	{
-		public override void Save()
-		{
-		}
 	}
 }

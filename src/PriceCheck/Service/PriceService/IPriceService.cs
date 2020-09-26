@@ -5,5 +5,6 @@ namespace PriceCheck
 	public interface IPriceService
 	{
 		List<PricedItem> GetItems();
+		void Dispose();
 	}
 }

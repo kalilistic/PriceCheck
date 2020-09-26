@@ -10,21 +10,26 @@ namespace PriceCheck
 {
 	public class PriceService : IPriceService
 	{
-		private readonly IPluginWrapper _plugin;
+		private readonly IPriceCheckPlugin _priceCheckPlugin;
 		private readonly List<PricedItem> _pricedItems;
 		private readonly IUniversalisClient _universalisClient;
 
-		public PriceService(IPluginWrapper plugin, IUniversalisClient universalisClient)
+		public PriceService(IPriceCheckPlugin priceCheckPlugin, IUniversalisClient universalisClient)
 		{
-			_plugin = plugin;
+			_priceCheckPlugin = priceCheckPlugin;
 			_pricedItems = new List<PricedItem>();
 			_universalisClient = universalisClient;
-			_plugin.ItemDetected += ProcessItem;
+			_priceCheckPlugin.ItemDetected += ProcessItem;
 		}
 
 		public List<PricedItem> GetItems()
 		{
 			return _pricedItems;
+		}
+
+		public void Dispose()
+		{
+			_priceCheckPlugin.ItemDetected -= ProcessItem;
 		}
 
 		internal PricedItem BuildPricedItemFromId(ulong itemId)
@@ -46,7 +51,7 @@ namespace PriceCheck
 
 		internal bool EnrichWithExcelData(PricedItem pricedItem)
 		{
-			var excelItem = _plugin.GetItems().Find(item => item.RowId == pricedItem.ItemId);
+			var excelItem = _priceCheckPlugin.GetItems().Find(item => item.RowId == pricedItem.ItemId);
 			if (excelItem == null) return true;
 			pricedItem.ItemName = excelItem.Name;
 			pricedItem.VendorPrice = excelItem.PriceLow;
@@ -55,7 +60,8 @@ namespace PriceCheck
 
 		internal bool EnrichWithMarketBoardData(PricedItem pricedItem)
 		{
-			var marketBoard = _universalisClient.GetMarketBoard(_plugin.GetLocalPlayerHomeWorld(), pricedItem.ItemId);
+			var marketBoard =
+				_universalisClient.GetMarketBoard(_priceCheckPlugin.GetLocalPlayerHomeWorld(), pricedItem.ItemId);
 			if (marketBoard == null)
 			{
 				pricedItem.Result = Result.FailedToGetData;
@@ -84,7 +90,7 @@ namespace PriceCheck
 			var currentTime = (long) (DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
 			var diffInSeconds = currentTime - pricedItem.LastUpdated;
 			var diffInDays = diffInSeconds / 86400000;
-			if (!(diffInDays > _plugin.GetConfig().MaxUploadDays)) return false;
+			if (!(diffInDays > _priceCheckPlugin.Configuration.MaxUploadDays)) return false;
 			pricedItem.Result = Result.NoRecentDataAvailable;
 			return true;
 		}
@@ -98,7 +104,8 @@ namespace PriceCheck
 
 		internal bool CompareMinPrice(PricedItem pricedItem)
 		{
-			if (pricedItem.AveragePrice >= _plugin.GetConfig().MinPrice) return false;
+			if (pricedItem.AveragePrice >= _priceCheckPlugin.Configuration.MinPrice)
+				return false;
 			pricedItem.Result = Result.BelowMinimum;
 			return true;
 		}
@@ -115,7 +122,7 @@ namespace PriceCheck
 
 		internal void RemoveItemsOverMax()
 		{
-			while (_pricedItems.Count >= _plugin.GetConfig().MaxItemsInOverlay)
+			while (_pricedItems.Count >= _priceCheckPlugin.Configuration.MaxItemsInOverlay)
 				_pricedItems.RemoveAt(_pricedItems.Count - 1);
 		}
 
@@ -126,13 +133,15 @@ namespace PriceCheck
 
 		internal void SendEcho(PricedItem pricedItem)
 		{
-			if (_plugin.GetConfig().ShowInChat) _plugin.PrintItemMessage(pricedItem);
+			if (_priceCheckPlugin.Configuration.ShowInChat)
+				_priceCheckPlugin.PrintItemMessage(pricedItem);
 		}
 
 		internal void SetDisplayName(PricedItem pricedItem)
 		{
 			if (pricedItem.IsHQ)
-				pricedItem.DisplayName = pricedItem.ItemName + " " + _plugin.GetHQIcon();
+				pricedItem.DisplayName =
+					pricedItem.ItemName + " " + _priceCheckPlugin.GetSeIcon(SeIconChar.HighQuality);
 			else
 				pricedItem.DisplayName = pricedItem.ItemName;
 		}
@@ -142,7 +151,7 @@ namespace PriceCheck
 			if (pricedItem.Result == null)
 			{
 				pricedItem.Result = Result.Success;
-				pricedItem.Message = _plugin.GetConfig().ShowPrices
+				pricedItem.Message = _priceCheckPlugin.Configuration.ShowPrices
 					? pricedItem.AveragePrice.ToString("N0", CultureInfo.InvariantCulture)
 					: pricedItem.Result.ToString();
 			}
@@ -179,11 +188,6 @@ namespace PriceCheck
 			RemoveItemsOverMax();
 			AddItemToList(pricedItem);
 			SendEcho(pricedItem);
-		}
-
-		public void Dispose()
-		{
-			_plugin.ItemDetected -= ProcessItem;
 		}
 	}
 }

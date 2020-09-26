@@ -9,7 +9,7 @@ namespace PriceCheck.Test
 		[SetUp]
 		public void Setup()
 		{
-			_client = new UniversalisClient(new MockPluginWrapper());
+			_client = new UniversalisClient(new MockPriceCheckPlugin());
 		}
 
 		[TearDown]

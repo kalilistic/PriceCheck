@@ -11,13 +11,13 @@ namespace PriceCheck
 {
 	public class SettingsWindow : WindowBase
 	{
-		private readonly IPluginWrapper _plugin;
+		private readonly IPriceCheckPlugin _priceCheckPlugin;
 		private Tab _currentTab = Tab.General;
 		private float _uiScale;
 
-		public SettingsWindow(IPluginWrapper plugin)
+		public SettingsWindow(IPriceCheckPlugin priceCheckPlugin)
 		{
-			_plugin = plugin;
+			_priceCheckPlugin = priceCheckPlugin;
 		}
 
 		public event EventHandler<bool> OverlayVisibilityUpdated;
@@ -60,7 +60,8 @@ namespace PriceCheck
 					break;
 				}
 				default:
-					throw new ArgumentOutOfRangeException();
+					DrawGeneral();
+					break;
 			}
 
 			ImGui.End();
@@ -70,31 +71,31 @@ namespace PriceCheck
 		{
 			if (ImGui.BeginTabBar("PriceCheckSettingsTabBar", ImGuiTabBarFlags.NoTooltip))
 			{
-				if (ImGui.BeginTabItem(Loc.Localize("General", "General")))
+				if (ImGui.BeginTabItem(Loc.Localize("General", "General") + "###PriceCheck_General_Tab"))
 				{
 					_currentTab = Tab.General;
 					ImGui.EndTabItem();
 				}
 
-				if (ImGui.BeginTabItem(Loc.Localize("Overlay", "Overlay")))
+				if (ImGui.BeginTabItem(Loc.Localize("Overlay", "Overlay") + "###PriceCheck_Overlay_Tab"))
 				{
 					_currentTab = Tab.Overlay;
 					ImGui.EndTabItem();
 				}
 
-				if (ImGui.BeginTabItem(Loc.Localize("Chat", "Chat")))
+				if (ImGui.BeginTabItem(Loc.Localize("Chat", "Chat") + "###PriceCheck_Chat_Tab"))
 				{
 					_currentTab = Tab.Chat;
 					ImGui.EndTabItem();
 				}
 
-				if (ImGui.BeginTabItem(Loc.Localize("Keybind", "Keybind")))
+				if (ImGui.BeginTabItem(Loc.Localize("Keybind", "Keybind") + "###PriceCheck_Keybind_Tab"))
 				{
 					_currentTab = Tab.Keybind;
 					ImGui.EndTabItem();
 				}
 
-				if (ImGui.BeginTabItem(Loc.Localize("Thresholds", "Thresholds")))
+				if (ImGui.BeginTabItem(Loc.Localize("Thresholds", "Thresholds") + "###PriceCheck_Thresholds_Tab"))
 				{
 					_currentTab = Tab.Thresholds;
 					ImGui.EndTabItem();
@@ -107,32 +108,33 @@ namespace PriceCheck
 
 		public void DrawGeneral()
 		{
-			var enabled = _plugin.GetConfig().Enabled;
-			if (ImGui.Checkbox(Loc.Localize("PluginEnabled", "Plugin Enabled") + "###PriceCheck_PluginEnabled_Checkbox",
+			var enabled = _priceCheckPlugin.Configuration.Enabled;
+			if (ImGui.Checkbox(
+				Loc.Localize("PluginEnabled", "PriceCheckPlugin Enabled") + "###PriceCheck_PluginEnabled_Checkbox",
 				ref enabled))
 			{
-				_plugin.GetConfig().Enabled = enabled;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.Enabled = enabled;
+				_priceCheckPlugin.SaveConfig();
 			}
 
-			var showPrices = _plugin.GetConfig().ShowPrices;
+			var showPrices = _priceCheckPlugin.Configuration.ShowPrices;
 			if (ImGui.Checkbox(Loc.Localize("ShowPrices", "Show Prices") + "###PriceCheck_ShowPrices_Checkbox",
 				ref showPrices))
 			{
-				_plugin.GetConfig().ShowPrices = showPrices;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.ShowPrices = showPrices;
+				_priceCheckPlugin.SaveConfig();
 			}
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("Language", "Language"));
-			var pluginLanguage = _plugin.GetConfig().PluginLanguage;
+			var pluginLanguage = _priceCheckPlugin.Configuration.PluginLanguage;
 			if (ImGui.Combo("###PriceCheck_Language_Combo", ref pluginLanguage,
 				PluginLanguage.LanguageNames.ToArray(),
 				PluginLanguage.LanguageNames.Count))
 			{
-				_plugin.GetConfig().PluginLanguage = pluginLanguage;
-				_plugin.GetConfig().Save();
-				_plugin.GetLoc().SetLanguage();
+				_priceCheckPlugin.Configuration.PluginLanguage = pluginLanguage;
+				_priceCheckPlugin.SaveConfig();
+				_priceCheckPlugin.Localization.SetLanguage(pluginLanguage);
 			}
 
 			ImGui.Spacing();
@@ -144,98 +146,100 @@ namespace PriceCheck
 				Process.Start("https://github.com/kalilistic/PriceCheck");
 			ImGui.SameLine(128f * _uiScale);
 			if (ImGui.SmallButton(Loc.Localize("PrintHelp", "Help") + "###PriceCheck_Help_Button"))
-				_plugin.PrintHelpMessage();
+				_priceCheckPlugin.PrintHelpMessage();
 		}
 
 		public void DrawOverlay()
 		{
-			var showOverlay = _plugin.GetConfig().ShowOverlay;
+			var showOverlay = _priceCheckPlugin.Configuration.ShowOverlay;
 			if (ImGui.Checkbox(Loc.Localize("ShowOverlay", "Show Overlay") + "###PriceCheck_ShowOverlay_Checkbox",
 				ref showOverlay))
 			{
-				_plugin.GetConfig().ShowOverlay = showOverlay;
+				_priceCheckPlugin.Configuration.ShowOverlay = showOverlay;
 				OverlayVisibilityUpdated?.Invoke(this, showOverlay);
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.SaveConfig();
 			}
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("MaxItems", "Max Items"));
-			var maxItemsInOverlay = _plugin.GetConfig().MaxItemsInOverlay;
+			var maxItemsInOverlay = _priceCheckPlugin.Configuration.MaxItemsInOverlay;
 			if (ImGui.SliderInt("###PriceCheck_MaxItems_Slider", ref maxItemsInOverlay, 0, 30))
 			{
-				_plugin.GetConfig().MaxItemsInOverlay = maxItemsInOverlay;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.MaxItemsInOverlay = maxItemsInOverlay;
+				_priceCheckPlugin.SaveConfig();
 			}
 		}
 
 		public void DrawChat()
 		{
-			var showInChat = _plugin.GetConfig().ShowInChat;
+			var showInChat = _priceCheckPlugin.Configuration.ShowInChat;
 			if (ImGui.Checkbox(Loc.Localize("ShowInChat", "Show in Chat") + "###PriceCheck_ShowInChat_Checkbox",
 				ref showInChat))
 			{
-				_plugin.GetConfig().ShowInChat = showInChat;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.ShowInChat = showInChat;
+				_priceCheckPlugin.SaveConfig();
 			}
 
-			var useChatColors = _plugin.GetConfig().UseChatColors;
+			var useChatColors = _priceCheckPlugin.Configuration.UseChatColors;
 			if (ImGui.Checkbox(
 				Loc.Localize("UseChatColors", "Use Chat Colors") + "###PriceCheck_UseChatColors_Checkbox",
 				ref useChatColors))
 			{
-				_plugin.GetConfig().UseChatColors = useChatColors;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.UseChatColors = useChatColors;
+				_priceCheckPlugin.SaveConfig();
 			}
 		}
 
 		public void DrawKeybind()
 		{
-			var keybindEnabled = _plugin.GetConfig().KeybindEnabled;
+			var keybindEnabled = _priceCheckPlugin.Configuration.KeybindEnabled;
 			if (ImGui.Checkbox(Loc.Localize("KeybindEnabled", "Use Keybind") + "###PriceCheck_KeybindEnabled_Checkbox",
 				ref keybindEnabled))
 			{
-				_plugin.GetConfig().KeybindEnabled = keybindEnabled;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.KeybindEnabled = keybindEnabled;
+				_priceCheckPlugin.SaveConfig();
 			}
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("ModifierKeybind", "Modifier"));
-			var modifierKey = ModifierKey.EnumToIndex(_plugin.GetConfig().ModifierKey);
+			var modifierKey =
+				ModifierKey.EnumToIndex(_priceCheckPlugin.Configuration.ModifierKey);
 			if (ImGui.Combo("###PriceCheck_ModifierKey_Combo", ref modifierKey, ModifierKey.Names.ToArray(),
 				ModifierKey.Names.Length))
 			{
-				_plugin.GetConfig().ModifierKey = ModifierKey.IndexToEnum(modifierKey);
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.ModifierKey =
+					ModifierKey.IndexToEnum(modifierKey);
+				_priceCheckPlugin.SaveConfig();
 			}
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("PrimaryKeybind", "Primary"));
-			var primaryKey = PrimaryKey.EnumToIndex(_plugin.GetConfig().PrimaryKey);
+			var primaryKey = PrimaryKey.EnumToIndex(_priceCheckPlugin.Configuration.PrimaryKey);
 			if (ImGui.Combo("###PriceCheck_PrimaryKey_Combo", ref primaryKey, PrimaryKey.Names.ToArray(),
 				PrimaryKey.Names.Length))
 			{
-				_plugin.GetConfig().PrimaryKey = PrimaryKey.IndexToEnum(primaryKey);
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.PrimaryKey = PrimaryKey.IndexToEnum(primaryKey);
+				_priceCheckPlugin.SaveConfig();
 			}
 		}
 
 		public void DrawThresholds()
 		{
 			ImGui.Text(Loc.Localize("MinimumPrice", "Minimum Price"));
-			var minPrice = _plugin.GetConfig().MinPrice;
+			var minPrice = _priceCheckPlugin.Configuration.MinPrice;
 			if (ImGui.SliderInt("###PriceCheck_MinPrice_Slider", ref minPrice, 0, 20000))
 			{
-				_plugin.GetConfig().MinPrice = minPrice;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.MinPrice = minPrice;
+				_priceCheckPlugin.SaveConfig();
 			}
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("MaxUploadDays", "Max Upload Days"));
-			var maxUploadDays = _plugin.GetConfig().MaxUploadDays;
+			var maxUploadDays = _priceCheckPlugin.Configuration.MaxUploadDays;
 			if (ImGui.SliderInt("###PriceCheck_MaxUploadDays_Slider", ref maxUploadDays, 0, 365))
 			{
-				_plugin.GetConfig().MaxUploadDays = maxUploadDays;
-				_plugin.GetConfig().Save();
+				_priceCheckPlugin.Configuration.MaxUploadDays = maxUploadDays;
+				_priceCheckPlugin.SaveConfig();
 			}
 		}
 

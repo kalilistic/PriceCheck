@@ -50,7 +50,7 @@
     <Compile Include="MockConfig.cs" />
     <Compile Include="MockPriceService.cs" />
     <Compile Include="MockUniversalis.cs" />
-    <Compile Include="MockPluginWrapper.cs" />
+    <Compile Include="MockPriceCheckPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

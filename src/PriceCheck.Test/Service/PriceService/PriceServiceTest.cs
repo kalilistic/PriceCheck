@@ -9,9 +9,9 @@ namespace PriceCheck.Test
 		[SetUp]
 		public void Setup()
 		{
-			_plugin = new MockPluginWrapper();
+			_priceCheckPlugin = new MockPriceCheckPlugin();
 			_universalisClient = new MockUniversalis();
-			_priceService = new PriceService(_plugin, _universalisClient);
+			_priceService = new PriceService(_priceCheckPlugin, _universalisClient);
 		}
 
 		[TearDown]
@@ -22,7 +22,7 @@ namespace PriceCheck.Test
 
 		private PriceService _priceService;
 		private IUniversalisClient _universalisClient;
-		private MockPluginWrapper _plugin;
+		private MockPriceCheckPlugin _priceCheckPlugin;
 
 		[Test]
 		public void BuildPricedItemFromId_NQ_ReturnsPricedItem()
@@ -116,7 +116,7 @@ namespace PriceCheck.Test
 		public void EvaluateDataAge_IsRecentData_ReturnsFalse()
 		{
 			var pricedItem = new PricedItem {LastUpdated = 1599272449630};
-			_plugin.GetConfig().MaxUploadDays = 360;
+			_priceCheckPlugin.Configuration.MaxUploadDays = 360;
 			var result = _priceService.EvaluateDataAge(pricedItem);
 			Assert.AreEqual(false, result);
 		}
@@ -125,7 +125,7 @@ namespace PriceCheck.Test
 		public void EvaluateDataAge_IsOldData_ReturnsTrue()
 		{
 			var pricedItem = new PricedItem {LastUpdated = 1568300583687};
-			_plugin.GetConfig().MaxUploadDays = 30;
+			_priceCheckPlugin.Configuration.MaxUploadDays = 30;
 			var result = _priceService.EvaluateDataAge(pricedItem);
 			Assert.AreEqual(true, result);
 		}
@@ -158,7 +158,7 @@ namespace PriceCheck.Test
 		public void CompareMinPrice_BelowMin_ReturnsTrue()
 		{
 			var pricedItem = new PricedItem {AveragePrice = 100};
-			_plugin.GetConfig().MinPrice = 101;
+			_priceCheckPlugin.Configuration.MinPrice = 101;
 			var result = _priceService.CompareMinPrice(pricedItem);
 			Assert.AreEqual(true, result);
 		}
@@ -167,7 +167,7 @@ namespace PriceCheck.Test
 		public void CompareMinPrice_MatchMin_ReturnsFalse()
 		{
 			var pricedItem = new PricedItem {AveragePrice = 100};
-			_plugin.GetConfig().MinPrice = 100;
+			_priceCheckPlugin.Configuration.MinPrice = 100;
 			var result = _priceService.CompareMinPrice(pricedItem);
 			Assert.AreEqual(false, result);
 		}
@@ -176,7 +176,7 @@ namespace PriceCheck.Test
 		public void CompareMinPrice_AboveMin_ReturnsFalse()
 		{
 			var pricedItem = new PricedItem {AveragePrice = 101};
-			_plugin.GetConfig().MinPrice = 100;
+			_priceCheckPlugin.Configuration.MinPrice = 100;
 			var result = _priceService.CompareMinPrice(pricedItem);
 			Assert.AreEqual(false, result);
 		}
@@ -211,7 +211,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void RemoveItemsOverMax_OverMax_ReducedToMax()
 		{
-			_plugin.GetConfig().MaxItemsInOverlay = 1;
+			_priceCheckPlugin.Configuration.MaxItemsInOverlay = 1;
 			var pricedItem = new PricedItem {ItemId = 1};
 			var pricedItem2 = new PricedItem {ItemId = 2};
 			_priceService.GetItems().Add(pricedItem);
@@ -231,7 +231,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void ProcessItem_NewItem_AddedToList()
 		{
-			_plugin.Config.MinPrice = 1;
+			_priceCheckPlugin.Configuration.MinPrice = 1;
 			_priceService.ProcessItem(this, 1);
 			Assert.AreEqual(1, _priceService.GetItems().Count);
 		}
@@ -274,7 +274,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void ProcessItem_BelowMin_BelowMinimum()
 		{
-			_plugin.Config.MinPrice = 99999999;
+			_priceCheckPlugin.Configuration.MinPrice = 99999999;
 			_priceService.ProcessItem(this, 1);
 			Assert.AreEqual(Result.BelowMinimum, _priceService.GetItems()[0].Result);
 		}
