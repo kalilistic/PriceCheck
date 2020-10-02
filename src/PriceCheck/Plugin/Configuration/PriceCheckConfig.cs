@@ -2,7 +2,6 @@
 {
 	public abstract class PriceCheckConfig
 	{
-		public int Version { get; set; } = 0;
 		public int RequestTimeout { get; set; } = 5000;
 		public bool FreshInstall { get; set; } = true;
 

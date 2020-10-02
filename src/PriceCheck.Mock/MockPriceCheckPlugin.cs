@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
 using Lumina.Data;
 using Lumina.Excel;
 using Lumina.Excel.GeneratedSheets;
@@ -11,12 +9,6 @@ namespace PriceCheck.Mock
 {
 	public class MockPriceCheckPlugin : IPriceCheckPlugin, IPluginBase
 	{
-		public IPriceService PriceService { get; }
-		public PriceCheckConfig Configuration { get; set; }
-		public Localization Localization { get; }
-		public string PluginName { get; }
-		public event EventHandler<ulong> ItemDetected;
-
 		public MockPriceCheckPlugin()
 		{
 			PluginName = "PriceCheck";
@@ -24,6 +16,12 @@ namespace PriceCheck.Mock
 			Configuration = new MockConfig();
 			PriceService = new MockPriceService();
 		}
+
+		public IPriceService PriceService { get; }
+		public PriceCheckConfig Configuration { get; set; }
+		public Localization Localization { get; }
+		public string PluginName { get; }
+		public event EventHandler<ulong> ItemDetected;
 
 		public void PrintHelpMessage()
 		{
@@ -87,16 +85,6 @@ namespace PriceCheck.Mock
 			throw new NotImplementedException();
 		}
 
-		public dynamic LoadConfig()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPluginBase.Dispose()
-		{
-			throw new NotImplementedException();
-		}
-
 		void IPriceCheckPlugin.Dispose()
 		{
 			throw new NotImplementedException();
@@ -104,7 +92,6 @@ namespace PriceCheck.Mock
 
 		public void SaveConfig()
 		{
-			return;
 		}
 
 		public void SetupCommands()
@@ -133,6 +120,76 @@ namespace PriceCheck.Mock
 		}
 
 		void IPriceCheckPlugin.SetLanguage(PluginLanguage language)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPriceCheckPlugin.PrintMessage(string message)
+		{
+			throw new NotImplementedException();
+		}
+
+		string IPriceCheckPlugin.GetSeIcon(SeIconChar seIconChar)
+		{
+			return " (HQ)";
+		}
+
+		uint? IPriceCheckPlugin.GetLocalPlayerHomeWorld()
+		{
+			return 63;
+		}
+
+		void IPriceCheckPlugin.LogInfo(string messageTemplate)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPriceCheckPlugin.LogInfo(string messageTemplate, params object[] values)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPriceCheckPlugin.LogError(string messageTemplate)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPriceCheckPlugin.LogError(string messageTemplate, params object[] values)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPriceCheckPlugin.LogError(Exception exception, string messageTemplate, params object[] values)
+		{
+			Log(messageTemplate);
+		}
+
+		bool IPriceCheckPlugin.IsKeyPressed(ModifierKey.Enum key)
+		{
+			throw new NotImplementedException();
+		}
+
+		bool IPriceCheckPlugin.IsKeyPressed(PrimaryKey.Enum key)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPriceCheckPlugin.SaveConfig(dynamic config)
+		{
+			throw new NotImplementedException();
+		}
+
+		public dynamic LoadConfig()
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPluginBase.Dispose()
+		{
+			throw new NotImplementedException();
+		}
+
+		public string PluginFolder()
 		{
 			throw new NotImplementedException();
 		}
@@ -193,61 +250,6 @@ namespace PriceCheck.Mock
 		}
 
 		void IPluginBase.SetLanguage(PluginLanguage language)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPriceCheckPlugin.PrintMessage(string message)
-		{
-			throw new NotImplementedException();
-		}
-
-		string IPriceCheckPlugin.GetSeIcon(SeIconChar seIconChar)
-		{
-			return " (HQ)";
-		}
-
-		uint? IPriceCheckPlugin.GetLocalPlayerHomeWorld()
-		{
-			return 63;
-		}
-
-		void IPriceCheckPlugin.LogInfo(string messageTemplate)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPriceCheckPlugin.LogInfo(string messageTemplate, params object[] values)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPriceCheckPlugin.LogError(string messageTemplate)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPriceCheckPlugin.LogError(string messageTemplate, params object[] values)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPriceCheckPlugin.LogError(Exception exception, string messageTemplate, params object[] values)
-		{
-			Log(messageTemplate);
-		}
-
-		bool IPriceCheckPlugin.IsKeyPressed(ModifierKey.Enum key)
-		{
-			throw new NotImplementedException();
-		}
-
-		bool IPriceCheckPlugin.IsKeyPressed(PrimaryKey.Enum key)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPriceCheckPlugin.SaveConfig(dynamic config)
 		{
 			throw new NotImplementedException();
 		}

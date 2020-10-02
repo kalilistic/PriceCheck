@@ -32,7 +32,7 @@
         "description": "Plugin.HandleFreshInstall"
     },
     "SettingsWindow": {
-        "message": "PriceCheck Settings",
+        "message": "EMBEDDED!",
         "description": "SettingsWindow.DrawWindow"
     },
     "General": {

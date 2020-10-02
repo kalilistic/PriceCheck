@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PriceCheck.Mock
 {
@@ -31,7 +32,7 @@ namespace PriceCheck.Mock
 
 		public void Dispose()
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 	}
 }

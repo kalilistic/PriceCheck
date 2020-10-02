@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CheapLoc;
 using Dalamud.Game.Chat.SeStringHandling.Payloads;
@@ -16,30 +15,47 @@ namespace PriceCheck
 {
 	public sealed class PriceCheckPlugin : PluginBase, IPriceCheckPlugin
 	{
-		private readonly List<Item> _items;
-		private readonly DalamudPluginInterface _pluginInterface;
-		private readonly PluginUI _pluginUI;
-		private readonly UniversalisClient _universalisClient;
+		private List<Item> _items;
+		private DalamudPluginInterface _pluginInterface;
+		private PluginUI _pluginUI;
+		private UniversalisClient _universalisClient;
 
 		public PriceCheckPlugin(string pluginName, DalamudPluginInterface pluginInterface) : base(pluginName,
 			pluginInterface)
 		{
-			_pluginInterface = pluginInterface;
-			LoadConfig();
-			_universalisClient = new UniversalisClient(this);
-			PriceService = new PriceService(this, _universalisClient);
-			_pluginUI = new PluginUI(this);
-			_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
-			_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
-			_items = PluginInterface.Data.Excel.GetSheet<Item>()
-				.Where(item => item.ItemSearchCategory.Row != 0 && !string.IsNullOrEmpty(item.Name)).ToList();
-			PluginInterface.Framework.Gui.HoveredItemChanged += HoveredItemChanged;
-			SetupCommands();
-			Localization.SetLanguage(Configuration.PluginLanguage);
-			HandleFreshInstall();
+			Task.Run(() =>
+			{
+				_pluginInterface = pluginInterface;
+
+				// config
+				LoadConfig();
+
+				// services
+				_universalisClient = new UniversalisClient(this);
+				PriceService = new PriceService(this, _universalisClient);
+
+				// data
+				_items = PluginInterface.Data.Excel.GetSheet<Item>()
+					.Where(item => item.ItemSearchCategory.Row != 0 && !string.IsNullOrEmpty(item.Name)).ToList();
+
+				// commands
+				SetupCommands();
+
+				// localization
+				Localization.SetLanguage(Configuration.PluginLanguage);
+
+				// ui
+				_pluginUI = new PluginUI(this);
+				_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
+				_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
+
+				// finalize
+				HandleFreshInstall();
+				PluginInterface.Framework.Gui.HoveredItemChanged += HoveredItemChanged;
+			});
 		}
 
-		public IPriceService PriceService { get; }
+		public IPriceService PriceService { get; set; }
 
 		public PriceCheckConfig Configuration { get; set; }
 
@@ -186,7 +202,7 @@ namespace PriceCheck
 			_pluginUI.SettingsWindow.IsVisible = true;
 		}
 
-		public new void LoadConfig()
+		public void LoadConfig()
 		{
 			try
 			{
