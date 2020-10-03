@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using CheapLoc;
 using Dalamud.Game.Chat.SeStringHandling.Payloads;
@@ -16,6 +17,7 @@ namespace PriceCheck
 {
 	public sealed class PriceCheckPlugin : PluginBase, IPriceCheckPlugin
 	{
+		private CancellationTokenSource _hoveredItemCancellationTokenSource;
 		private List<Item> _items;
 		private DalamudPluginInterface _pluginInterface;
 		private PluginUI _pluginUI;
@@ -108,6 +110,7 @@ namespace PriceCheck
 			PluginInterface.Framework.Gui.HoveredItemChanged -= HoveredItemChanged;
 			_pluginInterface.UiBuilder.OnOpenConfigUi -= (sender, args) => DrawConfigUI();
 			_pluginInterface.UiBuilder.OnBuildUi -= DrawUI;
+			_hoveredItemCancellationTokenSource?.Dispose();
 			PriceService.Dispose();
 			_universalisClient.Dispose();
 			_pluginInterface.Dispose();
@@ -175,12 +178,30 @@ namespace PriceCheck
 
 		private void HoveredItemChanged(object sender, ulong itemId)
 		{
-			if (itemId == 0) return;
+			if (_hoveredItemCancellationTokenSource != null)
+			{
+				if (!_hoveredItemCancellationTokenSource.IsCancellationRequested)
+					_hoveredItemCancellationTokenSource.Cancel();
+				_hoveredItemCancellationTokenSource.Dispose();
+			}
+
+			if (itemId == 0)
+			{
+				_hoveredItemCancellationTokenSource = null;
+				return;
+			}
+
+			_hoveredItemCancellationTokenSource = new CancellationTokenSource();
 			if (!Configuration.Enabled) return;
 			if (!PluginInterface.Data.IsDataReady) return;
 			if (PluginInterface?.ClientState?.LocalPlayer?.HomeWorld == null) return;
 			if (!IsKeyBindPressed()) return;
-			Task.Run(() => { ItemDetected?.Invoke(this, itemId); });
+			Task.Run(async () =>
+			{
+				await Task.Delay(Configuration.HoverDelay * 1000, _hoveredItemCancellationTokenSource.Token)
+					.ConfigureAwait(false);
+				ItemDetected?.Invoke(this, itemId);
+			});
 		}
 
 		private void HandleFreshInstall()

@@ -137,6 +137,15 @@ namespace PriceCheck
 			}
 
 			ImGui.Spacing();
+			ImGui.Text(Loc.Localize("HoverDelay", "Hover Delay (Seconds)"));
+			var hoverDelay = _priceCheckPlugin.Configuration.HoverDelay;
+			if (ImGui.SliderInt("###PriceCheck_HoverDelay_Slider", ref hoverDelay, 0, 10))
+			{
+				_priceCheckPlugin.Configuration.HoverDelay = hoverDelay;
+				_priceCheckPlugin.SaveConfig();
+			}
+
+			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("Language", "Language"));
 			var pluginLanguage = _priceCheckPlugin.Configuration.PluginLanguage;
 			if (ImGui.Combo("###PriceCheck_Language_Combo", ref pluginLanguage,
@@ -255,7 +264,8 @@ namespace PriceCheck
 			if (ImGui.Button(Loc.Localize("PrintHelp", "Print Help") + "###PriceCheck_PrintHelp_Button", buttonSize))
 				_priceCheckPlugin.PrintHelpMessage();
 			ImGui.SetCursorPosY(heightOffset);
-			if (ImGui.Button(Loc.Localize("ImproveTranslate", "Improve Translations") + "###PriceCheck_ImproveTranslate_Button",
+			if (ImGui.Button(
+				Loc.Localize("ImproveTranslate", "Improve Translations") + "###PriceCheck_ImproveTranslate_Button",
 				buttonSize))
 				Process.Start("https://crowdin.com/project/pricecheck");
 			ImGui.SameLine(widthOffset);

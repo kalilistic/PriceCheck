@@ -11,6 +11,7 @@
 		public bool ShowInChat { get; set; } = true;
 		public bool UseChatColors { get; set; } = true;
 		public bool ShowPrices { get; set; } = true;
+		public int HoverDelay { get; set; } = 1;
 		public int PluginLanguage { get; set; } = 0;
 
 		// Keybind
