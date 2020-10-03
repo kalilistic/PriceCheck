@@ -34,5 +34,6 @@ namespace PriceCheck
 		bool IsKeyPressed(ModifierKey.Enum key);
 		bool IsKeyPressed(PrimaryKey.Enum key);
 		void SaveConfig(dynamic config);
+		void UpdateResources();
 	}
 }

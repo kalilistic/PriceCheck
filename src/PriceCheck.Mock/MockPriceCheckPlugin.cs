@@ -17,6 +17,86 @@ namespace PriceCheck.Mock
 			PriceService = new MockPriceService();
 		}
 
+		public dynamic LoadConfig()
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPluginBase.Dispose()
+		{
+			throw new NotImplementedException();
+		}
+
+		public string PluginFolder()
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPluginBase.UpdateResources()
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPluginBase.PrintMessage(string message)
+		{
+			throw new NotImplementedException();
+		}
+
+		string IPluginBase.GetSeIcon(SeIconChar seIconChar)
+		{
+			return " (HQ)";
+		}
+
+		uint? IPluginBase.GetLocalPlayerHomeWorld()
+		{
+			return 63;
+		}
+
+		void IPluginBase.LogInfo(string messageTemplate)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPluginBase.LogInfo(string messageTemplate, params object[] values)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPluginBase.LogError(string messageTemplate)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPluginBase.LogError(string messageTemplate, params object[] values)
+		{
+			Log(messageTemplate);
+		}
+
+		void IPluginBase.LogError(Exception exception, string messageTemplate, params object[] values)
+		{
+			Log(messageTemplate);
+		}
+
+		bool IPluginBase.IsKeyPressed(ModifierKey.Enum key)
+		{
+			throw new NotImplementedException();
+		}
+
+		bool IPluginBase.IsKeyPressed(PrimaryKey.Enum key)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPluginBase.SaveConfig(dynamic config)
+		{
+			throw new NotImplementedException();
+		}
+
+		void IPluginBase.SetLanguage(PluginLanguage language)
+		{
+			throw new NotImplementedException();
+		}
+
 		public IPriceService PriceService { get; }
 		public PriceCheckConfig Configuration { get; set; }
 		public Localization Localization { get; }
@@ -179,77 +259,7 @@ namespace PriceCheck.Mock
 			throw new NotImplementedException();
 		}
 
-		public dynamic LoadConfig()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPluginBase.Dispose()
-		{
-			throw new NotImplementedException();
-		}
-
-		public string PluginFolder()
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPluginBase.PrintMessage(string message)
-		{
-			throw new NotImplementedException();
-		}
-
-		string IPluginBase.GetSeIcon(SeIconChar seIconChar)
-		{
-			return " (HQ)";
-		}
-
-		uint? IPluginBase.GetLocalPlayerHomeWorld()
-		{
-			return 63;
-		}
-
-		void IPluginBase.LogInfo(string messageTemplate)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPluginBase.LogInfo(string messageTemplate, params object[] values)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPluginBase.LogError(string messageTemplate)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPluginBase.LogError(string messageTemplate, params object[] values)
-		{
-			Log(messageTemplate);
-		}
-
-		void IPluginBase.LogError(Exception exception, string messageTemplate, params object[] values)
-		{
-			Log(messageTemplate);
-		}
-
-		bool IPluginBase.IsKeyPressed(ModifierKey.Enum key)
-		{
-			throw new NotImplementedException();
-		}
-
-		bool IPluginBase.IsKeyPressed(PrimaryKey.Enum key)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPluginBase.SaveConfig(dynamic config)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPluginBase.SetLanguage(PluginLanguage language)
+		void IPriceCheckPlugin.UpdateResources()
 		{
 			throw new NotImplementedException();
 		}

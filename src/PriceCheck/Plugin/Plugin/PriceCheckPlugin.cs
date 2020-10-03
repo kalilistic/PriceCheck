@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CheapLoc;
 using Dalamud.Game.Chat.SeStringHandling.Payloads;
@@ -202,7 +203,7 @@ namespace PriceCheck
 			_pluginUI.SettingsWindow.IsVisible = true;
 		}
 
-		public void LoadConfig()
+		public new void LoadConfig()
 		{
 			try
 			{

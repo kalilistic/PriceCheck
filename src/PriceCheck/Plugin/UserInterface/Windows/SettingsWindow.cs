@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using CheapLoc;
 using ImGuiNET;
@@ -25,10 +26,10 @@ namespace PriceCheck
 		{
 			if (!IsVisible) return;
 			_uiScale = ImGui.GetIO().FontGlobalScale;
-			ImGui.SetNextWindowSize(new Vector2(310 * _uiScale, 210 * _uiScale));
+			ImGui.SetNextWindowSize(new Vector2(350 * _uiScale, 210 * _uiScale), ImGuiCond.FirstUseEver);
 			ImGui.Begin(Loc.Localize("SettingsWindow", "PriceCheck Settings") + "###PriceCheck_Settings_Window",
 				ref IsVisible,
-				ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.AlwaysAutoResize);
+				ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoScrollbar);
 
 			DrawTabs();
 			switch (_currentTab)
@@ -56,6 +57,11 @@ namespace PriceCheck
 				case Tab.Thresholds:
 				{
 					DrawThresholds();
+					break;
+				}
+				case Tab.Other:
+				{
+					DrawOther();
 					break;
 				}
 				default:
@@ -100,6 +106,12 @@ namespace PriceCheck
 					ImGui.EndTabItem();
 				}
 
+				if (ImGui.BeginTabItem(Loc.Localize("Other", "Other") + "###PriceCheck_Other_Tab"))
+				{
+					_currentTab = Tab.Other;
+					ImGui.EndTabItem();
+				}
+
 				ImGui.EndTabBar();
 				ImGui.Spacing();
 			}
@@ -135,17 +147,6 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 				_priceCheckPlugin.Localization.SetLanguage(pluginLanguage);
 			}
-
-			ImGui.Spacing();
-			ImGui.Spacing();
-			if (ImGui.SmallButton(Loc.Localize("OpenTranslate", "Translate") + "###PriceCheck_Translate_Button"))
-				Process.Start("https://crowdin.com/project/pricecheck");
-			ImGui.SameLine(75f * _uiScale);
-			if (ImGui.SmallButton(Loc.Localize("OpenGithub", "Github") + "###PriceCheck_Github_Button"))
-				Process.Start("https://github.com/kalilistic/PriceCheck");
-			ImGui.SameLine(128f * _uiScale);
-			if (ImGui.SmallButton(Loc.Localize("PrintHelp", "Help") + "###PriceCheck_Help_Button"))
-				_priceCheckPlugin.PrintHelpMessage();
 		}
 
 		public void DrawOverlay()
@@ -242,6 +243,27 @@ namespace PriceCheck
 			}
 		}
 
+		public void DrawOther()
+		{
+			var buttonSize = new Vector2(160f * _uiScale, 25f * _uiScale);
+			var widthOffset = 175f * _uiScale;
+			var heightOffset = 100f * _uiScale;
+			ImGui.Spacing();
+			if (ImGui.Button(Loc.Localize("OpenGithub", "Open Github") + "###PriceCheck_OpenGithub_Button", buttonSize))
+				Process.Start("https://github.com/kalilistic/PriceCheck");
+			ImGui.SameLine(widthOffset);
+			if (ImGui.Button(Loc.Localize("PrintHelp", "Print Help") + "###PriceCheck_PrintHelp_Button", buttonSize))
+				_priceCheckPlugin.PrintHelpMessage();
+			ImGui.SetCursorPosY(heightOffset);
+			if (ImGui.Button(Loc.Localize("ImproveTranslate", "Improve Translations") + "###PriceCheck_ImproveTranslate_Button",
+				buttonSize))
+				Process.Start("https://crowdin.com/project/pricecheck");
+			ImGui.SameLine(widthOffset);
+			if (ImGui.Button(Loc.Localize("UpdateLoc", "Update Loc") + "###PriceCheck_UpdateLoc_Button",
+				buttonSize))
+				_priceCheckPlugin.UpdateResources();
+		}
+
 
 		private enum Tab
 		{
@@ -249,7 +271,8 @@ namespace PriceCheck
 			Overlay,
 			Chat,
 			Keybind,
-			Thresholds
+			Thresholds,
+			Other
 		}
 	}
 }
