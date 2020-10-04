@@ -121,7 +121,7 @@ namespace PriceCheck
 		{
 			var enabled = _priceCheckPlugin.Configuration.Enabled;
 			if (ImGui.Checkbox(
-				Loc.Localize("PluginEnabled", "PriceCheckPlugin Enabled") + "###PriceCheck_PluginEnabled_Checkbox",
+				Loc.Localize("PluginEnabled", "Plugin Enabled") + "###PriceCheck_PluginEnabled_Checkbox",
 				ref enabled))
 			{
 				_priceCheckPlugin.Configuration.Enabled = enabled;

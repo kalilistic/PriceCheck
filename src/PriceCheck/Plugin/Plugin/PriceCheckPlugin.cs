@@ -35,24 +35,9 @@ namespace PriceCheck
 			});
 		}
 
-		public void LoadServices()
-		{
-			_universalisClient = new UniversalisClient(this);
-			PriceService = new PriceService(this, _universalisClient);
-		}
-
-		public void LoadUI()
-		{
-			Localization.SetLanguage(Configuration.PluginLanguage);
-			_pluginUI = new PluginUI(this);
-			_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
-			_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
-		}
-
 		public IPriceService PriceService { get; set; }
 
 		public PriceCheckConfig Configuration { get; set; }
-
 
 		public event EventHandler<ulong> ItemDetected;
 
@@ -103,8 +88,9 @@ namespace PriceCheck
 			       IsKeyPressed(Configuration.PrimaryKey);
 		}
 
-		public override void Dispose()
+		public new void Dispose()
 		{
+			base.Dispose();
 			RemoveCommands();
 			PluginInterface.Framework.Gui.HoveredItemChanged -= HoveredItemChanged;
 			_pluginInterface.UiBuilder.OnOpenConfigUi -= (sender, args) => DrawConfigUI();
@@ -121,7 +107,7 @@ namespace PriceCheck
 		}
 
 
-		public void SetupCommands()
+		public new void SetupCommands()
 		{
 			_pluginInterface.CommandManager.AddHandler("/pcheck", new CommandInfo(TogglePriceCheck)
 			{
@@ -141,19 +127,14 @@ namespace PriceCheck
 			{
 				ShowInHelp = false
 			});
-			_pluginInterface.CommandManager.AddHandler("/pcheckexloc", new CommandInfo(ExportLocalizable)
-			{
-				ShowInHelp = false
-			});
 		}
 
-		public void RemoveCommands()
+		public new void RemoveCommands()
 		{
 			_pluginInterface.CommandManager.RemoveHandler("/pcheck");
 			_pluginInterface.CommandManager.RemoveHandler("/pricecheck");
 			_pluginInterface.CommandManager.RemoveHandler("/pcheckconfig");
 			_pluginInterface.CommandManager.RemoveHandler("/pricecheckconfig");
-			_pluginInterface.CommandManager.RemoveHandler("/pcheckexloc");
 		}
 
 		public void TogglePriceCheck(string command, string args)
@@ -169,10 +150,18 @@ namespace PriceCheck
 			_pluginUI.SettingsWindow.IsVisible = !_pluginUI.SettingsWindow.IsVisible;
 		}
 
-		public void ExportLocalizable(string command, string args)
+		public void LoadServices()
 		{
-			LogInfo("Running command {0} with args {1}", command, args);
-			Localization.ExportLocalizable();
+			_universalisClient = new UniversalisClient(this);
+			PriceService = new PriceService(this, _universalisClient);
+		}
+
+		public void LoadUI()
+		{
+			Localization.SetLanguage(Configuration.PluginLanguage);
+			_pluginUI = new PluginUI(this);
+			_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
+			_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
 		}
 
 		private void HoveredItemChanged(object sender, ulong itemId)
