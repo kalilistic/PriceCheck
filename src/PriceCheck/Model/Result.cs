@@ -1,4 +1,5 @@
-﻿using CheapLoc;
+﻿using System.Numerics;
+using CheapLoc;
 
 namespace PriceCheck
 {
@@ -10,13 +11,15 @@ namespace PriceCheck
 		public static Result NoRecentDataAvailable;
 		public static Result BelowVendor;
 		public static Result BelowMinimum;
-		private readonly ushort _colorKey;
+		private readonly ushort _chatColor;
 		private readonly string _description;
+		private readonly Vector4 _overlayColor;
 
-		private Result(string resultDesc, ushort colorKey)
+		private Result(string resultDesc, ushort chatColor, Vector4 overlayColor)
 		{
 			_description = resultDesc;
-			_colorKey = colorKey;
+			_chatColor = chatColor;
+			_overlayColor = overlayColor;
 		}
 
 		public override string ToString()
@@ -24,19 +27,29 @@ namespace PriceCheck
 			return _description;
 		}
 
-		public ushort ColorKey()
+		public ushort ChatColor()
 		{
-			return _colorKey;
+			return _chatColor;
+		}
+
+		public Vector4 OverlayColor()
+		{
+			return _overlayColor;
 		}
 
 		public static void UpdateLanguage()
 		{
-			Success = new Result(Loc.Localize("SellOnMarketboard", "Sell on marketboard"), 45);
-			FailedToGetData = new Result(Loc.Localize("FailedToGetData", "Failed to get data"), 17);
-			NoDataAvailable = new Result(Loc.Localize("NoDataAvailable", "No data available"), 17);
-			NoRecentDataAvailable = new Result(Loc.Localize("NoRecentDataAvailable", "No recent data"), 17);
-			BelowVendor = new Result(Loc.Localize("BelowVendor", "Sell to vendor"), 25);
-			BelowMinimum = new Result(Loc.Localize("BelowMinimum", "Below minimum price"), 25);
+			Success = new Result(Loc.Localize("SellOnMarketboard", "Sell on marketboard"), 45,
+				new Vector4(0f, .8f, .133f, 1));
+			FailedToGetData = new Result(Loc.Localize("FailedToGetData", "Failed to get data"), 17,
+				new Vector4(.863f, 0, 0, 1));
+			NoDataAvailable = new Result(Loc.Localize("NoDataAvailable", "No data available"), 17,
+				new Vector4(.863f, 0, 0, 1));
+			NoRecentDataAvailable = new Result(Loc.Localize("NoRecentDataAvailable", "No recent data"), 17,
+				new Vector4(.863f, 0, 0, 1));
+			BelowVendor = new Result(Loc.Localize("BelowVendor", "Sell to vendor"), 25, new Vector4(1f, 1f, .4f, 1f));
+			BelowMinimum = new Result(Loc.Localize("BelowMinimum", "Below minimum price"), 25,
+				new Vector4(1f, 1f, .4f, 1f));
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using CheapLoc;
 using ImGuiNET;
@@ -26,11 +25,8 @@ namespace PriceCheck
 				ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
 			{
 				if (!_priceCheckPlugin.Configuration.Enabled)
-				{
 					ImGui.Text(Loc.Localize("PluginDisabled", "PriceCheckPlugin is disabled."));
-				}
 				else
-				{
 					try
 					{
 						var items = _priceCheckPlugin.PriceService.GetItems()?.ToList();
@@ -39,9 +35,19 @@ namespace PriceCheck
 							ImGui.Columns(2);
 							foreach (var item in items)
 							{
-								ImGui.Text(item.ItemName);
-								ImGui.NextColumn();
-								ImGui.Text(item.Message);
+								if (_priceCheckPlugin.Configuration.UseOverlayColors)
+								{
+									ImGui.TextColored(item.Result.OverlayColor(), item.ItemName);
+									ImGui.NextColumn();
+									ImGui.TextColored(item.Result.OverlayColor(), item.Message);
+								}
+								else
+								{
+									ImGui.Text(item.ItemName);
+									ImGui.NextColumn();
+									ImGui.Text(item.Message);
+								}
+
 								ImGui.NextColumn();
 								ImGui.Separator();
 							}
@@ -55,7 +61,6 @@ namespace PriceCheck
 					{
 						// ignored
 					}
-				}
 			}
 
 			ImGui.End();

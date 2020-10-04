@@ -169,6 +169,15 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			var useOverlayColors = _priceCheckPlugin.Configuration.UseOverlayColors;
+			if (ImGui.Checkbox(
+				Loc.Localize("UseOverlayColors", "Use Overlay Colors") + "###PriceCheck_UseOverlayColors_Checkbox",
+				ref useOverlayColors))
+			{
+				_priceCheckPlugin.Configuration.UseOverlayColors = useOverlayColors;
+				_priceCheckPlugin.SaveConfig();
+			}
+
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("MaxItems", "Max Items"));
 			var maxItemsInOverlay = _priceCheckPlugin.Configuration.MaxItemsInOverlay;

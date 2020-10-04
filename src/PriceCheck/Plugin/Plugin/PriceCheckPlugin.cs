@@ -77,7 +77,7 @@ namespace PriceCheck
 		{
 			var payloadList = BuildMessagePayload();
 			if (Configuration.UseChatColors)
-				payloadList.Add(new UIForegroundPayload(PluginInterface.Data, pricedItem.Result.ColorKey()));
+				payloadList.Add(new UIForegroundPayload(PluginInterface.Data, pricedItem.Result.ChatColor()));
 			if (Configuration.UseItemLinks)
 			{
 				payloadList.Add(new ItemPayload(PluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ));

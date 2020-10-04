@@ -13,6 +13,7 @@
 
 		// Overlay
 		public bool ShowOverlay { get; set; } = true;
+		public bool UseOverlayColors { get; set; } = true;
 		public int MaxItemsInOverlay { get; set; } = 10;
 
 		// Chat
