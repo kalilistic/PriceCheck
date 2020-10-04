@@ -156,6 +156,8 @@ namespace PriceCheck
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("HoverDelay", "Hover Delay"));
+			CustomWidgets.HelpMarker(Loc.Localize("HoverDelay_HelpMarker",
+				"delay (in seconds) before processing after hovering"));
 			var hoverDelay = _priceCheckPlugin.Configuration.HoverDelay;
 			if (ImGui.SliderInt("###PriceCheck_HoverDelay_Slider", ref hoverDelay, 0, 10))
 			{
@@ -163,11 +165,10 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
-			CustomWidgets.HelpMarker(Loc.Localize("HoverDelay_HelpMarker",
-				"delay (in seconds) before processing after hovering"));
-
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("Language", "Language"));
+			CustomWidgets.HelpMarker(Loc.Localize("Language_HelpMarker",
+				"use default or override plugin ui language"));
 			var pluginLanguage = _priceCheckPlugin.Configuration.PluginLanguage;
 			if (ImGui.Combo("###PriceCheck_Language_Combo", ref pluginLanguage,
 				PluginLanguage.LanguageNames.ToArray(),
@@ -177,9 +178,6 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 				_priceCheckPlugin.Localization.SetLanguage(pluginLanguage);
 			}
-
-			CustomWidgets.HelpMarker(Loc.Localize("Language_HelpMarker",
-				"use default or override plugin ui language"));
 		}
 
 		public void DrawOverlay()
@@ -210,15 +208,14 @@ namespace PriceCheck
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("MaxItems", "Max Items"));
+			CustomWidgets.HelpMarker(Loc.Localize("MaxItems_HelpMarker",
+				"set max number of items in overlay at a time"));
 			var maxItemsInOverlay = _priceCheckPlugin.Configuration.MaxItemsInOverlay;
 			if (ImGui.SliderInt("###PriceCheck_MaxItems_Slider", ref maxItemsInOverlay, 0, 30))
 			{
 				_priceCheckPlugin.Configuration.MaxItemsInOverlay = maxItemsInOverlay;
 				_priceCheckPlugin.SaveConfig();
 			}
-
-			CustomWidgets.HelpMarker(Loc.Localize("MaxItems_HelpMarker",
-				"set max number of items in overlay at a time"));
 		}
 
 		public void DrawChat()
@@ -274,6 +271,8 @@ namespace PriceCheck
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("ModifierKeybind", "Modifier"));
+			CustomWidgets.HelpMarker(Loc.Localize("ModifierKeybind_HelpMarker",
+				"set your modifier key (e.g. shift)"));
 			var modifierKey =
 				ModifierKey.EnumToIndex(_priceCheckPlugin.Configuration.ModifierKey);
 			if (ImGui.Combo("###PriceCheck_ModifierKey_Combo", ref modifierKey, ModifierKey.Names.ToArray(),
@@ -284,11 +283,10 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
-			CustomWidgets.HelpMarker(Loc.Localize("ModifierKeybind_HelpMarker",
-				"set your modifier key (e.g. shift)"));
-
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("PrimaryKeybind", "Primary"));
+			CustomWidgets.HelpMarker(Loc.Localize("PrimaryKeybind_HelpMarker",
+				"set your primary key (e.g. None, Z)"));
 			var primaryKey = PrimaryKey.EnumToIndex(_priceCheckPlugin.Configuration.PrimaryKey);
 			if (ImGui.Combo("###PriceCheck_PrimaryKey_Combo", ref primaryKey, PrimaryKey.Names.ToArray(),
 				PrimaryKey.Names.Length))
@@ -296,14 +294,13 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.PrimaryKey = PrimaryKey.IndexToEnum(primaryKey);
 				_priceCheckPlugin.SaveConfig();
 			}
-
-			CustomWidgets.HelpMarker(Loc.Localize("PrimaryKeybind_HelpMarker",
-				"set your primary key (e.g. None, Z)"));
 		}
 
 		public void DrawThresholds()
 		{
 			ImGui.Text(Loc.Localize("MinimumPrice", "Minimum Price"));
+			CustomWidgets.HelpMarker(Loc.Localize("MinimumPrice_HelpMarker",
+				"set minimum price at which actual average will be displayed"));
 			var minPrice = _priceCheckPlugin.Configuration.MinPrice;
 			if (ImGui.SliderInt("###PriceCheck_MinPrice_Slider", ref minPrice, 0, 20000))
 			{
@@ -311,20 +308,16 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
-			CustomWidgets.HelpMarker(Loc.Localize("MinimumPrice_HelpMarker",
-				"set minimum price at which actual average will be displayed"));
-
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("MaxUploadDays", "Max Upload Days"));
+			CustomWidgets.HelpMarker(Loc.Localize("MaxUploadDays_HelpMarker",
+				"set maximum age to avoid using old data"));
 			var maxUploadDays = _priceCheckPlugin.Configuration.MaxUploadDays;
 			if (ImGui.SliderInt("###PriceCheck_MaxUploadDays_Slider", ref maxUploadDays, 0, 365))
 			{
 				_priceCheckPlugin.Configuration.MaxUploadDays = maxUploadDays;
 				_priceCheckPlugin.SaveConfig();
 			}
-
-			CustomWidgets.HelpMarker(Loc.Localize("MaxUploadDays_HelpMarker",
-				"set maximum age to avoid using old data"));
 		}
 
 		public void DrawOther()
