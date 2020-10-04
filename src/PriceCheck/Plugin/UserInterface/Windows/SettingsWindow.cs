@@ -128,6 +128,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("PluginEnabled_HelpMarker",
+				"toggle the plugin on/off"));
+
 			var showPrices = _priceCheckPlugin.Configuration.ShowPrices;
 			if (ImGui.Checkbox(Loc.Localize("ShowPrices", "Show Prices") + "###PriceCheck_ShowPrices_Checkbox",
 				ref showPrices))
@@ -136,14 +139,20 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("ShowPrices_HelpMarker",
+				"show price or just show advice"));
+
 			ImGui.Spacing();
-			ImGui.Text(Loc.Localize("HoverDelay", "Hover Delay (Seconds)"));
+			ImGui.Text(Loc.Localize("HoverDelay", "Hover Delay"));
 			var hoverDelay = _priceCheckPlugin.Configuration.HoverDelay;
 			if (ImGui.SliderInt("###PriceCheck_HoverDelay_Slider", ref hoverDelay, 0, 10))
 			{
 				_priceCheckPlugin.Configuration.HoverDelay = hoverDelay;
 				_priceCheckPlugin.SaveConfig();
 			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("HoverDelay_HelpMarker",
+				"delay (in seconds) before processing after hovering"));
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("Language", "Language"));
@@ -156,6 +165,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 				_priceCheckPlugin.Localization.SetLanguage(pluginLanguage);
 			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("Language_HelpMarker",
+				"use default or override plugin ui language"));
 		}
 
 		public void DrawOverlay()
@@ -169,6 +181,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("ShowOverlay_HelpMarker",
+				"show price check results in overlay window"));
+
 			var useOverlayColors = _priceCheckPlugin.Configuration.UseOverlayColors;
 			if (ImGui.Checkbox(
 				Loc.Localize("UseOverlayColors", "Use Overlay Colors") + "###PriceCheck_UseOverlayColors_Checkbox",
@@ -178,6 +193,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("UseOverlayColors_HelpMarker",
+				"use different colors for overlay based on result"));
+
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("MaxItems", "Max Items"));
 			var maxItemsInOverlay = _priceCheckPlugin.Configuration.MaxItemsInOverlay;
@@ -186,6 +204,9 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.MaxItemsInOverlay = maxItemsInOverlay;
 				_priceCheckPlugin.SaveConfig();
 			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("MaxItems_HelpMarker",
+				"set max number of items in overlay at a time"));
 		}
 
 		public void DrawChat()
@@ -198,6 +219,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("ShowInChat_HelpMarker",
+				"show price check results in chat"));
+
 			var useChatColors = _priceCheckPlugin.Configuration.UseChatColors;
 			if (ImGui.Checkbox(
 				Loc.Localize("UseChatColors", "Use Chat Colors") + "###PriceCheck_UseChatColors_Checkbox",
@@ -207,6 +231,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("UseChatColors_HelpMarker",
+				"use different colors for chat based on result"));
+
 			var useItemLinks = _priceCheckPlugin.Configuration.UseItemLinks;
 			if (ImGui.Checkbox(
 				Loc.Localize("UseItemLinks", "Use Item Links") + "###PriceCheck_UseItemLinks_Checkbox",
@@ -215,6 +242,9 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.UseItemLinks = useItemLinks;
 				_priceCheckPlugin.SaveConfig();
 			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("UseItemLinks_HelpMarker",
+				"use item links in chat results"));
 		}
 
 		public void DrawKeybind()
@@ -226,6 +256,9 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.KeybindEnabled = keybindEnabled;
 				_priceCheckPlugin.SaveConfig();
 			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("KeybindEnabled_HelpMarker",
+				"toggle if keybind is used or just hover"));
 
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("ModifierKeybind", "Modifier"));
@@ -239,6 +272,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("ModifierKeybind_HelpMarker",
+				"set your modifier key (e.g. shift)"));
+
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("PrimaryKeybind", "Primary"));
 			var primaryKey = PrimaryKey.EnumToIndex(_priceCheckPlugin.Configuration.PrimaryKey);
@@ -248,6 +284,9 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.PrimaryKey = PrimaryKey.IndexToEnum(primaryKey);
 				_priceCheckPlugin.SaveConfig();
 			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("PrimaryKeybind_HelpMarker",
+				"set your primary key (e.g. None, Z)"));
 		}
 
 		public void DrawThresholds()
@@ -260,6 +299,9 @@ namespace PriceCheck
 				_priceCheckPlugin.SaveConfig();
 			}
 
+			CustomWidgets.HelpMarker(Loc.Localize("MinimumPrice_HelpMarker",
+				"set minimum price at which actual average will be displayed"));
+
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("MaxUploadDays", "Max Upload Days"));
 			var maxUploadDays = _priceCheckPlugin.Configuration.MaxUploadDays;
@@ -268,6 +310,9 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.MaxUploadDays = maxUploadDays;
 				_priceCheckPlugin.SaveConfig();
 			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("MaxUploadDays_HelpMarker",
+				"set maximum age to avoid using old data"));
 		}
 
 		public void DrawOther()

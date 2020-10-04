@@ -16,15 +16,18 @@ Dalamud plugin to quickly check item prices. To check prices, hold your keybind 
 ### General
 **Plugin Enabled** - toggle the plugin off/on.<br>
 **Show Prices** - show price or just show advice.<br>
+**Hover Delay** - delay (in seconds) before processing after hovering.<br>
 **Language** - use default or override plugin ui language.<br>
 
 ### Overlay
 **Show Overlay** - show price check results in overlay window.<br>
+**Use Overlay Colors** - use different colors for overlay based on result.<br>
 **Max Items** - set max number of items in overlay at a time.<br>
 
 ### Chat
 **Show in Chat** - show price check results in chat.<br>
 **Use Chat Colors** - use different colors for chat based on result.<br>
+**Use Item Links** - use item links in chat results.<br>
 
 ### Keybind
 **Use Keybind** - toggle if keybind is used or just hover.<br>
