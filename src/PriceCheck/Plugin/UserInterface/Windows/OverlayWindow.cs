@@ -37,13 +37,13 @@ namespace PriceCheck
 							{
 								if (_priceCheckPlugin.Configuration.UseOverlayColors)
 								{
-									ImGui.TextColored(item.Result.OverlayColor(), item.ItemName);
+									ImGui.TextColored(item.Result.OverlayColor(), item.DisplayName);
 									ImGui.NextColumn();
 									ImGui.TextColored(item.Result.OverlayColor(), item.Message);
 								}
 								else
 								{
-									ImGui.Text(item.ItemName);
+									ImGui.Text(item.DisplayName);
 									ImGui.NextColumn();
 									ImGui.Text(item.Message);
 								}
