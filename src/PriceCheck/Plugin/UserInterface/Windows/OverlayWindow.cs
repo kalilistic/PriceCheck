@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Linq;
+using System.Numerics;
 using CheapLoc;
 using ImGuiNET;
 
@@ -29,22 +31,29 @@ namespace PriceCheck
 				}
 				else
 				{
-					var items = _priceCheckPlugin.PriceService.GetItems();
-					if (items != null && items.Count > 0)
+					try
 					{
-						ImGui.Columns(2);
-						foreach (var item in items)
+						var items = _priceCheckPlugin.PriceService.GetItems()?.ToList();
+						if (items != null && items.Count > 0)
 						{
-							ImGui.Text(item.ItemName);
-							ImGui.NextColumn();
-							ImGui.Text(item.Message);
-							ImGui.NextColumn();
-							ImGui.Separator();
+							ImGui.Columns(2);
+							foreach (var item in items)
+							{
+								ImGui.Text(item.ItemName);
+								ImGui.NextColumn();
+								ImGui.Text(item.Message);
+								ImGui.NextColumn();
+								ImGui.Separator();
+							}
+						}
+						else
+						{
+							ImGui.Text(Loc.Localize("WaitingForItems", "Waiting for items."));
 						}
 					}
-					else
+					catch
 					{
-						ImGui.Text(Loc.Localize("WaitingForItems", "Waiting for items."));
+						// ignored
 					}
 				}
 			}
