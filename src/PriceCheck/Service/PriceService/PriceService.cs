@@ -60,8 +60,15 @@ namespace PriceCheck
 
 		internal bool EnrichWithMarketBoardData(PricedItem pricedItem)
 		{
+			var worldId = _priceCheckPlugin.GetLocalPlayerHomeWorld();
+			if (worldId == null)
+			{
+				pricedItem.Result = Result.FailedToGetData;
+				return true;
+			}
+
 			var marketBoard =
-				_universalisClient.GetMarketBoard(_priceCheckPlugin.GetLocalPlayerHomeWorld(), pricedItem.ItemId);
+				_universalisClient.GetMarketBoard(worldId, pricedItem.ItemId);
 			if (marketBoard == null)
 			{
 				pricedItem.Result = Result.FailedToGetData;
