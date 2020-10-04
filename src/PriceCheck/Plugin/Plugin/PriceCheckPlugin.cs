@@ -3,8 +3,6 @@
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CheapLoc;
@@ -18,7 +16,6 @@ namespace PriceCheck
 	public sealed class PriceCheckPlugin : PluginBase, IPriceCheckPlugin
 	{
 		private CancellationTokenSource _hoveredItemCancellationTokenSource;
-		private List<Item> _items;
 		private DalamudPluginInterface _pluginInterface;
 		private PluginUI _pluginUI;
 		private UniversalisClient _universalisClient;
@@ -36,10 +33,6 @@ namespace PriceCheck
 				// services
 				_universalisClient = new UniversalisClient(this);
 				PriceService = new PriceService(this, _universalisClient);
-
-				// data
-				_items = PluginInterface.Data.Excel.GetSheet<Item>()
-					.Where(item => item.ItemSearchCategory.Row != 0 && !string.IsNullOrEmpty(item.Name)).ToList();
 
 				// commands
 				SetupCommands();
@@ -75,9 +68,9 @@ namespace PriceCheck
 				"help add translations, you can submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings."));
 		}
 
-		public List<Item> GetItems()
+		public Item GetItemById(uint itemId)
 		{
-			return _items;
+			return PluginInterface.Data.Excel.GetSheet<Item>().GetRow(itemId);
 		}
 
 		public void PrintItemMessage(PricedItem pricedItem)

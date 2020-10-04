@@ -108,9 +108,9 @@ namespace PriceCheck.Mock
 			throw new NotImplementedException();
 		}
 
-		public List<Item> GetItems()
+		public Item GetItemById(uint itemId)
 		{
-			return new List<Item>
+			var items = new List<Item>
 			{
 				new Item
 				{
@@ -125,7 +125,7 @@ namespace PriceCheck.Mock
 					RowId = 2,
 					Name = "Mango",
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
-						null, 0, Language.English),
+						null, 1, Language.English),
 					PriceLow = 90000
 				},
 				new Item
@@ -133,7 +133,7 @@ namespace PriceCheck.Mock
 					RowId = 3,
 					Name = "Strawberry",
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
-						null, 0, Language.English),
+						null, 1, Language.English),
 					PriceLow = 25
 				},
 				new Item
@@ -141,7 +141,7 @@ namespace PriceCheck.Mock
 					RowId = 4,
 					Name = "Blueberry",
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
-						null, 0, Language.English),
+						null, 1, Language.English),
 					PriceLow = 300
 				},
 				new Item
@@ -149,10 +149,11 @@ namespace PriceCheck.Mock
 					RowId = 5,
 					Name = "Clementine",
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
-						null, 0, Language.English),
+						null, 1, Language.English),
 					PriceLow = 300
 				}
 			};
+			return items.Find(item => item.RowId == itemId);
 		}
 
 		public void PrintItemMessage(PricedItem pricedItem)
@@ -267,6 +268,11 @@ namespace PriceCheck.Mock
 		private static void Log(string messageTemplate)
 		{
 			Trace.WriteLine("LOG: " + messageTemplate);
+		}
+
+		protected virtual void OnItemDetected(ulong e)
+		{
+			ItemDetected?.Invoke(this, e);
 		}
 	}
 }

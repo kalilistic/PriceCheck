@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Lumina.Excel.GeneratedSheets;
 
 namespace PriceCheck
@@ -12,7 +11,7 @@ namespace PriceCheck
 		string PluginName { get; }
 		event EventHandler<ulong> ItemDetected;
 		void PrintHelpMessage();
-		List<Item> GetItems();
+		Item GetItemById(uint itemId);
 		void PrintItemMessage(PricedItem pricedItem);
 		bool IsKeyBindPressed();
 		void Dispose();

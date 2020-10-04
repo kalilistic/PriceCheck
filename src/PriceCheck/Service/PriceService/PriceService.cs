@@ -51,8 +51,8 @@ namespace PriceCheck
 
 		internal bool EnrichWithExcelData(PricedItem pricedItem)
 		{
-			var excelItem = _priceCheckPlugin.GetItems().Find(item => item.RowId == pricedItem.ItemId);
-			if (excelItem == null) return true;
+			var excelItem = _priceCheckPlugin.GetItemById(pricedItem.ItemId);
+			if (excelItem == null || excelItem.ItemSearchCategory.Row == 0) return true;
 			pricedItem.ItemName = excelItem.Name;
 			pricedItem.VendorPrice = excelItem.PriceLow;
 			return false;
