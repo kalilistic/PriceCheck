@@ -26,29 +26,27 @@ namespace PriceCheck
 			Task.Run(() =>
 			{
 				_pluginInterface = pluginInterface;
-
-				// config
 				LoadConfig();
-
-				// services
-				_universalisClient = new UniversalisClient(this);
-				PriceService = new PriceService(this, _universalisClient);
-
-				// commands
+				LoadServices();
 				SetupCommands();
-
-				// localization
-				Localization.SetLanguage(Configuration.PluginLanguage);
-
-				// ui
-				_pluginUI = new PluginUI(this);
-				_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
-				_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
-
-				// finalize
+				LoadUI();
 				HandleFreshInstall();
 				PluginInterface.Framework.Gui.HoveredItemChanged += HoveredItemChanged;
 			});
+		}
+
+		public void LoadServices()
+		{
+			_universalisClient = new UniversalisClient(this);
+			PriceService = new PriceService(this, _universalisClient);
+		}
+
+		public void LoadUI()
+		{
+			Localization.SetLanguage(Configuration.PluginLanguage);
+			_pluginUI = new PluginUI(this);
+			_pluginInterface.UiBuilder.OnBuildUi += DrawUI;
+			_pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
 		}
 
 		public IPriceService PriceService { get; set; }
