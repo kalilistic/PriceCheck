@@ -16,6 +16,7 @@ Dalamud plugin to quickly check item prices. To check prices, hold your keybind 
 ### General
 **Plugin Enabled** - toggle the plugin off/on.<br>
 **Show Prices** - show price or just show advice.<br>
+**Show Unmarketable** - toggle whether to process items unmarketable items.<br>
 **Hover Delay** - delay (in seconds) before processing after hovering.<br>
 **Language** - use default or override plugin ui language.<br>
 

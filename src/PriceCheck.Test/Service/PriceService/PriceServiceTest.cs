@@ -63,7 +63,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void EnrichWithMarketBoardData_ValidResponseForHQ_ReturnsFalse()
 		{
-			var pricedItem = new PricedItem {ItemId = 1, IsHQ = true};
+			var pricedItem = new PricedItem {ItemId = 1, IsHQ = true, IsMarketable = true};
 			var result = _priceService.EnrichWithMarketBoardData(pricedItem);
 			Assert.AreEqual(false, result);
 			Assert.AreEqual(1599272449630, pricedItem.LastUpdated);
@@ -73,11 +73,19 @@ namespace PriceCheck.Test
 		[Test]
 		public void EnrichWithMarketBoardData_ValidResponseForNQ_ReturnsFalse()
 		{
-			var pricedItem = new PricedItem {ItemId = 1, IsHQ = false};
+			var pricedItem = new PricedItem {ItemId = 1, IsHQ = false, IsMarketable = true};
 			var result = _priceService.EnrichWithMarketBoardData(pricedItem);
 			Assert.AreEqual(false, result);
 			Assert.AreEqual(1599272449630, pricedItem.LastUpdated);
 			Assert.AreEqual(200, pricedItem.AveragePrice);
+		}
+
+		[Test]
+		public void EnrichWithMarketBoardData_Unmarketable_ReturnsTrue()
+		{
+			var pricedItem = new PricedItem {ItemId = 1, IsMarketable = false};
+			var result = _priceService.EnrichWithMarketBoardData(pricedItem);
+			Assert.AreEqual(true, result);
 		}
 
 		[Test]

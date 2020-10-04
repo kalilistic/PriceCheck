@@ -11,6 +11,7 @@ namespace PriceCheck
 		public static Result NoRecentDataAvailable;
 		public static Result BelowVendor;
 		public static Result BelowMinimum;
+		public static Result Unmarketable;
 		private readonly ushort _chatColor;
 		private readonly string _description;
 		private readonly Vector4 _overlayColor;
@@ -49,6 +50,8 @@ namespace PriceCheck
 				new Vector4(.863f, 0, 0, 1));
 			BelowVendor = new Result(Loc.Localize("BelowVendor", "Sell to vendor"), 25, new Vector4(1f, 1f, .4f, 1f));
 			BelowMinimum = new Result(Loc.Localize("BelowMinimum", "Below minimum price"), 25,
+				new Vector4(1f, 1f, .4f, 1f));
+			Unmarketable = new Result(Loc.Localize("Unmarketable", "Can't sell on marketboard"), 25,
 				new Vector4(1f, 1f, .4f, 1f));
 		}
 	}

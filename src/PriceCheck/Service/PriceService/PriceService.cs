@@ -52,7 +52,19 @@ namespace PriceCheck
 		internal bool EnrichWithExcelData(PricedItem pricedItem)
 		{
 			var excelItem = _priceCheckPlugin.GetItemById(pricedItem.ItemId);
-			if (excelItem == null || excelItem.ItemSearchCategory.Row == 0) return true;
+			if (excelItem == null) return true;
+			if (excelItem.ItemSearchCategory.Row == 0)
+			{
+				if (_priceCheckPlugin.Configuration.ShowUnmarketable)
+					pricedItem.IsMarketable = false;
+				else
+					return true;
+			}
+			else
+			{
+				pricedItem.IsMarketable = true;
+			}
+
 			pricedItem.ItemName = excelItem.Name;
 			pricedItem.VendorPrice = excelItem.PriceLow;
 			return false;
@@ -60,6 +72,12 @@ namespace PriceCheck
 
 		internal bool EnrichWithMarketBoardData(PricedItem pricedItem)
 		{
+			if (!pricedItem.IsMarketable)
+			{
+				pricedItem.Result = Result.Unmarketable;
+				return true;
+			}
+
 			var worldId = _priceCheckPlugin.GetLocalPlayerHomeWorld();
 			if (worldId == null)
 			{

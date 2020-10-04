@@ -142,6 +142,18 @@ namespace PriceCheck
 			CustomWidgets.HelpMarker(Loc.Localize("ShowPrices_HelpMarker",
 				"show price or just show advice"));
 
+			var showUnmarketable = _priceCheckPlugin.Configuration.ShowUnmarketable;
+			if (ImGui.Checkbox(
+				Loc.Localize("ShowUnmarketable", "Show Unmarketable") + "###PriceCheck_ShowUnmarketable_Checkbox",
+				ref showUnmarketable))
+			{
+				_priceCheckPlugin.Configuration.ShowUnmarketable = showUnmarketable;
+				_priceCheckPlugin.SaveConfig();
+			}
+
+			CustomWidgets.HelpMarker(Loc.Localize("ShowUnmarketable_HelpMarker",
+				"toggle whether to show items unmarketable items"));
+
 			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("HoverDelay", "Hover Delay"));
 			var hoverDelay = _priceCheckPlugin.Configuration.HoverDelay;
