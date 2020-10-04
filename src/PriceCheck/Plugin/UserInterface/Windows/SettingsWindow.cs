@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using CheapLoc;
 using ImGuiNET;
 
@@ -339,9 +340,12 @@ namespace PriceCheck
 			ImGui.SameLine(widthOffset);
 			if (ImGui.Button(Loc.Localize("UpdateLoc", "Update Loc") + "###PriceCheck_UpdateLoc_Button",
 				buttonSize))
-				_priceCheckPlugin.UpdateResources();
+				Task.Run(() =>
+				{
+					_priceCheckPlugin.UpdateResources();
+					_priceCheckPlugin.Localization.SetLanguage(_priceCheckPlugin.Configuration.PluginLanguage);
+				});
 		}
-
 
 		private enum Tab
 		{

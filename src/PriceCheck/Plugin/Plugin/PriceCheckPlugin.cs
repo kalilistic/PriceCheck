@@ -26,6 +26,7 @@ namespace PriceCheck
 			Task.Run(() =>
 			{
 				_pluginInterface = pluginInterface;
+				ResourceManager.UpdateResources();
 				LoadConfig();
 				LoadServices();
 				SetupCommands();

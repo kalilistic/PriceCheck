@@ -92,6 +92,7 @@
     <Compile Include="Common\Plugin\IPluginBase.cs" />
     <Compile Include="Common\Plugin\PluginBase.cs" />
     <Compile Include="Common\UserInterface\CustomWidgets.cs" />
+    <Compile Include="Common\WebClient\CustomWebClient.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Common\Model\PrimaryKey.cs" />
     <Compile Include="Common\Model\ModifierKey.cs" />
