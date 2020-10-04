@@ -7,12 +7,18 @@
 
 		// General
 		public bool Enabled { get; set; } = true;
-		public bool ShowOverlay { get; set; } = true;
-		public bool ShowInChat { get; set; } = true;
-		public bool UseChatColors { get; set; } = true;
 		public bool ShowPrices { get; set; } = true;
 		public int HoverDelay { get; set; } = 1;
 		public int PluginLanguage { get; set; } = 0;
+
+		// Overlay
+		public bool ShowOverlay { get; set; } = true;
+		public int MaxItemsInOverlay { get; set; } = 10;
+
+		// Chat
+		public bool ShowInChat { get; set; } = true;
+		public bool UseChatColors { get; set; } = true;
+		public bool UseItemLinks { get; set; } = true;
 
 		// Keybind
 		public bool KeybindEnabled { get; set; } = true;
@@ -22,6 +28,5 @@
 		// Thresholds
 		public int MinPrice { get; set; } = 1000;
 		public int MaxUploadDays { get; set; } = 60;
-		public int MaxItemsInOverlay { get; set; } = 10;
 	}
 }

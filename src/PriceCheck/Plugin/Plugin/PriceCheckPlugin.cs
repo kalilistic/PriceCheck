@@ -85,10 +85,18 @@ namespace PriceCheck
 			var payloadList = BuildMessagePayload();
 			if (Configuration.UseChatColors)
 				payloadList.Add(new UIForegroundPayload(PluginInterface.Data, pricedItem.Result.ColorKey()));
-			payloadList.Add(new ItemPayload(PluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ));
-			payloadList.Add(new TextPayload($"{(char) SeIconChar.LinkMarker}"));
-			payloadList.Add(new TextPayload(" " + pricedItem.DisplayName));
-			payloadList.Add(RawPayload.LinkTerminator);
+			if (Configuration.UseItemLinks)
+			{
+				payloadList.Add(new ItemPayload(PluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ));
+				payloadList.Add(new TextPayload($"{(char) SeIconChar.LinkMarker}"));
+				payloadList.Add(new TextPayload(" " + pricedItem.DisplayName));
+				payloadList.Add(RawPayload.LinkTerminator);
+			}
+			else
+			{
+				payloadList.Add(new TextPayload(pricedItem.DisplayName));
+			}
+
 			payloadList.Add(new TextPayload(" " + GetSeIcon(SeIconChar.ArrowRight) + " " + pricedItem.Message));
 			if (Configuration.UseChatColors)
 				payloadList.Add(new UIForegroundPayload(PluginInterface.Data, 0));

@@ -197,6 +197,15 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.UseChatColors = useChatColors;
 				_priceCheckPlugin.SaveConfig();
 			}
+
+			var useItemLinks = _priceCheckPlugin.Configuration.UseItemLinks;
+			if (ImGui.Checkbox(
+				Loc.Localize("UseItemLinks", "Use Item Links") + "###PriceCheck_UseItemLinks_Checkbox",
+				ref useItemLinks))
+			{
+				_priceCheckPlugin.Configuration.UseItemLinks = useItemLinks;
+				_priceCheckPlugin.SaveConfig();
+			}
 		}
 
 		public void DrawKeybind()
