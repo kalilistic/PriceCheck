@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using Lumina.Data;
 using Lumina.Excel;
 using Lumina.Excel.GeneratedSheets;
+using Lumina.Text;
 
 namespace PriceCheck.Mock
 {
@@ -115,7 +117,7 @@ namespace PriceCheck.Mock
 				new Item
 				{
 					RowId = 1,
-					Name = "Potato",
+					Name = new SeString(Encoding.ASCII.GetBytes("Potato")),
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
 						null, 1, Language.English),
 					PriceLow = 100
@@ -123,7 +125,7 @@ namespace PriceCheck.Mock
 				new Item
 				{
 					RowId = 2,
-					Name = "Mango",
+					Name = new SeString(Encoding.ASCII.GetBytes("Mango")),
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
 						null, 1, Language.English),
 					PriceLow = 90000
@@ -131,7 +133,7 @@ namespace PriceCheck.Mock
 				new Item
 				{
 					RowId = 3,
-					Name = "Strawberry",
+					Name = new SeString(Encoding.ASCII.GetBytes("Strawberry")),
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
 						null, 1, Language.English),
 					PriceLow = 25
@@ -139,7 +141,7 @@ namespace PriceCheck.Mock
 				new Item
 				{
 					RowId = 4,
-					Name = "Blueberry",
+					Name = new SeString(Encoding.ASCII.GetBytes("Blueberry")),
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
 						null, 1, Language.English),
 					PriceLow = 300
@@ -147,7 +149,7 @@ namespace PriceCheck.Mock
 				new Item
 				{
 					RowId = 5,
-					Name = "Clementine",
+					Name = new SeString(Encoding.ASCII.GetBytes("Clementine")),
 					ItemSearchCategory = new LazyRow<ItemSearchCategory>(
 						null, 1, Language.English),
 					PriceLow = 300
