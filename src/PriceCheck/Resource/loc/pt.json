@@ -1,47 +1,47 @@
 {
     "SellOnMarketboard": {
-        "message": "Sell on marketboard",
+        "message": "Vender no mercado",
         "description": "Result.UpdateLanguage"
     },
     "FailedToGetData": {
-        "message": "Failed to get data",
+        "message": "Falha ao obter dados",
         "description": "Result.UpdateLanguage"
     },
     "NoDataAvailable": {
-        "message": "No data available",
+        "message": "Sem dados disponíveis",
         "description": "Result.UpdateLanguage"
     },
     "NoRecentDataAvailable": {
-        "message": "No recent data",
+        "message": "Nenhum dado recente",
         "description": "Result.UpdateLanguage"
     },
     "BelowVendor": {
-        "message": "Sell to vendor",
+        "message": "Vender ao NPC",
         "description": "Result.UpdateLanguage"
     },
     "BelowMinimum": {
-        "message": "Below minimum price",
+        "message": "Preço abaixo do mínimo",
         "description": "Result.UpdateLanguage"
     },
     "Unmarketable": {
-        "message": "Can't sell on marketboard",
+        "message": "Não é possível vender no mercado",
         "description": "Result.UpdateLanguage"
     },
     "HelpMessage": {
         "message":
-            "To check prices, hold your keybind and then hover over an item in your inventory or linked in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, reach out on discord or open an issue on GitHub. If you want to help add translations, you can submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings.",
+            "Para verificar preços, segure sua tecla de atalho e então passe o mouse sobre um item do seu inventário ou linkado no chat. Você pode definir seu atalho (ou desativá-lo) nas configurações do PriceCheck. Os preços são uma média da Universalis e não corresponderão a nenhum anúncio específico que possa achar no mercado. Você pode usar /pcheck para abrir o overlay e /pcheckconfig para abrir as configurações. Se precisar de ajuda, entre em contato no Discord ou abra um issue no GitHub. Se você quiser ajudar a adicionar traduções, você pode enviar atualizações no Crowdin. Links para o GitHub e Crowdin estão disponíveis nas configurações.",
         "description": "PriceCheckPlugin.PrintHelpMessage"
     },
     "InstallThankYou": {
-        "message": "Thank you for installing PriceCheck!",
+        "message": "Obrigado por instalar o PriceCheck!",
         "description": "PriceCheckPlugin.HandleFreshInstall"
     },
     "SettingsWindow": {
-        "message": "PriceCheck Settings",
+        "message": "Configurações do PriceCheck",
         "description": "SettingsWindow.DrawWindow"
     },
     "General": {
-        "message": "General",
+        "message": "Geral",
         "description": "SettingsWindow.DrawTabs"
     },
     "Overlay": {
@@ -53,159 +53,159 @@
         "description": "SettingsWindow.DrawTabs"
     },
     "Keybind": {
-        "message": "Keybind",
+        "message": "Teclas de atalho",
         "description": "SettingsWindow.DrawTabs"
     },
     "Thresholds": {
-        "message": "Thresholds",
+        "message": "Limites",
         "description": "SettingsWindow.DrawTabs"
     },
     "Other": {
-        "message": "Other",
+        "message": "Outros",
         "description": "SettingsWindow.DrawTabs"
     },
     "PluginEnabled": {
-        "message": "Plugin Enabled",
+        "message": "Plugin ativado",
         "description": "SettingsWindow.DrawGeneral"
     },
     "PluginEnabled_HelpMarker": {
-        "message": "toggle the plugin on/off",
+        "message": "ativar/desativar o plugin",
         "description": "SettingsWindow.DrawGeneral"
     },
     "ShowPrices": {
-        "message": "Show Prices",
+        "message": "Mostrar preços",
         "description": "SettingsWindow.DrawGeneral"
     },
     "ShowPrices_HelpMarker": {
-        "message": "show price or just show advice",
+        "message": "mostrar preço ou apenas conselhos",
         "description": "SettingsWindow.DrawGeneral"
     },
     "ShowUnmarketable": {
-        "message": "Show Unmarketable",
+        "message": "Mostrar não comercializáveis",
         "description": "SettingsWindow.DrawGeneral"
     },
     "ShowUnmarketable_HelpMarker": {
-        "message": "toggle whether to show items unmarketable items",
+        "message": "alterna se mostrar itens não comercializáveis",
         "description": "SettingsWindow.DrawGeneral"
     },
     "HoverDelay": {
-        "message": "Hover Delay",
+        "message": "Atraso de seleção",
         "description": "SettingsWindow.DrawGeneral"
     },
     "HoverDelay_HelpMarker": {
-        "message": "delay (in seconds) before processing after hovering",
+        "message": "atraso (em segundos) antes de processar após passar o cursor",
         "description": "SettingsWindow.DrawGeneral"
     },
     "Language": {
-        "message": "Language",
+        "message": "Idioma",
         "description": "SettingsWindow.DrawGeneral"
     },
     "Language_HelpMarker": {
-        "message": "use default or override plugin ui language",
+        "message": "usar padrão ou substituir o idioma do plugin",
         "description": "SettingsWindow.DrawGeneral"
     },
     "ShowOverlay": {
-        "message": "Show Overlay",
+        "message": "Mostrar overlay",
         "description": "SettingsWindow.DrawOverlay"
     },
     "ShowOverlay_HelpMarker": {
-        "message": "show price check results in overlay window",
+        "message": "mostrar resultados da busca de preços na janela de overlay",
         "description": "SettingsWindow.DrawOverlay"
     },
     "UseOverlayColors": {
-        "message": "Use Overlay Colors",
+        "message": "Usar Cores do Overlay",
         "description": "SettingsWindow.DrawOverlay"
     },
     "UseOverlayColors_HelpMarker": {
-        "message": "use different colors for overlay based on result",
+        "message": "usar cores diferentes para overlay com base no resultado",
         "description": "SettingsWindow.DrawOverlay"
     },
     "MaxItems": {
-        "message": "Max Items",
+        "message": "Máximo de Itens",
         "description": "SettingsWindow.DrawOverlay"
     },
     "MaxItems_HelpMarker": {
-        "message": "set max number of items in overlay at a time",
+        "message": "define o número máximo de itens simultâneos no overlay",
         "description": "SettingsWindow.DrawOverlay"
     },
     "ShowInChat": {
-        "message": "Show in Chat",
+        "message": "Mostrar no chat",
         "description": "SettingsWindow.DrawChat"
     },
     "ShowInChat_HelpMarker": {
-        "message": "show price check results in chat",
+        "message": "mostrar resultados da busca de preços no chat",
         "description": "SettingsWindow.DrawChat"
     },
     "UseChatColors": {
-        "message": "Use Chat Colors",
+        "message": "Usar Cores do Chat",
         "description": "SettingsWindow.DrawChat"
     },
     "UseChatColors_HelpMarker": {
-        "message": "use different colors for chat based on result",
+        "message": "usar cores diferentes no chat dependendo do resultado",
         "description": "SettingsWindow.DrawChat"
     },
     "UseItemLinks": {
-        "message": "Use Item Links",
+        "message": "Usar Links de Itens",
         "description": "SettingsWindow.DrawChat"
     },
     "UseItemLinks_HelpMarker": {
-        "message": "use item links in chat results",
+        "message": "usar links de itens nos resultados no chat",
         "description": "SettingsWindow.DrawChat"
     },
     "KeybindEnabled": {
-        "message": "Use Keybind",
+        "message": "Usar Teclas de Atalho",
         "description": "SettingsWindow.DrawKeybind"
     },
     "KeybindEnabled_HelpMarker": {
-        "message": "toggle if keybind is used or just hover",
+        "message": "alternar uso do atalho ou apenar passe do mouse",
         "description": "SettingsWindow.DrawKeybind"
     },
     "ModifierKeybind": {
-        "message": "Modifier",
+        "message": "Modificador",
         "description": "SettingsWindow.DrawKeybind"
     },
     "ModifierKeybind_HelpMarker": {
-        "message": "set your modifier key (e.g. shift)",
+        "message": "definir tecla modificadora (por exemplo, shift)",
         "description": "SettingsWindow.DrawKeybind"
     },
     "PrimaryKeybind": {
-        "message": "Primary",
+        "message": "Principal",
         "description": "SettingsWindow.DrawKeybind"
     },
     "PrimaryKeybind_HelpMarker": {
-        "message": "set your primary key (e.g. None, Z)",
+        "message": "definir tecla principal (por exemplo, Nenhuma, Z)",
         "description": "SettingsWindow.DrawKeybind"
     },
     "MinimumPrice": {
-        "message": "Minimum Price",
+        "message": "Preço Mínimo",
         "description": "SettingsWindow.DrawThresholds"
     },
     "MinimumPrice_HelpMarker": {
-        "message": "set minimum price at which actual average will be displayed",
+        "message": "definir preço mínimo no qual a média real será mostrada",
         "description": "SettingsWindow.DrawThresholds"
     },
     "MaxUploadDays": {
-        "message": "Max Upload Days",
+        "message": "Máximo de Dias de Upload",
         "description": "SettingsWindow.DrawThresholds"
     },
     "MaxUploadDays_HelpMarker": {
-        "message": "set maximum age to avoid using old data",
+        "message": "definir idade máxima para evitar uso de dados antigos",
         "description": "SettingsWindow.DrawThresholds"
     },
     "OpenGithub": {
-        "message": "Open Github",
+        "message": "Abrir GitHub",
         "description": "SettingsWindow.DrawOther"
     },
     "PrintHelp": {
-        "message": "Print Help",
+        "message": "Mostrar Ajuda",
         "description": "SettingsWindow.DrawOther"
     },
     "ImproveTranslate": {
-        "message": "Improve Translations",
+        "message": "Melhorar Traduções",
         "description": "SettingsWindow.DrawOther"
     },
     "UpdateLoc": {
-        "message": "Update Loc",
+        "message": "Atualizar Loc",
         "description": "SettingsWindow.DrawOther"
     },
     "OverlayWindow": {
@@ -213,11 +213,11 @@
         "description": "OverlayWindow.DrawWindow"
     },
     "PluginDisabled": {
-        "message": "PriceCheckPlugin is disabled.",
+        "message": "PriceCheckPlugin está desativado.",
         "description": "OverlayWindow.DrawWindow"
     },
     "WaitingForItems": {
-        "message": "Waiting for items.",
+        "message": "Aguardando itens.",
         "description": "OverlayWindow.DrawWindow"
     }
 }
