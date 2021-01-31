@@ -109,6 +109,7 @@
     <Compile Include="Common\WebClient\CustomWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Model\PriceMode.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Common\Model\PrimaryKey.cs" />
     <Compile Include="Common\Model\ModifierKey.cs" />

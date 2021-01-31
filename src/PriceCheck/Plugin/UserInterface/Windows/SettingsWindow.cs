@@ -171,6 +171,19 @@ namespace PriceCheck
 			}
 
 			ImGui.Spacing();
+			ImGui.Text(Loc.Localize("PriceMode", "Price Mode"));
+			CustomWidgets.HelpMarker(Loc.Localize("PriceMode_HelpMarker",
+				"select price calculation to use"));
+			var priceMode = _priceCheckPlugin.Configuration.PriceMode;
+			if (ImGui.Combo("###PriceCheck_PriceMode_Combo", ref priceMode,
+				PriceMode.PriceModeNames.ToArray(),
+				PriceMode.PriceModeNames.Count))
+			{
+				_priceCheckPlugin.Configuration.PriceMode = priceMode;
+				_priceCheckPlugin.SaveConfig();
+			}
+
+			ImGui.Spacing();
 			ImGui.Text(Loc.Localize("Language", "Language"));
 			CustomWidgets.HelpMarker(Loc.Localize("Language_HelpMarker",
 				"use default or override plugin ui language"));

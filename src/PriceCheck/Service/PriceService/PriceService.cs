@@ -94,18 +94,27 @@ namespace PriceCheck
 			}
 
 			pricedItem.LastUpdated = marketBoard.LastUploadTime;
-			var averagePrice = pricedItem.IsHQ ? marketBoard.AveragePriceHQ : marketBoard.AveragePriceNQ;
-			if (averagePrice == null)
-				averagePrice = 0;
+
+			double? marketPrice = null;
+			if (_priceCheckPlugin.Configuration.PriceMode == PriceMode.HistoricalAverage.Index)
+			{
+				marketPrice = pricedItem.IsHQ ? marketBoard.AveragePriceHQ : marketBoard.AveragePriceNQ;
+			}
+			else if (_priceCheckPlugin.Configuration.PriceMode == PriceMode.CurrentAverage.Index)
+			{
+				marketPrice = pricedItem.IsHQ ? marketBoard.CurrentAveragePriceHQ : marketBoard.CurrentAveragePriceNQ;
+			}
+			if (marketPrice == null)
+				marketPrice = 0;
 			else
-				averagePrice = Math.Round((double) averagePrice);
-			pricedItem.AveragePrice = (uint) averagePrice;
+				marketPrice = Math.Round((double) marketPrice);
+			pricedItem.MarketPrice = (uint) marketPrice;
 			return false;
 		}
 
 		internal bool ValidateMarketBoardData(PricedItem pricedItem)
 		{
-			if (pricedItem.LastUpdated != 0 && pricedItem.AveragePrice != 0) return false;
+			if (pricedItem.LastUpdated != 0 && pricedItem.MarketPrice != 0) return false;
 			pricedItem.Result = Result.NoDataAvailable;
 			return true;
 		}
@@ -122,14 +131,14 @@ namespace PriceCheck
 
 		internal bool CompareVendorPrice(PricedItem pricedItem)
 		{
-			if (pricedItem.VendorPrice < pricedItem.AveragePrice) return false;
+			if (pricedItem.VendorPrice < pricedItem.MarketPrice) return false;
 			pricedItem.Result = Result.BelowVendor;
 			return true;
 		}
 
 		internal bool CompareMinPrice(PricedItem pricedItem)
 		{
-			if (pricedItem.AveragePrice >= _priceCheckPlugin.Configuration.MinPrice)
+			if (pricedItem.MarketPrice >= _priceCheckPlugin.Configuration.MinPrice)
 				return false;
 			pricedItem.Result = Result.BelowMinimum;
 			return true;
@@ -177,7 +186,7 @@ namespace PriceCheck
 			{
 				pricedItem.Result = Result.Success;
 				pricedItem.Message = _priceCheckPlugin.Configuration.ShowPrices
-					? pricedItem.AveragePrice.ToString("N0", CultureInfo.InvariantCulture)
+					? pricedItem.MarketPrice.ToString("N0", CultureInfo.InvariantCulture)
 					: pricedItem.Result.ToString();
 			}
 			else

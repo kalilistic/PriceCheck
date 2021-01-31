@@ -12,19 +12,19 @@ namespace PriceCheck.Mock
 				new PricedItem
 				{
 					ItemName = "Potato",
-					AveragePrice = 1000,
+					MarketPrice = 1000,
 					Message = "1000"
 				},
 				new PricedItem
 				{
 					ItemName = "Carrot",
-					AveragePrice = 200,
+					MarketPrice = 200,
 					Message = "200"
 				},
 				new PricedItem
 				{
 					ItemName = "Orange",
-					AveragePrice = 900,
+					MarketPrice = 900,
 					Message = "900"
 				}
 			};

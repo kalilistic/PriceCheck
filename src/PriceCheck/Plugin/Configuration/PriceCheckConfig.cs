@@ -7,6 +7,7 @@
 
 		// General
 		public bool Enabled { get; set; } = true;
+		public int PriceMode { get; set; } = 0;
 		public bool ShowPrices { get; set; } = true;
 		public bool ShowUnmarketable { get; set; } = false;
 		public int HoverDelay { get; set; } = 1;

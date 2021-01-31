@@ -73,7 +73,9 @@ namespace PriceCheck
 					LastCheckTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
 					LastUploadTime = json.lastUploadTime?.Value,
 					AveragePriceNQ = json.averagePriceNQ?.Value,
-					AveragePriceHQ = json.averagePriceHQ?.Value
+					AveragePriceHQ = json.averagePriceHQ?.Value,
+					CurrentAveragePriceNQ = json.currentAveragePriceNQ?.Value,
+					CurrentAveragePriceHQ = json.currentAveragePriceHQ?.Value,
 				};
 				return marketBoardData;
 			}

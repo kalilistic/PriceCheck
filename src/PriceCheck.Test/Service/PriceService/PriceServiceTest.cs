@@ -67,7 +67,7 @@ namespace PriceCheck.Test
 			var result = _priceService.EnrichWithMarketBoardData(pricedItem);
 			Assert.AreEqual(false, result);
 			Assert.AreEqual(1599272449630, pricedItem.LastUpdated);
-			Assert.AreEqual(300, pricedItem.AveragePrice);
+			Assert.AreEqual(300, pricedItem.MarketPrice);
 		}
 
 		[Test]
@@ -77,7 +77,7 @@ namespace PriceCheck.Test
 			var result = _priceService.EnrichWithMarketBoardData(pricedItem);
 			Assert.AreEqual(false, result);
 			Assert.AreEqual(1599272449630, pricedItem.LastUpdated);
-			Assert.AreEqual(200, pricedItem.AveragePrice);
+			Assert.AreEqual(200, pricedItem.MarketPrice);
 		}
 
 		[Test]
@@ -99,7 +99,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void ValidateMarketBoardData_Valid_ReturnsFalse()
 		{
-			var pricedItem = new PricedItem {ItemId = 1, LastUpdated = 1, AveragePrice = 1};
+			var pricedItem = new PricedItem {ItemId = 1, LastUpdated = 1, MarketPrice = 1};
 			var result = _priceService.ValidateMarketBoardData(pricedItem);
 			Assert.AreEqual(false, result);
 		}
@@ -141,7 +141,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void CompareVendorPrice_IsCheaperOnVendor_ReturnsFalse()
 		{
-			var pricedItem = new PricedItem {AveragePrice = 100, VendorPrice = 99};
+			var pricedItem = new PricedItem {MarketPrice = 100, VendorPrice = 99};
 			var result = _priceService.CompareVendorPrice(pricedItem);
 			Assert.AreEqual(false, result);
 		}
@@ -149,7 +149,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void CompareVendorPrice_IsHigherOnVendor_ReturnsTrue()
 		{
-			var pricedItem = new PricedItem {AveragePrice = 99, VendorPrice = 100};
+			var pricedItem = new PricedItem {MarketPrice = 99, VendorPrice = 100};
 			var result = _priceService.CompareVendorPrice(pricedItem);
 			Assert.AreEqual(true, result);
 		}
@@ -157,7 +157,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void CompareVendorPrice_SameOnVendor_ReturnsTrue()
 		{
-			var pricedItem = new PricedItem {AveragePrice = 100, VendorPrice = 100};
+			var pricedItem = new PricedItem {MarketPrice = 100, VendorPrice = 100};
 			var result = _priceService.CompareVendorPrice(pricedItem);
 			Assert.AreEqual(true, result);
 		}
@@ -165,7 +165,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void CompareMinPrice_BelowMin_ReturnsTrue()
 		{
-			var pricedItem = new PricedItem {AveragePrice = 100};
+			var pricedItem = new PricedItem {MarketPrice = 100};
 			_priceCheckPlugin.Configuration.MinPrice = 101;
 			var result = _priceService.CompareMinPrice(pricedItem);
 			Assert.AreEqual(true, result);
@@ -174,7 +174,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void CompareMinPrice_MatchMin_ReturnsFalse()
 		{
-			var pricedItem = new PricedItem {AveragePrice = 100};
+			var pricedItem = new PricedItem {MarketPrice = 100};
 			_priceCheckPlugin.Configuration.MinPrice = 100;
 			var result = _priceService.CompareMinPrice(pricedItem);
 			Assert.AreEqual(false, result);
@@ -183,7 +183,7 @@ namespace PriceCheck.Test
 		[Test]
 		public void CompareMinPrice_AboveMin_ReturnsFalse()
 		{
-			var pricedItem = new PricedItem {AveragePrice = 101};
+			var pricedItem = new PricedItem {MarketPrice = 101};
 			_priceCheckPlugin.Configuration.MinPrice = 100;
 			var result = _priceService.CompareMinPrice(pricedItem);
 			Assert.AreEqual(false, result);
