@@ -21,7 +21,6 @@ namespace PriceCheck
 		void TogglePriceCheck(string command, string args);
 		void ToggleConfig(string command, string args);
 		void ExportLocalizable(string command, string args);
-		void SetLanguage(PluginLanguage language);
 		void PrintMessage(string message);
 		string GetSeIcon(SeIconChar seIconChar);
 		uint? GetLocalPlayerHomeWorld();

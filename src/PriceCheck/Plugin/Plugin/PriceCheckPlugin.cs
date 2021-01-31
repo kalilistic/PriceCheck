@@ -32,6 +32,7 @@ namespace PriceCheck
 				SetupCommands();
 				LoadUI();
 				HandleFreshInstall();
+				Result.UpdateLanguage();
 				PluginInterface.Framework.Gui.HoveredItemChanged += HoveredItemChanged;
 			});
 		}

@@ -39,6 +39,21 @@ namespace PriceCheck.Mock
 			throw new NotImplementedException();
 		}
 
+		public string PluginVersion()
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool IsLoggedIn()
+		{
+			throw new NotImplementedException();
+		}
+
+		public double ConvertHeightToInches(int raceId, int tribeId, int genderId, int sliderHeight)
+		{
+			throw new NotImplementedException();
+		}
+
 		void IPluginBase.PrintMessage(string message)
 		{
 			throw new NotImplementedException();
@@ -90,11 +105,6 @@ namespace PriceCheck.Mock
 		}
 
 		void IPluginBase.SaveConfig(dynamic config)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPluginBase.SetLanguage(PluginLanguage language)
 		{
 			throw new NotImplementedException();
 		}
@@ -198,11 +208,6 @@ namespace PriceCheck.Mock
 		}
 
 		public void ExportLocalizable(string command, string args)
-		{
-			throw new NotImplementedException();
-		}
-
-		void IPriceCheckPlugin.SetLanguage(PluginLanguage language)
 		{
 			throw new NotImplementedException();
 		}

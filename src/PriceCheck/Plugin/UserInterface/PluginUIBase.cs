@@ -44,8 +44,8 @@ namespace PriceCheck
 
 		public void Draw()
 		{
-			OverlayWindow.DrawWindow();
-			SettingsWindow.DrawWindow();
+			OverlayWindow.DrawView();
+			SettingsWindow.DrawView();
 		}
 	}
 }

@@ -23,51 +23,55 @@ namespace PriceCheck
 
 		public event EventHandler<bool> OverlayVisibilityUpdated;
 
-		public void DrawWindow()
+		public override void DrawView()
 		{
 			if (!IsVisible) return;
+			var isVisible = IsVisible;
 			_uiScale = ImGui.GetIO().FontGlobalScale;
 			ImGui.SetNextWindowSize(new Vector2(350 * _uiScale, 210 * _uiScale), ImGuiCond.FirstUseEver);
-			ImGui.Begin(Loc.Localize("SettingsWindow", "PriceCheck Settings") + "###PriceCheck_Settings_Window",
-				ref IsVisible,
-				ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoScrollbar);
-
-			DrawTabs();
-			switch (_currentTab)
+			if (ImGui.Begin(Loc.Localize("SettingsWindow", "PriceCheck Settings") + "###PriceCheck_Settings_Window",
+				ref isVisible,
+				ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoScrollbar))
 			{
-				case Tab.General:
+				IsVisible = isVisible;
+				DrawTabs();
+				switch (_currentTab)
 				{
-					DrawGeneral();
-					break;
+					case Tab.General:
+					{
+						DrawGeneral();
+						break;
+					}
+					case Tab.Overlay:
+					{
+						DrawOverlay();
+						break;
+					}
+					case Tab.Chat:
+					{
+						DrawChat();
+						break;
+					}
+					case Tab.Keybind:
+					{
+						DrawKeybind();
+						break;
+					}
+					case Tab.Thresholds:
+					{
+						DrawThresholds();
+						break;
+					}
+					case Tab.Other:
+					{
+						DrawOther();
+						break;
+					}
+					default:
+						DrawGeneral();
+						break;
 				}
-				case Tab.Overlay:
-				{
-					DrawOverlay();
-					break;
-				}
-				case Tab.Chat:
-				{
-					DrawChat();
-					break;
-				}
-				case Tab.Keybind:
-				{
-					DrawKeybind();
-					break;
-				}
-				case Tab.Thresholds:
-				{
-					DrawThresholds();
-					break;
-				}
-				case Tab.Other:
-				{
-					DrawOther();
-					break;
-				}
-				default:
-					DrawGeneral();
-					break;
+
 			}
 
 			ImGui.End();
@@ -178,6 +182,7 @@ namespace PriceCheck
 				_priceCheckPlugin.Configuration.PluginLanguage = pluginLanguage;
 				_priceCheckPlugin.SaveConfig();
 				_priceCheckPlugin.Localization.SetLanguage(pluginLanguage);
+				Result.UpdateLanguage();
 			}
 		}
 

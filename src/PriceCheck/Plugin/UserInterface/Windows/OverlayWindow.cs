@@ -15,15 +15,17 @@ namespace PriceCheck
 			_priceCheckPlugin = priceCheckPlugin;
 		}
 
-		public void DrawWindow()
+		public override void DrawView()
 		{
 			if (!IsVisible) return;
+			var isVisible = IsVisible;
 			_uiScale = ImGui.GetIO().FontGlobalScale;
 			ImGui.SetNextWindowSize(new Vector2(300 * _uiScale, 150 * _uiScale), ImGuiCond.FirstUseEver);
 			if (ImGui.Begin(Loc.Localize("OverlayWindow", "PriceCheck Overlay") + "###PriceCheck_Overlay_Window",
-				ref IsVisible,
+				ref isVisible,
 				ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse))
 			{
+				IsVisible = isVisible;
 				if (!_priceCheckPlugin.Configuration.Enabled)
 					ImGui.Text(Loc.Localize("PluginDisabled", "PriceCheckPlugin is disabled."));
 				else
