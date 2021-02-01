@@ -25,6 +25,7 @@ namespace PriceCheck
 
 		public override void DrawView()
 		{
+			if (!_priceCheckPlugin.IsLoggedIn()) return;
 			if (!IsVisible) return;
 			var isVisible = IsVisible;
 			_uiScale = ImGui.GetIO().FontGlobalScale;
