@@ -321,9 +321,9 @@ namespace PriceCheck
 			CustomWidgets.HelpMarker(Loc.Localize("MinimumPrice_HelpMarker",
 				"set minimum price at which actual average will be displayed"));
 			var minPrice = _priceCheckPlugin.Configuration.MinPrice;
-			if (ImGui.SliderInt("###PriceCheck_MinPrice_Slider", ref minPrice, 0, 20000))
+			if (ImGui.InputInt("###PriceCheck_MinPrice_Slider", ref minPrice, 500, 500))
 			{
-				_priceCheckPlugin.Configuration.MinPrice = minPrice;
+				_priceCheckPlugin.Configuration.MinPrice = Math.Abs(minPrice);
 				_priceCheckPlugin.SaveConfig();
 			}
 
@@ -332,9 +332,9 @@ namespace PriceCheck
 			CustomWidgets.HelpMarker(Loc.Localize("MaxUploadDays_HelpMarker",
 				"set maximum age to avoid using old data"));
 			var maxUploadDays = _priceCheckPlugin.Configuration.MaxUploadDays;
-			if (ImGui.SliderInt("###PriceCheck_MaxUploadDays_Slider", ref maxUploadDays, 0, 365))
+			if (ImGui.InputInt("###PriceCheck_MaxUploadDays_Slider", ref maxUploadDays, 5,5))
 			{
-				_priceCheckPlugin.Configuration.MaxUploadDays = maxUploadDays;
+				_priceCheckPlugin.Configuration.MaxUploadDays = Math.Abs(maxUploadDays);
 				_priceCheckPlugin.SaveConfig();
 			}
 		}
