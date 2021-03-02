@@ -1,6 +1,6 @@
 ﻿namespace PriceCheck.Mock
 {
-	public class MockConfig : PriceCheckConfig
-	{
-	}
+    public class MockConfig : PriceCheckConfig
+    {
+    }
 }
