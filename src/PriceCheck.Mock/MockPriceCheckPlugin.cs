@@ -69,6 +69,16 @@ namespace PriceCheck.Mock
 			return 63;
 		}
 
+		public void LogVerbose(string messageTemplate)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void LogDebug(string messageTemplate)
+		{
+			throw new NotImplementedException();
+		}
+
 		void IPluginBase.LogInfo(string messageTemplate)
 		{
 			Log(messageTemplate);
