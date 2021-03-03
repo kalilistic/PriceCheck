@@ -28,8 +28,7 @@
         "description": "Result.UpdateLanguage"
     },
     "HelpMessage": {
-        "message":
-            "Per controllare i prezzi, tieni premuta la scorciatoia e poi passa sopra un oggetto nel tuo inventario o in chat. È possibile la scorciatoia (o disattivarla) nelle impostazioni di PriceCheck. I prezzi sono la media in Universalis e non corrisponderanno ad alcun elenco specifico visibile dalla market board. È possibile usare il comando /pcheck per aprire l'overlay e /pcheckconfig per aprire le impostazioni. Se hai bisogno di aiuto, segnalalo su Discord o apri un ticket su GitHub. Se vuoi aiutare ad aggiungere traduzioni, puoi contribuire revisionandole su Crowdin. I link a GitHub e Crowdin sono disponibili nelle impostazioni.",
+        "message": "Per controllare i prezzi, tieni premuta la scorciatoia e poi passa sopra un oggetto nel tuo inventario o in chat. È possibile la scorciatoia (o disattivarla) nelle impostazioni di PriceCheck. I prezzi sono la media in Universalis e non corrisponderanno ad alcun elenco specifico visibile dalla market board. È possibile usare il comando /pcheck per aprire l'overlay e /pcheckconfig per aprire le impostazioni. Se hai bisogno di aiuto, segnalalo su Discord o apri un ticket su GitHub. Se vuoi aiutare ad aggiungere traduzioni, puoi contribuire revisionandole su Crowdin. I link a GitHub e Crowdin sono disponibili nelle impostazioni.",
         "description": "PriceCheckPlugin.PrintHelpMessage"
     },
     "InstallThankYou": {
@@ -38,7 +37,7 @@
     },
     "SettingsWindow": {
         "message": "Impostazioni PriceCheck",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawView"
     },
     "General": {
         "message": "Generale",
@@ -94,6 +93,14 @@
     },
     "HoverDelay_HelpMarker": {
         "message": "ritardo (in secondi) prima di elaborare dopo il passaggio del puntatore",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode": {
+        "message": "Modalità Prezzo",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode_HelpMarker": {
+        "message": "seleziona il calcolo del prezzo da usare",
         "description": "SettingsWindow.DrawGeneral"
     },
     "Language": {
@@ -210,14 +217,14 @@
     },
     "OverlayWindow": {
         "message": "PriceCheck Overlay",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     },
     "PluginDisabled": {
         "message": "PriceCheckPlugin è disabilitato.",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     },
     "WaitingForItems": {
         "message": "In attesa di oggetti.",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     }
 }
