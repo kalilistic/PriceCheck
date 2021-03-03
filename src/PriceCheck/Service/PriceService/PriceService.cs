@@ -100,6 +100,10 @@ namespace PriceCheck
                 marketPrice = pricedItem.IsHQ ? marketBoard.AveragePriceHQ : marketBoard.AveragePriceNQ;
             else if (_priceCheckPlugin.Configuration.PriceMode == PriceMode.CurrentAverage.Index)
                 marketPrice = pricedItem.IsHQ ? marketBoard.CurrentAveragePriceHQ : marketBoard.CurrentAveragePriceNQ;
+            else if (_priceCheckPlugin.Configuration.PriceMode == PriceMode.MinimumPrice.Index)
+                marketPrice = pricedItem.IsHQ ? marketBoard.MinimumPriceHQ : marketBoard.MinimumPriceNQ;
+            else if (_priceCheckPlugin.Configuration.PriceMode == PriceMode.MaximumPrice.Index)
+                marketPrice = pricedItem.IsHQ ? marketBoard.MaximumPriceHQ : marketBoard.MaximumPriceNQ;
             if (marketPrice == null)
                 marketPrice = 0;
             else

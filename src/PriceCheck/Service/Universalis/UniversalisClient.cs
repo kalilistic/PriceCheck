@@ -75,7 +75,11 @@ namespace PriceCheck
                     AveragePriceNQ = json.averagePriceNQ?.Value,
                     AveragePriceHQ = json.averagePriceHQ?.Value,
                     CurrentAveragePriceNQ = json.currentAveragePriceNQ?.Value,
-                    CurrentAveragePriceHQ = json.currentAveragePriceHQ?.Value
+                    CurrentAveragePriceHQ = json.currentAveragePriceHQ?.Value,
+                    MinimumPriceNQ = json.minPriceNQ?.Value,
+                    MinimumPriceHQ = json.minPriceHQ?.Value,
+                    MaximumPriceNQ = json.maxPriceNQ?.Value,
+                    MaximumPriceHQ = json.maxPriceHQ?.Value
                 };
                 return marketBoardData;
             }

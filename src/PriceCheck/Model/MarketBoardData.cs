@@ -8,5 +8,9 @@
         public double? AveragePriceHQ { get; set; }
         public double? CurrentAveragePriceNQ { get; set; }
         public double? CurrentAveragePriceHQ { get; set; }
+        public double? MinimumPriceNQ { get; set; }
+        public double? MinimumPriceHQ { get; set; }
+        public double? MaximumPriceNQ { get; set; }
+        public double? MaximumPriceHQ { get; set; }
     }
 }

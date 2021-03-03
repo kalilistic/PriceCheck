@@ -10,6 +10,8 @@ namespace PriceCheck
 
         public static readonly PriceMode HistoricalAverage = new PriceMode(0, "Historical Average");
         public static readonly PriceMode CurrentAverage = new PriceMode(1, "Current Average");
+        public static readonly PriceMode MinimumPrice = new PriceMode(2, "Historical Minimum");
+        public static readonly PriceMode MaximumPrice = new PriceMode(3, "Historical Maximum");
 
         public PriceMode()
         {
