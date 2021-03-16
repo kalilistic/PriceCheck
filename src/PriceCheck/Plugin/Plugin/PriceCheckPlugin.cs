@@ -192,17 +192,17 @@ namespace PriceCheck
                 if (Configuration.RestrictInCombat && InCombat()) return;
                 if (Configuration.RestrictInContent && InContent()) return;
 
-                if (itemId == 0)
-                {
-                    _hoveredItemCancellationTokenSource = null;
-                    return;
-                }
-
                 if (_hoveredItemCancellationTokenSource != null)
                 {
                     if (!_hoveredItemCancellationTokenSource.IsCancellationRequested)
                         _hoveredItemCancellationTokenSource.Cancel();
                     _hoveredItemCancellationTokenSource.Dispose();
+                }
+
+                if (itemId == 0)
+                {
+                    _hoveredItemCancellationTokenSource = null;
+                    return;
                 }
 
                 _hoveredItemCancellationTokenSource = new CancellationTokenSource(Configuration.RequestTimeout * 2);
