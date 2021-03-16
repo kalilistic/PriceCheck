@@ -1,6 +1,6 @@
 {
     "Author": "kalilistic",
-    "Name": "PriceCheck",
+    "Name": "<%name%>",
     "Description": "Quickly price check your items.",
     "InternalName": "PriceCheck",
     "AssemblyVersion": "<%version%>",
