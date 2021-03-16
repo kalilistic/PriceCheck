@@ -166,6 +166,21 @@ namespace PriceCheck
             _pluginInterface.UiBuilder.OnOpenConfigUi += (sender, args) => DrawConfigUI();
         }
 
+        private bool InContent()
+        {
+            try
+            {
+                var territoryTypeId = GetTerritoryType();
+                if (territoryTypeId == 0) return false;
+                var contentId = GetContentId(territoryTypeId);
+                return contentId != 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void HoveredItemChanged(object sender, ulong itemId)
         {
             try
@@ -174,6 +189,8 @@ namespace PriceCheck
                 if (!PluginInterface.Data.IsDataReady) return;
                 if (PluginInterface?.ClientState?.LocalPlayer?.HomeWorld == null) return;
                 if (!IsKeyBindPressed()) return;
+                if (Configuration.RestrictInCombat && InCombat()) return;
+                if (Configuration.RestrictInContent && InContent()) return;
 
                 if (itemId == 0)
                 {
@@ -210,6 +227,8 @@ namespace PriceCheck
             PrintMessage(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
             PrintHelpMessage();
             Configuration.FreshInstall = false;
+            Configuration.RestrictInCombat = true;
+            Configuration.RestrictInContent = true;
             SaveConfig();
             _pluginUI.SettingsWindow.IsVisible = true;
         }

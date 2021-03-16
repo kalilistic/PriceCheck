@@ -29,7 +29,7 @@ namespace PriceCheck
             if (!IsVisible) return;
             var isVisible = IsVisible;
             _uiScale = ImGui.GetIO().FontGlobalScale;
-            ImGui.SetNextWindowSize(new Vector2(350 * _uiScale, 210 * _uiScale), ImGuiCond.FirstUseEver);
+            ImGui.SetNextWindowSize(new Vector2(400 * _uiScale, 300 * _uiScale), ImGuiCond.Appearing);
             if (ImGui.Begin(Loc.Localize("SettingsWindow", "PriceCheck Settings") + "###PriceCheck_Settings_Window",
                 ref isVisible,
                 ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoScrollbar))
@@ -56,6 +56,11 @@ namespace PriceCheck
                     case Tab.Keybind:
                     {
                         DrawKeybind();
+                        break;
+                    }
+                    case Tab.Filters:
+                    {
+                        DrawFilters();
                         break;
                     }
                     case Tab.Thresholds:
@@ -105,6 +110,12 @@ namespace PriceCheck
                     ImGui.EndTabItem();
                 }
 
+                if (ImGui.BeginTabItem(Loc.Localize("Filters", "Filters") + "###PriceCheck_Filters_Tab"))
+                {
+                    _currentTab = Tab.Filters;
+                    ImGui.EndTabItem();
+                }
+
                 if (ImGui.BeginTabItem(Loc.Localize("Thresholds", "Thresholds") + "###PriceCheck_Thresholds_Tab"))
                 {
                     _currentTab = Tab.Thresholds;
@@ -146,18 +157,6 @@ namespace PriceCheck
 
             CustomWidgets.HelpMarker(Loc.Localize("ShowPrices_HelpMarker",
                 "show price or just show advice"));
-
-            var showUnmarketable = _priceCheckPlugin.Configuration.ShowUnmarketable;
-            if (ImGui.Checkbox(
-                Loc.Localize("ShowUnmarketable", "Show Unmarketable") + "###PriceCheck_ShowUnmarketable_Checkbox",
-                ref showUnmarketable))
-            {
-                _priceCheckPlugin.Configuration.ShowUnmarketable = showUnmarketable;
-                _priceCheckPlugin.SaveConfig();
-            }
-
-            CustomWidgets.HelpMarker(Loc.Localize("ShowUnmarketable_HelpMarker",
-                "toggle whether to show items unmarketable items"));
 
             ImGui.Spacing();
             ImGui.Text(Loc.Localize("HoverDelay", "Hover Delay"));
@@ -315,6 +314,45 @@ namespace PriceCheck
             }
         }
 
+        private void DrawFilters()
+        {
+            var restrictInCombat = _priceCheckPlugin.Configuration.RestrictInCombat;
+            if (ImGui.Checkbox(
+                Loc.Localize("RestrictInCombat", "Don't process in combat") + "###PriceCheck_RestrictInCombat_Checkbox",
+                ref restrictInCombat))
+            {
+                _priceCheckPlugin.Configuration.RestrictInCombat = restrictInCombat;
+                _priceCheckPlugin.SaveConfig();
+            }
+
+            CustomWidgets.HelpMarker(Loc.Localize("RestrictInCombat_HelpMarker",
+                "don't process price checks while in combat"));
+
+            var restrictInContent = _priceCheckPlugin.Configuration.RestrictInContent;
+            if (ImGui.Checkbox(
+                Loc.Localize("RestrictInContent", "Don't process in content") + "###PriceCheck_RestrictInContent_Checkbox",
+                ref restrictInContent))
+            {
+                _priceCheckPlugin.Configuration.RestrictInContent = restrictInContent;
+                _priceCheckPlugin.SaveConfig();
+            }
+
+            CustomWidgets.HelpMarker(Loc.Localize("RestrictInContent_HelpMarker",
+                "don't process price checks while in content"));
+            
+            var showUnmarketable = _priceCheckPlugin.Configuration.ShowUnmarketable;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowUnmarketable", "Show Unmarketable") + "###PriceCheck_ShowUnmarketable_Checkbox",
+                ref showUnmarketable))
+            {
+                _priceCheckPlugin.Configuration.ShowUnmarketable = showUnmarketable;
+                _priceCheckPlugin.SaveConfig();
+            }
+
+            CustomWidgets.HelpMarker(Loc.Localize("ShowUnmarketable_HelpMarker",
+                "toggle whether to show items unmarketable items"));
+        }
+
         private void DrawThresholds()
         {
             ImGui.Text(Loc.Localize("MinimumPrice", "Minimum Price"));
@@ -371,6 +409,7 @@ namespace PriceCheck
             Overlay,
             Chat,
             Keybind,
+            Filters,
             Thresholds,
             Other
         }

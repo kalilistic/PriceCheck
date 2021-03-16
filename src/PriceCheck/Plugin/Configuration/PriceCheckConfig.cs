@@ -7,11 +7,13 @@
 
         // General
         public bool Enabled { get; set; } = true;
-        public int PriceMode { get; set; } = 0;
+        public int PriceMode { get; set; }
         public bool ShowPrices { get; set; } = true;
-        public bool ShowUnmarketable { get; set; } = false;
+        public bool ShowUnmarketable { get; set; }
+        public bool RestrictInCombat { get; set; }
+        public bool RestrictInContent { get; set; }
         public int HoverDelay { get; set; } = 1;
-        public int PluginLanguage { get; set; } = 0;
+        public int PluginLanguage { get; set; }
 
         // Overlay
         public bool ShowOverlay { get; set; } = true;
