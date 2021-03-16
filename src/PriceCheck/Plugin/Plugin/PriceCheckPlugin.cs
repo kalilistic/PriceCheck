@@ -168,30 +168,40 @@ namespace PriceCheck
 
         private void HoveredItemChanged(object sender, ulong itemId)
         {
-            if (_hoveredItemCancellationTokenSource != null)
+            try
             {
-                if (!_hoveredItemCancellationTokenSource.IsCancellationRequested)
-                    _hoveredItemCancellationTokenSource.Cancel();
-                _hoveredItemCancellationTokenSource.Dispose();
-            }
+                if (!Configuration.Enabled) return;
+                if (!PluginInterface.Data.IsDataReady) return;
+                if (PluginInterface?.ClientState?.LocalPlayer?.HomeWorld == null) return;
+                if (!IsKeyBindPressed()) return;
 
-            if (itemId == 0)
+                if (itemId == 0)
+                {
+                    _hoveredItemCancellationTokenSource = null;
+                    return;
+                }
+
+                if (_hoveredItemCancellationTokenSource != null)
+                {
+                    if (!_hoveredItemCancellationTokenSource.IsCancellationRequested)
+                        _hoveredItemCancellationTokenSource.Cancel();
+                    _hoveredItemCancellationTokenSource.Dispose();
+                }
+
+                _hoveredItemCancellationTokenSource = new CancellationTokenSource(Configuration.RequestTimeout * 2);
+
+                Task.Run(async () =>
+                {
+                    await Task.Delay(Configuration.HoverDelay * 1000, _hoveredItemCancellationTokenSource.Token)
+                        .ConfigureAwait(false);
+                    ItemDetected?.Invoke(this, itemId);
+                });
+            }
+            catch (Exception ex)
             {
+                LogError(ex, "Failed to price check.");
                 _hoveredItemCancellationTokenSource = null;
-                return;
             }
-
-            _hoveredItemCancellationTokenSource = new CancellationTokenSource();
-            if (!Configuration.Enabled) return;
-            if (!PluginInterface.Data.IsDataReady) return;
-            if (PluginInterface?.ClientState?.LocalPlayer?.HomeWorld == null) return;
-            if (!IsKeyBindPressed()) return;
-            Task.Run(async () =>
-            {
-                await Task.Delay(Configuration.HoverDelay * 1000, _hoveredItemCancellationTokenSource.Token)
-                    .ConfigureAwait(false);
-                ItemDetected?.Invoke(this, itemId);
-            });
         }
 
         private void HandleFreshInstall()
