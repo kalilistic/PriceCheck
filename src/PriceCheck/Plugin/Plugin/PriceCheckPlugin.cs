@@ -37,7 +37,7 @@ namespace PriceCheck
             });
         }
 
-        public IPriceService PriceService { get; set; }
+        public IPriceService PriceService { get; private set; }
 
         public PriceCheckConfig Configuration { get; set; }
 
@@ -152,13 +152,13 @@ namespace PriceCheck
             _pluginUI.SettingsWindow.IsVisible = !_pluginUI.SettingsWindow.IsVisible;
         }
 
-        public void LoadServices()
+        private void LoadServices()
         {
             _universalisClient = new UniversalisClient(this);
             PriceService = new PriceService(this, _universalisClient);
         }
 
-        public void LoadUI()
+        private void LoadUI()
         {
             Localization.SetLanguage(Configuration.PluginLanguage);
             _pluginUI = new PluginUI(this);
@@ -214,7 +214,7 @@ namespace PriceCheck
             _pluginUI.SettingsWindow.IsVisible = true;
         }
 
-        public new void LoadConfig()
+        private new void LoadConfig()
         {
             try
             {

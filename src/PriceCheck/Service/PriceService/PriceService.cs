@@ -1,10 +1,10 @@
 ﻿// ReSharper disable DelegateSubtraction
+// ReSharper disable RedundantJumpStatement
+// ReSharper disable ConvertIfStatementToReturnStatement
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-
-// ReSharper disable ConvertIfStatementToReturnStatement
 
 namespace PriceCheck
 {
@@ -160,12 +160,12 @@ namespace PriceCheck
                 _pricedItems.RemoveAt(_pricedItems.Count - 1);
         }
 
-        internal void AddItemToList(PricedItem pricedItem)
+        private void AddItemToList(PricedItem pricedItem)
         {
             _pricedItems.Insert(0, pricedItem);
         }
 
-        internal void SendEcho(PricedItem pricedItem)
+        private void SendEcho(PricedItem pricedItem)
         {
             if (_priceCheckPlugin.Configuration.ShowInChat)
                 _priceCheckPlugin.PrintItemMessage(pricedItem);
@@ -180,7 +180,7 @@ namespace PriceCheck
                 pricedItem.DisplayName = pricedItem.ItemName;
         }
 
-        internal void SetMessage(PricedItem pricedItem)
+        private void SetMessage(PricedItem pricedItem)
         {
             if (pricedItem.Result == null)
             {
@@ -195,19 +195,18 @@ namespace PriceCheck
             }
         }
 
-        internal bool ProcessItem(PricedItem pricedItem)
+        private void ProcessItem(PricedItem pricedItem)
         {
             var failedToGetMarketBoardData = EnrichWithMarketBoardData(pricedItem);
-            if (failedToGetMarketBoardData) return true;
+            if (failedToGetMarketBoardData) return;
             var invalidMarketBoardData = ValidateMarketBoardData(pricedItem);
-            if (invalidMarketBoardData) return true;
+            if (invalidMarketBoardData) return;
             var isOldData = EvaluateDataAge(pricedItem);
-            if (isOldData) return true;
+            if (isOldData) return;
             var hasHigherPriceOnVendor = CompareVendorPrice(pricedItem);
-            if (hasHigherPriceOnVendor) return true;
+            if (hasHigherPriceOnVendor) return;
             var belowMinPrice = CompareMinPrice(pricedItem);
-            if (belowMinPrice) return true;
-            return false;
+            if (belowMinPrice) return;
         }
 
         internal void ProcessItem(object sender, ulong itemId)

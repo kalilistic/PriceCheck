@@ -5,12 +5,12 @@ namespace PriceCheck
     public class PluginUIBase : IDisposable
     {
         public OverlayWindow OverlayWindow;
-        public IPriceCheckPlugin PriceCheckPlugin;
+        private readonly IPriceCheckPlugin _priceCheckPlugin;
         public SettingsWindow SettingsWindow;
 
-        public PluginUIBase(IPriceCheckPlugin priceCheckPlugin)
+        protected PluginUIBase(IPriceCheckPlugin priceCheckPlugin)
         {
-            PriceCheckPlugin = priceCheckPlugin;
+            _priceCheckPlugin = priceCheckPlugin;
             BuildWindows();
             SetWindowVisibility();
             AddEventHandlers();
@@ -22,13 +22,13 @@ namespace PriceCheck
 
         private void BuildWindows()
         {
-            OverlayWindow = new OverlayWindow(PriceCheckPlugin);
-            SettingsWindow = new SettingsWindow(PriceCheckPlugin);
+            OverlayWindow = new OverlayWindow(_priceCheckPlugin);
+            SettingsWindow = new SettingsWindow(_priceCheckPlugin);
         }
 
         private void SetWindowVisibility()
         {
-            OverlayWindow.IsVisible = PriceCheckPlugin.Configuration.ShowOverlay;
+            OverlayWindow.IsVisible = _priceCheckPlugin.Configuration.ShowOverlay;
             SettingsWindow.IsVisible = false;
         }
 

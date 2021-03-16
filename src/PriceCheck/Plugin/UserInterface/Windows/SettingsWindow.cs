@@ -77,7 +77,7 @@ namespace PriceCheck
             ImGui.End();
         }
 
-        public void DrawTabs()
+        private void DrawTabs()
         {
             if (ImGui.BeginTabBar("PriceCheckSettingsTabBar", ImGuiTabBarFlags.NoTooltip))
             {
@@ -122,7 +122,7 @@ namespace PriceCheck
             }
         }
 
-        public void DrawGeneral()
+        private void DrawGeneral()
         {
             var enabled = _priceCheckPlugin.Configuration.Enabled;
             if (ImGui.Checkbox(
@@ -199,7 +199,7 @@ namespace PriceCheck
             }
         }
 
-        public void DrawOverlay()
+        private void DrawOverlay()
         {
             var showOverlay = _priceCheckPlugin.Configuration.ShowOverlay;
             if (ImGui.Checkbox(Loc.Localize("ShowOverlay", "Show Overlay") + "###PriceCheck_ShowOverlay_Checkbox",
@@ -237,7 +237,7 @@ namespace PriceCheck
             }
         }
 
-        public void DrawChat()
+        private void DrawChat()
         {
             var showInChat = _priceCheckPlugin.Configuration.ShowInChat;
             if (ImGui.Checkbox(Loc.Localize("ShowInChat", "Show in Chat") + "###PriceCheck_ShowInChat_Checkbox",
@@ -275,7 +275,7 @@ namespace PriceCheck
                 "use item links in chat results"));
         }
 
-        public void DrawKeybind()
+        private void DrawKeybind()
         {
             var keybindEnabled = _priceCheckPlugin.Configuration.KeybindEnabled;
             if (ImGui.Checkbox(Loc.Localize("KeybindEnabled", "Use Keybind") + "###PriceCheck_KeybindEnabled_Checkbox",
@@ -315,7 +315,7 @@ namespace PriceCheck
             }
         }
 
-        public void DrawThresholds()
+        private void DrawThresholds()
         {
             ImGui.Text(Loc.Localize("MinimumPrice", "Minimum Price"));
             CustomWidgets.HelpMarker(Loc.Localize("MinimumPrice_HelpMarker",
@@ -339,7 +339,7 @@ namespace PriceCheck
             }
         }
 
-        public void DrawOther()
+        private void DrawOther()
         {
             var buttonSize = new Vector2(160f * _uiScale, 25f * _uiScale);
             var widthOffset = 175f * _uiScale;
