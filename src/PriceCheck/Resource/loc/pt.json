@@ -28,8 +28,7 @@
         "description": "Result.UpdateLanguage"
     },
     "HelpMessage": {
-        "message":
-            "Para verificar preços, segure sua tecla de atalho e então passe o mouse sobre um item do seu inventário ou linkado no chat. Você pode definir seu atalho (ou desativá-lo) nas configurações do PriceCheck. Os preços são uma média da Universalis e não corresponderão a nenhum anúncio específico que possa achar no mercado. Você pode usar /pcheck para abrir o overlay e /pcheckconfig para abrir as configurações. Se precisar de ajuda, entre em contato no Discord ou abra um issue no GitHub. Se você quiser ajudar a adicionar traduções, você pode enviar atualizações no Crowdin. Links para o GitHub e Crowdin estão disponíveis nas configurações.",
+        "message": "Para verificar preços, segure sua tecla de atalho e então passe o mouse sobre um item do seu inventário ou linkado no chat. Você pode definir seu atalho (ou desativá-lo) nas configurações do PriceCheck. Os preços são uma média da Universalis e não corresponderão a nenhum anúncio específico que possa achar no mercado. Você pode usar /pcheck para abrir o overlay e /pcheckconfig para abrir as configurações. Se precisar de ajuda, entre em contato no Discord ou abra um issue no GitHub. Se você quiser ajudar a adicionar traduções, você pode enviar atualizações no Crowdin. Links para o GitHub e Crowdin estão disponíveis nas configurações.",
         "description": "PriceCheckPlugin.PrintHelpMessage"
     },
     "InstallThankYou": {
@@ -38,7 +37,7 @@
     },
     "SettingsWindow": {
         "message": "Configurações do PriceCheck",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawView"
     },
     "General": {
         "message": "Geral",
@@ -54,6 +53,10 @@
     },
     "Keybind": {
         "message": "Teclas de atalho",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Filters": {
+        "message": "Filters",
         "description": "SettingsWindow.DrawTabs"
     },
     "Thresholds": {
@@ -80,20 +83,20 @@
         "message": "mostrar preço ou apenas conselhos",
         "description": "SettingsWindow.DrawGeneral"
     },
-    "ShowUnmarketable": {
-        "message": "Mostrar não comercializáveis",
-        "description": "SettingsWindow.DrawGeneral"
-    },
-    "ShowUnmarketable_HelpMarker": {
-        "message": "alterna se mostrar itens não comercializáveis",
-        "description": "SettingsWindow.DrawGeneral"
-    },
     "HoverDelay": {
         "message": "Atraso de seleção",
         "description": "SettingsWindow.DrawGeneral"
     },
     "HoverDelay_HelpMarker": {
         "message": "atraso (em segundos) antes de processar após passar o cursor",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode": {
+        "message": "Price Mode",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode_HelpMarker": {
+        "message": "select price calculation to use",
         "description": "SettingsWindow.DrawGeneral"
     },
     "Language": {
@@ -176,6 +179,30 @@
         "message": "definir tecla principal (por exemplo, Nenhuma, Z)",
         "description": "SettingsWindow.DrawKeybind"
     },
+    "RestrictInCombat": {
+        "message": "Don't process in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInCombat_HelpMarker": {
+        "message": "don't process price checks while in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent": {
+        "message": "Don't process in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent_HelpMarker": {
+        "message": "don't process price checks while in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable": {
+        "message": "Mostrar não comercializáveis",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable_HelpMarker": {
+        "message": "alterna se mostrar itens não comercializáveis",
+        "description": "SettingsWindow.DrawFilters"
+    },
     "MinimumPrice": {
         "message": "Preço Mínimo",
         "description": "SettingsWindow.DrawThresholds"
@@ -210,14 +237,14 @@
     },
     "OverlayWindow": {
         "message": "PriceCheck Overlay",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     },
     "PluginDisabled": {
         "message": "PriceCheckPlugin está desativado.",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     },
     "WaitingForItems": {
         "message": "Aguardando itens.",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     }
 }

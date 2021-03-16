@@ -55,6 +55,10 @@
         "message": "Scorciatoie",
         "description": "SettingsWindow.DrawTabs"
     },
+    "Filters": {
+        "message": "Filters",
+        "description": "SettingsWindow.DrawTabs"
+    },
     "Thresholds": {
         "message": "Soglie",
         "description": "SettingsWindow.DrawTabs"
@@ -77,14 +81,6 @@
     },
     "ShowPrices_HelpMarker": {
         "message": "mostra prezzo o mostra consigli",
-        "description": "SettingsWindow.DrawGeneral"
-    },
-    "ShowUnmarketable": {
-        "message": "Mostra Non Commerciabili",
-        "description": "SettingsWindow.DrawGeneral"
-    },
-    "ShowUnmarketable_HelpMarker": {
-        "message": "attiva o disattiva la visualizzazione di elementi non commercializzabili",
         "description": "SettingsWindow.DrawGeneral"
     },
     "HoverDelay": {
@@ -182,6 +178,30 @@
     "PrimaryKeybind_HelpMarker": {
         "message": "imposta tasto carattere (es: nessuno, Z)",
         "description": "SettingsWindow.DrawKeybind"
+    },
+    "RestrictInCombat": {
+        "message": "Don't process in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInCombat_HelpMarker": {
+        "message": "don't process price checks while in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent": {
+        "message": "Don't process in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent_HelpMarker": {
+        "message": "don't process price checks while in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable": {
+        "message": "Mostra Non Commerciabili",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable_HelpMarker": {
+        "message": "attiva o disattiva la visualizzazione di elementi non commercializzabili",
+        "description": "SettingsWindow.DrawFilters"
     },
     "MinimumPrice": {
         "message": "Prezzo Minimo",

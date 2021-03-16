@@ -28,8 +28,7 @@
         "description": "Result.UpdateLanguage"
     },
     "HelpMessage": {
-        "message":
-            "価格を確認するには、キーバインドを長押ししてから、インベントリ内のアイテムまたはチャットでリンクされているアイテムにカーソルを合わせます。 PriceCheck設定でキーバインド(または無効)を設定できます。 価格は Universalis からの平均値であり、市場ボードで表示される特定のリストと一致しません。 /pcheck を使用してオーバーレイを開き、/pcheckconfig を使用して設定を開くことができます。 ヘルプが必要な場合は、discordに問い合わせるか、GitHub で問題を開きます。 翻訳の追加を手伝いたい場合は、Crowdin でアップデートを送信することができます。GitHub と Crowdin の両方へのリンクは設定で利用できます。",
+        "message": "価格を確認するには、キーバインドを長押ししてから、インベントリ内のアイテムまたはチャットでリンクされているアイテムにカーソルを合わせます。 PriceCheck設定でキーバインド(または無効)を設定できます。 価格は Universalis からの平均値であり、市場ボードで表示される特定のリストと一致しません。 /pcheck を使用してオーバーレイを開き、/pcheckconfig を使用して設定を開くことができます。 ヘルプが必要な場合は、discordに問い合わせるか、GitHub で問題を開きます。 翻訳の追加を手伝いたい場合は、Crowdin でアップデートを送信することができます。GitHub と Crowdin の両方へのリンクは設定で利用できます。",
         "description": "PriceCheckPlugin.PrintHelpMessage"
     },
     "InstallThankYou": {
@@ -38,7 +37,7 @@
     },
     "SettingsWindow": {
         "message": "価格チェックの設定",
-        "description": "SettingsWindow.DrawWindow"
+        "description": "SettingsWindow.DrawView"
     },
     "General": {
         "message": "一般",
@@ -54,6 +53,10 @@
     },
     "Keybind": {
         "message": "キーバインド",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Filters": {
+        "message": "Filters",
         "description": "SettingsWindow.DrawTabs"
     },
     "Thresholds": {
@@ -80,20 +83,20 @@
         "message": "価格を表示するかアドバイスを表示する",
         "description": "SettingsWindow.DrawGeneral"
     },
-    "ShowUnmarketable": {
-        "message": "市場に出回っていないものを表示",
-        "description": "SettingsWindow.DrawGeneral"
-    },
-    "ShowUnmarketable_HelpMarker": {
-        "message": "非市場性のある商品を表示するかどうかを切り替えます",
-        "description": "SettingsWindow.DrawGeneral"
-    },
     "HoverDelay": {
         "message": "ホバーの遅延",
         "description": "SettingsWindow.DrawGeneral"
     },
     "HoverDelay_HelpMarker": {
         "message": "ホバリング後の処理の遅延 (秒)",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode": {
+        "message": "Price Mode",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode_HelpMarker": {
+        "message": "select price calculation to use",
         "description": "SettingsWindow.DrawGeneral"
     },
     "Language": {
@@ -176,6 +179,30 @@
         "message": "プライマリキーを設定します（例：なし、Z）",
         "description": "SettingsWindow.DrawKeybind"
     },
+    "RestrictInCombat": {
+        "message": "Don't process in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInCombat_HelpMarker": {
+        "message": "don't process price checks while in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent": {
+        "message": "Don't process in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent_HelpMarker": {
+        "message": "don't process price checks while in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable": {
+        "message": "市場に出回っていないものを表示",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable_HelpMarker": {
+        "message": "非市場性のある商品を表示するかどうかを切り替えます",
+        "description": "SettingsWindow.DrawFilters"
+    },
     "MinimumPrice": {
         "message": "最低価格",
         "description": "SettingsWindow.DrawThresholds"
@@ -210,14 +237,14 @@
     },
     "OverlayWindow": {
         "message": "PriceCheckオーバーレイ",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     },
     "PluginDisabled": {
         "message": "PriceCheckPluginは無効です。",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     },
     "WaitingForItems": {
         "message": "アイテムを待っています。",
-        "description": "OverlayWindow.DrawWindow"
+        "description": "OverlayWindow.DrawView"
     }
 }
