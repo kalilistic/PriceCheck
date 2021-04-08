@@ -6,8 +6,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using CheapLoc;
-using Dalamud.Game.Chat.SeStringHandling.Payloads;
 using Dalamud.Game.Command;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
 using Lumina.Excel.GeneratedSheets;
 

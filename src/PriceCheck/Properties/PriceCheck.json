@@ -7,5 +7,5 @@
     "RepoUrl": "https://github.com/kalilistic/PriceCheck",
     "Tags": ["price", "marketboard", "items"],
     "ApplicableVersion": "any",
-    "DalamudApiLevel": "2"
+    "DalamudApiLevel": "3"
 }
