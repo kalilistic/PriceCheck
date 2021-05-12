@@ -1,3 +1,0 @@
-[submodule "src/PriceCheck/Common"]
-	path = src/PriceCheck/Common
-	url = https://github.com/kalilistic/DalamudPluginCommon.git
