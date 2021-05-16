@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.Game.Command;
-using Dalamud.Game.Internal.Gui;
-using Dalamud.Game.Internal.Gui.Toast;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
@@ -287,6 +285,7 @@ namespace PriceCheck
             this.Chat.PrintNotice(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
             this.PrintHelpMessage();
             this.Configuration.FreshInstall = false;
+            this.Configuration.ShowToast = true;
             this.Configuration.RestrictInCombat = true;
             this.Configuration.RestrictInContent = true;
             this.SaveConfig();

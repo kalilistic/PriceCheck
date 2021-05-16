@@ -70,7 +70,7 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets a value indicating whether to show price checks in toasts.
         /// </summary>
-        public bool ShowToast { get; set; } = true;
+        public bool ShowToast { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to show price checks in chat.
