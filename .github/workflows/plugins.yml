@@ -54,3 +54,8 @@ jobs:
           branch: ${{env.PLUGIN_NAME}}-${{ steps.getrel.outputs.release}}
           message: ${{env.PLUGIN_NAME}} -> ${{steps.getrel.outputs.release}}
           pull_strategy: NO-PULL
+          
+      - name: Create PR
+        run: |
+          git config --local --add remote.upstream.gh-resolved base
+          gh pr create --title "${{env.PLUGIN_NAME}} ${{steps.getrel.outputs.release}}" --body "nofranz"
