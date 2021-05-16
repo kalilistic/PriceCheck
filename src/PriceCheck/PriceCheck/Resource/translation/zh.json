@@ -1,14 +1,14 @@
 {
-    "InstallThankYou": {
-        "message": "Thank you for installing Sample Plugin!",
-        "description": "PriceCheck.HandleFreshInstall"
-    },
-    "PluginEnabled": {
-        "message": "Plugin Enabled",
-        "description": "ConfigWindow.Draw"
-    },
-    "ShowOverlay": {
-        "message": "Show Overlay",
-        "description": "ConfigWindow.Draw"
-    }
+  "InstallThankYou": {
+    "message": "Thank you for installing Sample Plugin!",
+    "description": "PriceCheckPlugin.HandleFreshInstall"
+  },
+  "PluginEnabled": {
+    "message": "Plugin Enabled",
+    "description": "SettingsWindow.DrawGeneral"
+  },
+  "ShowOverlay": {
+    "message": "Show Overlay",
+    "description": "SettingsWindow.DrawOverlay"
+  }
 }
