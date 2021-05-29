@@ -58,7 +58,7 @@
     </ItemGroup>
 		
     <ItemGroup>
-				<PackageReference Include="DalamudPluginCommon" Version="0.0.0-alpha.0.56" /> 
+				<PackageReference Include="DalamudPluginCommon" Version="0.0.0-alpha.0.57" /> 
 				<!--
 				<Reference Include="DalamudPluginCommon, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
 				    <HintPath>..\..\..\DalamudPluginCommon\src\DalamudPluginCommon\bin\Debug\net48\DalamudPluginCommon.dll</HintPath>
