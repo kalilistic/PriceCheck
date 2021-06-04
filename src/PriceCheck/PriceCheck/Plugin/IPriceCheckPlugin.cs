@@ -1,6 +1,5 @@
 using System;
 
-using DalamudPluginCommon;
 using Lumina.Excel.GeneratedSheets;
 
 namespace PriceCheck
@@ -13,7 +12,7 @@ namespace PriceCheck
         /// <summary>
         /// Item detected event handler.
         /// </summary>
-        event EventHandler<ulong> OnItemDetected;
+        event EventHandler<DetectedItem> OnItemDetected;
 
         /// <summary>
         /// Gets price service.

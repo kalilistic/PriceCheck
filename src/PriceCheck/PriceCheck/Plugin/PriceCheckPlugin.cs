@@ -12,6 +12,8 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
 using DalamudPluginCommon;
 using Lumina.Excel.GeneratedSheets;
+using XivCommon;
+using XivCommon.Functions.ContextMenu.Inventory;
 
 namespace PriceCheck
 {
@@ -20,8 +22,9 @@ namespace PriceCheck
     /// </summary>
     public class PriceCheckPlugin : PluginBase, IPriceCheckPlugin
     {
+        private readonly XivCommonBase common;
         private readonly DalamudPluginInterface pluginInterface;
-        private CancellationTokenSource? hoveredItemCancellationTokenSource;
+        private CancellationTokenSource? itemCancellationTokenSource;
         private PluginUI pluginUI = null!;
         private UniversalisClient universalisClient = null!;
 
@@ -40,12 +43,14 @@ namespace PriceCheck
             this.LoadUI();
             this.HandleFreshInstall();
             Result.UpdateLanguage();
+            this.common = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
             this.PluginInterface.Framework.Gui.HoveredItemChanged += this.HoveredItemChanged;
             this.PluginInterface.OnLanguageChanged += OnLanguageChanged;
+            this.common.Functions.ContextMenu.OpenInventoryContextMenu += this.OnOpenInventoryContextMenu;
         }
 
         /// <inheritdoc/>
-        public event EventHandler<ulong> OnItemDetected = null!;
+        public event EventHandler<DetectedItem> OnItemDetected = null!;
 
         /// <inheritdoc/>
         public IPriceService PriceService { get; private set; } = null!;
@@ -148,9 +153,10 @@ namespace PriceCheck
         {
             base.Dispose();
             this.RemoveCommands();
+            this.common.Functions.ContextMenu.OpenInventoryContextMenu -= this.OnOpenInventoryContextMenu;
             this.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
             this.pluginInterface.UiBuilder.OnBuildUi -= this.DrawUI;
-            this.hoveredItemCancellationTokenSource?.Dispose();
+            this.itemCancellationTokenSource?.Dispose();
             this.PriceService.Dispose();
             this.universalisClient.Dispose();
             this.pluginInterface.Dispose();
@@ -226,6 +232,33 @@ namespace PriceCheck
             Result.UpdateLanguage();
         }
 
+        private void ContextItemChanged(InventoryContextMenuItemSelectedArgs args)
+        {
+            try
+            {
+                if (args.ItemId == 0) return;
+                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
+                Task.Run(async () =>
+                {
+                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource.Token)
+                              .ConfigureAwait(false);
+                    this.OnItemDetected.Invoke(this, new DetectedItem(args.ItemId, args.ItemHq));
+                });
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed to price check item via context menu.");
+            }
+        }
+
+        private void OnOpenInventoryContextMenu(InventoryContextMenuOpenArgs args)
+        {
+            if (args.ParentAddonName is "Inventory" or "InventoryExpansion" or "InventoryLarge" or "InventoryRetainer" or "InventoryRetainerLarge" or "Character")
+            {
+                args.Items.Add(new InventoryContextMenuItem(Loc.Localize("ContextMenuItem", "Check Marketboard Price"), this.ContextItemChanged));
+            }
+        }
+
         private void LoadServices()
         {
             this.universalisClient = new UniversalisClient(this);
@@ -250,32 +283,32 @@ namespace PriceCheck
                 if (this.Configuration.RestrictInCombat && this.ClientState.Condition.InCombat()) return;
                 if (this.Configuration.RestrictInContent && this.InContent()) return;
 
-                if (this.hoveredItemCancellationTokenSource != null)
+                if (this.itemCancellationTokenSource != null)
                 {
-                    if (!this.hoveredItemCancellationTokenSource.IsCancellationRequested)
-                        this.hoveredItemCancellationTokenSource.Cancel();
-                    this.hoveredItemCancellationTokenSource.Dispose();
+                    if (!this.itemCancellationTokenSource.IsCancellationRequested)
+                        this.itemCancellationTokenSource.Cancel();
+                    this.itemCancellationTokenSource.Dispose();
                 }
 
                 if (itemId == 0)
                 {
-                    this.hoveredItemCancellationTokenSource = null;
+                    this.itemCancellationTokenSource = null;
                     return;
                 }
 
-                this.hoveredItemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
+                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
 
                 Task.Run(async () =>
                 {
-                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.hoveredItemCancellationTokenSource.Token)
+                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource.Token)
                               .ConfigureAwait(false);
-                    this.OnItemDetected.Invoke(this, itemId);
+                    this.OnItemDetected.Invoke(this, new DetectedItem(itemId));
                 });
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Failed to price check.");
-                this.hoveredItemCancellationTokenSource = null;
+                this.itemCancellationTokenSource = null;
             }
         }
 

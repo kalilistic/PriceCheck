@@ -233,10 +233,24 @@ namespace PriceCheck
         /// Check if price is within threshold.
         /// </summary>
         /// <param name="sender">event sender.</param>
-        /// <param name="itemId">item id to process.</param>
-        internal void ProcessItem(object sender, ulong itemId)
+        /// <param name="detectedItem">detected item.</param>
+        internal void ProcessItem(object sender, DetectedItem detectedItem)
         {
-            var pricedItem = BuildPricedItemFromId(itemId);
+            PricedItem pricedItem;
+            if (detectedItem.IsHQ == null)
+            {
+                pricedItem = BuildPricedItemFromId(detectedItem.ItemId);
+            }
+            else
+            {
+                pricedItem = new PricedItem
+                {
+                    RawItemId = detectedItem.ItemId,
+                    ItemId = Convert.ToUInt32(detectedItem.ItemId),
+                    IsHQ = (bool)detectedItem.IsHQ,
+                };
+            }
+
             var failedToEnrichItem = this.EnrichWithExcelData(pricedItem);
             if (failedToEnrichItem) return;
             this.ProcessItem(pricedItem);
