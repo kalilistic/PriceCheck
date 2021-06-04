@@ -32,12 +32,17 @@ namespace PriceCheck
         /// <summary>
         /// Price mode: minimum price.
         /// </summary>
-        public static readonly PriceMode MinimumPrice = new PriceMode(2, "Historical Minimum");
+        public static readonly PriceMode HistoricalMinimumPrice = new PriceMode(2, "Historical Minimum");
 
         /// <summary>
         /// Price mode: maximum price.
         /// </summary>
-        public static readonly PriceMode MaximumPrice = new PriceMode(3, "Historical Maximum");
+        public static readonly PriceMode HistoricalMaximumPrice = new PriceMode(3, "Historical Maximum");
+
+        /// <summary>
+        /// Price mode: current minimum price.
+        /// </summary>
+        public static readonly PriceMode CurrentMinimumPrice = new PriceMode(4, "Current Minimum Price");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceMode"/> class.

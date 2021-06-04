@@ -92,6 +92,7 @@ namespace PriceCheck
                     MinimumPriceHQ = json.minPriceHQ?.Value,
                     MaximumPriceNQ = json.maxPriceNQ?.Value,
                     MaximumPriceHQ = json.maxPriceHQ?.Value,
+                    CurrentMinimumPrice = json.listings[0]?.pricePerUnit?.Value,
                 };
                 return marketBoardData;
             }

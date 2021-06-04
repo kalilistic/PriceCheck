@@ -54,5 +54,10 @@ namespace PriceCheck
         /// Gets or sets the maximum price (HQ).
         /// </summary>
         public double? MaximumPriceHQ { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current minimum price.
+        /// </summary>
+        public double? CurrentMinimumPrice { get; set; }
     }
 }
