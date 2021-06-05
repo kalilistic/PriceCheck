@@ -55,7 +55,7 @@
         <PackageReference Include="DalamudPackager" Version="1.2.1" />
         <PackageReference Include="Fody" Version="6.5.1" PrivateAssets="all" />
         <PackageReference Include="ILMerge.Fody" Version="1.16.0" PrivateAssets="all" />
-        <PackageReference Include="XivCommon" Version="1.6.2" />
+        <PackageReference Include="XivCommon" Version="2.0.0" />
     </ItemGroup>
 		
     <ItemGroup>
