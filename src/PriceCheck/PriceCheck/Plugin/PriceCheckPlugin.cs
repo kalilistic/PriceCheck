@@ -157,6 +157,7 @@ namespace PriceCheck
             base.Dispose();
             this.RemoveCommands();
             this.common.Functions.ContextMenu.OpenInventoryContextMenu -= this.OnOpenInventoryContextMenu;
+            this.common.Dispose();
             this.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
             this.pluginInterface.UiBuilder.OnBuildUi -= this.DrawUI;
             this.itemCancellationTokenSource?.Dispose();
