@@ -1,214 +1,238 @@
 {
-  "SellOnMarketboard": {
-    "message": "マーケットボードで販売",
-    "description": "Result.UpdateLanguage"
-  },
-  "FailedToGetData": {
-    "message": "データの取得に失敗しました",
-    "description": "Result.UpdateLanguage"
-  },
-  "NoDataAvailable": {
-    "message": "利用可能なデータはありません。",
-    "description": "Result.UpdateLanguage"
-  },
-  "NoRecentDataAvailable": {
-    "message": "最近のデータなし",
-    "description": "Result.UpdateLanguage"
-  },
-  "BelowVendor": {
-    "message": "Npcに販売",
-    "description": "Result.UpdateLanguage"
-  },
-  "BelowMinimum": {
-    "message": "最低価格以下",
-    "description": "Result.UpdateLanguage"
-  },
-  "Unmarketable": {
-    "message": "マーケットボードで販売",
-    "description": "Result.UpdateLanguage"
-  },
-  "HelpMessage": {
-    "message": "価格を確認するには、キーバインドを長押ししてから、インベントリ内のアイテムまたはチャットでリンクされているアイテムにカーソルを合わせます。 PriceCheck設定でキーバインド(または無効)を設定できます。 価格は Universalis からの平均値であり、市場ボードで表示される特定のリストと一致しません。 /pcheck を使用してオーバーレイを開き、/pcheckconfig を使用して設定を開くことができます。 ヘルプが必要な場合は、discordに問い合わせるか、GitHub で問題を開きます。 翻訳の追加を手伝いたい場合は、Crowdin でアップデートを送信することができます。GitHub と Crowdin の両方へのリンクは設定で利用できます。",
-    "description": "PriceCheckPlugin.PrintHelpMessage"
-  },
-  "InstallThankYou": {
-    "message": "PriceCheckをインストールしていただきありがとうございます！",
-    "description": "PriceCheckPlugin.HandleFreshInstall"
-  },
-  "OverlayWindow": {
-    "message": "PriceCheckオーバーレイ",
-    "description": "OverlayWindow.DrawView"
-  },
-  "PluginDisabled": {
-    "message": "PriceCheckPluginは無効です。",
-    "description": "OverlayWindow.DrawView"
-  },
-  "WaitingForItems": {
-    "message": "アイテムを待っています。",
-    "description": "OverlayWindow.DrawView"
-  },
-  "SettingsWindow": {
-    "message": "価格チェックの設定",
-    "description": "SettingsWindow.DrawView"
-  },
-  "General": {
-    "message": "一般",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Overlay": {
-    "message": "オーバーレイ",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Chat": {
-    "message": "チャット",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Keybind": {
-    "message": "キーバインド",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Filters": {
-    "message": "Filters",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Thresholds": {
-    "message": "しきい値",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Other": {
-    "message": "その他",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "PluginEnabled": {
-    "message": "プラグイン有効化",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "PluginEnabled_HelpMarker": {
-    "message": "プラグインのオン/オフの切り替え",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "ShowPrices": {
-    "message": "価格を表示：",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "ShowPrices_HelpMarker": {
-    "message": "価格を表示するかアドバイスを表示する",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "HoverDelay": {
-    "message": "ホバーの遅延",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "HoverDelay_HelpMarker": {
-    "message": "ホバリング後の処理の遅延 (秒)",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "ShowOverlay": {
-    "message": "オーバーレイを表示する",
-    "description": "SettingsWindow.DrawOverlay"
-  },
-  "ShowOverlay_HelpMarker": {
-    "message": "オーバーレイウィンドウで価格チェック結果を表示する",
-    "description": "SettingsWindow.DrawOverlay"
-  },
-  "UseOverlayColors": {
-    "message": "CAPEの重ね書きの色",
-    "description": "SettingsWindow.DrawOverlay"
-  },
-  "UseOverlayColors_HelpMarker": {
-    "message": "結果に基づいてオーバーレイに異なる色を使用する",
-    "description": "SettingsWindow.DrawOverlay"
-  },
-  "MaxItems": {
-    "message": "最大アイテム数",
-    "description": "SettingsWindow.DrawOverlay"
-  },
-  "MaxItems_HelpMarker": {
-    "message": "一度にオーバーレイ中のアイテムの最大数を設定",
-    "description": "SettingsWindow.DrawOverlay"
-  },
-  "ShowInChat": {
-    "message": "チャットの表示",
-    "description": "SettingsWindow.DrawChat"
-  },
-  "ShowInChat_HelpMarker": {
-    "message": "価格チェック結果をチャットに表示する",
-    "description": "SettingsWindow.DrawChat"
-  },
-  "UseChatColors": {
-    "message": "チャット色変更",
-    "description": "SettingsWindow.DrawChat"
-  },
-  "UseChatColors_HelpMarker": {
-    "message": "結果に基づいてチャットに異なる色を使用します",
-    "description": "SettingsWindow.DrawChat"
-  },
-  "UseItemLinks": {
-    "message": "アイテムリンクを使用する",
-    "description": "SettingsWindow.DrawChat"
-  },
-  "UseItemLinks_HelpMarker": {
-    "message": "チャット結果にアイテムリンクを使用する",
-    "description": "SettingsWindow.DrawChat"
-  },
-  "KeybindEnabled": {
-    "message": "キー設定をリセット",
-    "description": "SettingsWindow.DrawKeybind"
-  },
-  "KeybindEnabled_HelpMarker": {
-    "message": "キーバインドが使用されているか、ホバリングするかを切り替えます",
-    "description": "SettingsWindow.DrawKeybind"
-  },
-  "ModifierKeybind": {
-    "message": "追加オプション",
-    "description": "SettingsWindow.DrawKeybind"
-  },
-  "ModifierKeybind_HelpMarker": {
-    "message": "修飾キーを設定 (例: shift)",
-    "description": "SettingsWindow.DrawKeybind"
-  },
-  "PrimaryKeybind": {
-    "message": "標準",
-    "description": "SettingsWindow.DrawKeybind"
-  },
-  "PrimaryKeybind_HelpMarker": {
-    "message": "プライマリキーを設定します（例：なし、Z）",
-    "description": "SettingsWindow.DrawKeybind"
-  },
-  "ShowUnmarketable": {
-    "message": "市場に出回っていないものを表示",
-    "description": "SettingsWindow.DrawFilters"
-  },
-  "ShowUnmarketable_HelpMarker": {
-    "message": "非市場性のある商品を表示するかどうかを切り替えます",
-    "description": "SettingsWindow.DrawFilters"
-  },
-  "MinimumPrice": {
-    "message": "最低価格",
-    "description": "SettingsWindow.DrawThresholds"
-  },
-  "MinimumPrice_HelpMarker": {
-    "message": "実際の平均値が表示される最低価格を設定します。",
-    "description": "SettingsWindow.DrawThresholds"
-  },
-  "MaxUploadDays": {
-    "message": "最大ダウンロード速度",
-    "description": "SettingsWindow.DrawThresholds"
-  },
-  "MaxUploadDays_HelpMarker": {
-    "message": "上限を設定して古いデータを使用しないようにする",
-    "description": "SettingsWindow.DrawThresholds"
-  },
-  "OpenGithub": {
-    "message": "GitHubを開く",
-    "description": "SettingsWindow.DrawOther"
-  },
-  "PrintHelp": {
-    "message": "印刷のヘルプ",
-    "description": "SettingsWindow.DrawOther"
-  },
-  "ImproveTranslate": {
-    "message": "翻訳を追加または改善する",
-    "description": "SettingsWindow.DrawOther"
-  }
+    "SellOnMarketboard": {
+        "message": "マーケットボードで販売",
+        "description": "Result.UpdateLanguage"
+    },
+    "FailedToGetData": {
+        "message": "データの取得に失敗しました",
+        "description": "Result.UpdateLanguage"
+    },
+    "NoDataAvailable": {
+        "message": "利用可能なデータはありません。",
+        "description": "Result.UpdateLanguage"
+    },
+    "NoRecentDataAvailable": {
+        "message": "最近のデータなし",
+        "description": "Result.UpdateLanguage"
+    },
+    "BelowVendor": {
+        "message": "Npcに販売",
+        "description": "Result.UpdateLanguage"
+    },
+    "BelowMinimum": {
+        "message": "最低価格以下",
+        "description": "Result.UpdateLanguage"
+    },
+    "Unmarketable": {
+        "message": "マーケットボードで販売",
+        "description": "Result.UpdateLanguage"
+    },
+    "HelpMessage": {
+        "message": "価格を確認するには、キーバインドを長押ししてから、インベントリ内のアイテムまたはチャットでリンクされているアイテムにカーソルを合わせます。 PriceCheck設定でキーバインド(または無効)を設定できます。 価格は Universalis からの平均値であり、市場ボードで表示される特定のリストと一致しません。 /pcheck を使用してオーバーレイを開き、/pcheckconfig を使用して設定を開くことができます。 ヘルプが必要な場合は、discordに問い合わせるか、GitHub で問題を開きます。 翻訳の追加を手伝いたい場合は、Crowdin でアップデートを送信することができます。GitHub と Crowdin の両方へのリンクは設定で利用できます。",
+        "description": "PriceCheckPlugin.PrintHelpMessage"
+    },
+    "InstallThankYou": {
+        "message": "PriceCheckをインストールしていただきありがとうございます！",
+        "description": "PriceCheckPlugin.HandleFreshInstall"
+    },
+    "OverlayWindow": {
+        "message": "PriceCheckオーバーレイ",
+        "description": "OverlayWindow.DrawView"
+    },
+    "PluginDisabled": {
+        "message": "PriceCheckPluginは無効です。",
+        "description": "OverlayWindow.DrawView"
+    },
+    "WaitingForItems": {
+        "message": "アイテムを待っています。",
+        "description": "OverlayWindow.DrawView"
+    },
+    "SettingsWindow": {
+        "message": "価格チェックの設定",
+        "description": "SettingsWindow.DrawView"
+    },
+    "General": {
+        "message": "一般",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Overlay": {
+        "message": "オーバーレイ",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Chat": {
+        "message": "チャット",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Keybind": {
+        "message": "キーバインド",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Filters": {
+        "message": "Filters",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Thresholds": {
+        "message": "しきい値",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Other": {
+        "message": "その他",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "PluginEnabled": {
+        "message": "プラグイン有効化",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PluginEnabled_HelpMarker": {
+        "message": "プラグインのオン/オフの切り替え",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowPrices": {
+        "message": "価格を表示：",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowPrices_HelpMarker": {
+        "message": "価格を表示するかアドバイスを表示する",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "HoverDelay": {
+        "message": "ホバーの遅延",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "HoverDelay_HelpMarker": {
+        "message": "ホバリング後の処理の遅延 (秒)",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode": {
+        "message": "Price Mode",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode_HelpMarker": {
+        "message": "select price calculation to use",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowOverlay": {
+        "message": "オーバーレイを表示する",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "ShowOverlay_HelpMarker": {
+        "message": "オーバーレイウィンドウで価格チェック結果を表示する",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "UseOverlayColors": {
+        "message": "CAPEの重ね書きの色",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "UseOverlayColors_HelpMarker": {
+        "message": "結果に基づいてオーバーレイに異なる色を使用する",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "MaxItems": {
+        "message": "最大アイテム数",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "MaxItems_HelpMarker": {
+        "message": "一度にオーバーレイ中のアイテムの最大数を設定",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "ShowInChat": {
+        "message": "チャットの表示",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "ShowInChat_HelpMarker": {
+        "message": "価格チェック結果をチャットに表示する",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseChatColors": {
+        "message": "チャット色変更",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseChatColors_HelpMarker": {
+        "message": "結果に基づいてチャットに異なる色を使用します",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseItemLinks": {
+        "message": "アイテムリンクを使用する",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseItemLinks_HelpMarker": {
+        "message": "チャット結果にアイテムリンクを使用する",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "KeybindEnabled": {
+        "message": "キー設定をリセット",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "KeybindEnabled_HelpMarker": {
+        "message": "キーバインドが使用されているか、ホバリングするかを切り替えます",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "ModifierKeybind": {
+        "message": "追加オプション",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "ModifierKeybind_HelpMarker": {
+        "message": "修飾キーを設定 (例: shift)",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "PrimaryKeybind": {
+        "message": "標準",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "PrimaryKeybind_HelpMarker": {
+        "message": "プライマリキーを設定します（例：なし、Z）",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "RestrictInCombat": {
+        "message": "Don't process in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInCombat_HelpMarker": {
+        "message": "don't process price checks while in combat",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent": {
+        "message": "Don't process in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent_HelpMarker": {
+        "message": "don't process price checks while in content",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable": {
+        "message": "市場に出回っていないものを表示",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable_HelpMarker": {
+        "message": "非市場性のある商品を表示するかどうかを切り替えます",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "MinimumPrice": {
+        "message": "最低価格",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "MinimumPrice_HelpMarker": {
+        "message": "実際の平均値が表示される最低価格を設定します。",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "MaxUploadDays": {
+        "message": "最大ダウンロード速度",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "MaxUploadDays_HelpMarker": {
+        "message": "上限を設定して古いデータを使用しないようにする",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "OpenGithub": {
+        "message": "GitHubを開く",
+        "description": "SettingsWindow.DrawOther"
+    },
+    "PrintHelp": {
+        "message": "印刷のヘルプ",
+        "description": "SettingsWindow.DrawOther"
+    },
+    "ImproveTranslate": {
+        "message": "翻訳を追加または改善する",
+        "description": "SettingsWindow.DrawOther"
+    }
 }

@@ -1,1 +1,242 @@
-{}
+{
+    "SellOnMarketboard": {
+        "message": "在市场出售",
+        "description": "Result.UpdateLanguage"
+    },
+    "FailedToGetData": {
+        "message": "获取数据失败",
+        "description": "Result.UpdateLanguage"
+    },
+    "NoDataAvailable": {
+        "message": "没有可用数据",
+        "description": "Result.UpdateLanguage"
+    },
+    "NoRecentDataAvailable": {
+        "message": "没有近期数据",
+        "description": "Result.UpdateLanguage"
+    },
+    "BelowVendor": {
+        "message": "出售给NPC",
+        "description": "Result.UpdateLanguage"
+    },
+    "Unmarketable": {
+        "message": "该物品无法在市场出售",
+        "description": "Result.UpdateLanguage"
+    },
+    "HelpMessage": {
+        "message": "您可以通过按住快捷键并悬浮在背包物品或消息中的物品上来查看价格。快捷键可以在 PriceCheck 设定中进行更改或禁用。该价格是来自于 Universalis 的平均价格且并不等同于您在市场中看到的价格。您可以使用「/pcheck」命令来打开叠加层，「/pcheckconfig」命令来打开设定。如果您需要帮助，请在 Discord 上联系我们或在 GitHub 上新建一个 Issue。如果您希望对翻译做出贡献，请在我们的 Crowdin 上提交翻译。GitHub 和 Crowdin 的链接都可以在设定中找到。",
+        "description": "PriceCheckPlugin.PrintHelpMessage"
+    },
+    "InstallThankYou": {
+        "message": "感谢您安装 PriceCheck！",
+        "description": "PriceCheckPlugin.HandleFreshInstall"
+    },
+    "OverlayWindow": {
+        "message": "PriceCheck",
+        "description": "OverlayWindow.DrawView"
+    },
+    "PluginDisabled": {
+        "message": "PriceCheck 插件已禁用。",
+        "description": "OverlayWindow.DrawView"
+    },
+    "SettingsWindow": {
+        "message": "PriceCheck 设定",
+        "description": "SettingsWindow.DrawView"
+    },
+    "General": {
+        "message": "一般",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Overlay": {
+        "message": "叠加层",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Chat": {
+        "message": "聊天",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Toast": {
+        "message": "弹出提示",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Keybind": {
+        "message": "快捷键",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Filters": {
+        "message": "过滤",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Thresholds": {
+        "message": "临界值",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "Other": {
+        "message": "其他",
+        "description": "SettingsWindow.DrawTabs"
+    },
+    "PluginEnabled": {
+        "message": "Plugin Enabled",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PluginEnabled_HelpMarker": {
+        "message": "启用/禁用插件",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowPrices": {
+        "message": "显示价格",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowPrices_HelpMarker": {
+        "message": "显示价格或仅显示建议",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "HoverDelay": {
+        "message": "悬停延迟",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "HoverDelay_HelpMarker": {
+        "message": "悬停后处理前的延迟（秒）IMPROVE REQUIRED",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode": {
+        "message": "价格模式",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "PriceMode_HelpMarker": {
+        "message": "选择价格算法",
+        "description": "SettingsWindow.DrawGeneral"
+    },
+    "ShowOverlay": {
+        "message": "Show Overlay",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "ShowOverlay_HelpMarker": {
+        "message": "在叠加层显示价格结果",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "UseOverlayColors": {
+        "message": "使用叠加层颜色",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "UseOverlayColors_HelpMarker": {
+        "message": "根据结果为叠加层设置不同的颜色",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "MaxItems": {
+        "message": "最多项目",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "MaxItems_HelpMarker": {
+        "message": "设置叠加层一次可显示的项目数量",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "ShowInChat": {
+        "message": "在聊天中显示",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "ShowInChat_HelpMarker": {
+        "message": "在聊天中显示价格结果",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseChatColors": {
+        "message": "使用聊天颜色",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseChatColors_HelpMarker": {
+        "message": "根据结果为聊天消息设置不同的颜色",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseItemLinks": {
+        "message": "使用物品链接",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "UseItemLinks_HelpMarker": {
+        "message": "在聊天消息中使用物品链接",
+        "description": "SettingsWindow.DrawChat"
+    },
+    "ShowToast": {
+        "message": "显示弹出提示",
+        "description": "SettingsWindow.DrawToast"
+    },
+    "ShowToast_HelpMarker": {
+        "message": "在弹出提示中显示价格结果",
+        "description": "SettingsWindow.DrawToast"
+    },
+    "KeybindEnabled": {
+        "message": "使用快捷键",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "KeybindEnabled_HelpMarker": {
+        "message": "切换是否使用快捷键或仅悬浮",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "ModifierKeybind": {
+        "message": "修饰键",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "ModifierKeybind_HelpMarker": {
+        "message": "设置您的修饰键（例如 Shift）",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "PrimaryKeybind": {
+        "message": "主要键",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "PrimaryKeybind_HelpMarker": {
+        "message": "设置您的主要键（例如 None、Z）",
+        "description": "SettingsWindow.DrawKeybind"
+    },
+    "RestrictInCombat": {
+        "message": "不要在战斗中进行处理",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInCombat_HelpMarker": {
+        "message": "战斗时不处理价格检查",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent": {
+        "message": "不要在副本中进行处理",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "RestrictInContent_HelpMarker": {
+        "message": "处于副本时不处理价格检查",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable": {
+        "message": "显示不可出售的",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "ShowUnmarketable_HelpMarker": {
+        "message": "切换是否显示无法出售的物品",
+        "description": "SettingsWindow.DrawFilters"
+    },
+    "MinimumPrice": {
+        "message": "最低售价",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "MinimumPrice_HelpMarker": {
+        "message": "设置实际平均显示的最低价格",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "MaxUploadDays": {
+        "message": "最大上传天数",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "MaxUploadDays_HelpMarker": {
+        "message": "设置最大上传时间以避免获取旧数据",
+        "description": "SettingsWindow.DrawThresholds"
+    },
+    "OpenGithub": {
+        "message": "打开 GitHub",
+        "description": "SettingsWindow.DrawOther"
+    },
+    "PrintHelp": {
+        "message": "显示帮助",
+        "description": "SettingsWindow.DrawOther"
+    },
+    "ImproveTranslate": {
+        "message": "改进翻译",
+        "description": "SettingsWindow.DrawOther"
+    }
+}
