@@ -2,6 +2,7 @@
 using System.Numerics;
 
 using CheapLoc;
+using DalamudPluginCommon;
 using ImGuiNET;
 
 namespace PriceCheck
@@ -28,6 +29,9 @@ namespace PriceCheck
         {
             if (!this.priceCheckPlugin.IsLoggedIn()) return;
             if (!this.IsVisible) return;
+            if (this.priceCheckPlugin.Configuration.HideOverlayElapsed != 0 &&
+                DateUtil.CurrentTime() - this.priceCheckPlugin.LastPriceCheck >
+                this.priceCheckPlugin.Configuration.HideOverlayElapsed) return;
             var isVisible = this.IsVisible;
             this.uiScale = ImGui.GetIO().FontGlobalScale;
             ImGui.SetNextWindowSize(new Vector2(300 * this.uiScale, 150 * this.uiScale), ImGuiCond.FirstUseEver);

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Globalization;
 
 using Dalamud.Game.Text;
+using DalamudPluginCommon;
 
 namespace PriceCheck
 {
@@ -238,6 +239,7 @@ namespace PriceCheck
         /// <param name="detectedItem">detected item.</param>
         internal void ProcessItem(object sender, DetectedItem detectedItem)
         {
+            this.priceCheckPlugin.LastPriceCheck = DateUtil.CurrentTime();
             PricedItem pricedItem;
             if (detectedItem.IsHQ == null)
             {

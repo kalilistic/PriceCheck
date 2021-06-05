@@ -52,6 +52,9 @@ namespace PriceCheck
         /// <inheritdoc/>
         public event EventHandler<DetectedItem> OnItemDetected = null!;
 
+        /// <inheritdoc />
+        public long LastPriceCheck { get; set; }
+
         /// <inheritdoc/>
         public IPriceService PriceService { get; private set; } = null!;
 
@@ -236,11 +239,11 @@ namespace PriceCheck
         {
             try
             {
-                if (args.ItemId == 0) return;
-                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
+                if (!this.ShouldPriceCheck(args.ItemId)) return;
+                this.BuildCancellationToken();
                 Task.Run(async () =>
                 {
-                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource.Token)
+                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource!.Token)
                               .ConfigureAwait(false);
                     this.OnItemDetected.Invoke(this, new DetectedItem(args.ItemId, args.ItemHq));
                 });
@@ -272,35 +275,44 @@ namespace PriceCheck
             this.pluginInterface.UiBuilder.OnOpenConfigUi += (_, _) => this.DrawConfigUI();
         }
 
+        private bool ShouldPriceCheck(ulong itemId)
+        {
+            if (this.Configuration.Enabled &&
+                itemId != 0 &&
+                this.PluginInterface.Data.IsDataReady &&
+                this.PluginInterface.ClientState?.LocalPlayer?.HomeWorld != null &&
+                !(this.Configuration.RestrictInCombat && this.ClientState.Condition.InCombat()) &&
+                !(this.Configuration.RestrictInContent && this.InContent()))
+            {
+                return true;
+            }
+
+            this.itemCancellationTokenSource = null;
+            return false;
+        }
+
+        private void BuildCancellationToken()
+        {
+            if (this.itemCancellationTokenSource != null)
+            {
+                if (!this.itemCancellationTokenSource.IsCancellationRequested)
+                    this.itemCancellationTokenSource.Cancel();
+                this.itemCancellationTokenSource.Dispose();
+            }
+
+            this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
+        }
+
         private void HoveredItemChanged(object sender, ulong itemId)
         {
             try
             {
-                if (!this.Configuration.Enabled) return;
-                if (!this.PluginInterface.Data.IsDataReady) return;
-                if (this.PluginInterface.ClientState?.LocalPlayer?.HomeWorld == null) return;
+                if (!this.ShouldPriceCheck(itemId)) return;
                 if (!this.IsKeyBindPressed()) return;
-                if (this.Configuration.RestrictInCombat && this.ClientState.Condition.InCombat()) return;
-                if (this.Configuration.RestrictInContent && this.InContent()) return;
-
-                if (this.itemCancellationTokenSource != null)
-                {
-                    if (!this.itemCancellationTokenSource.IsCancellationRequested)
-                        this.itemCancellationTokenSource.Cancel();
-                    this.itemCancellationTokenSource.Dispose();
-                }
-
-                if (itemId == 0)
-                {
-                    this.itemCancellationTokenSource = null;
-                    return;
-                }
-
-                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
-
+                this.BuildCancellationToken();
                 Task.Run(async () =>
                 {
-                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource.Token)
+                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource!.Token)
                               .ConfigureAwait(false);
                     this.OnItemDetected.Invoke(this, new DetectedItem(itemId));
                 });

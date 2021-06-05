@@ -270,9 +270,21 @@ namespace PriceCheck
                 "MaxItems_HelpMarker",
                 "set max number of items in overlay at a time"));
             var maxItemsInOverlay = this.plugin.Configuration.MaxItemsInOverlay;
-            if (ImGui.SliderInt("###PriceCheck_MaxItems_Slider", ref maxItemsInOverlay, 0, 30))
+            if (ImGui.SliderInt("###PriceCheck_MaxItems_Slider", ref maxItemsInOverlay, 1, 30))
             {
                 this.plugin.Configuration.MaxItemsInOverlay = maxItemsInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGui.Spacing();
+            ImGui.Text(Loc.Localize("HideOverlayTimer", "Hide Overlay Timer"));
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "HideOverlayTimer_HelpMarker",
+                                           "hide overlay after x amount of seconds since last price check - you can this by setting to zero."));
+            var hideOverlayTimer = this.plugin.Configuration.HideOverlayElapsed.FromMillisecondsToSeconds();
+            if (ImGui.SliderInt("###PriceCheck_HideOverlay_Slider", ref hideOverlayTimer, 0, 300))
+            {
+                this.plugin.Configuration.HideOverlayElapsed = hideOverlayTimer.FromSecondsToMilliseconds();
                 this.plugin.SaveConfig();
             }
         }

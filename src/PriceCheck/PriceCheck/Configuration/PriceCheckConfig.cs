@@ -111,5 +111,10 @@ namespace PriceCheck
         /// Gets or sets the maximum number of upload days.
         /// </summary>
         public int MaxUploadDays { get; set; } = 60;
+
+        /// <summary>
+        /// Gets or sets the number of milliseconds to hide overlay after use.
+        /// </summary>
+        public int HideOverlayElapsed { get; set; }
     }
 }

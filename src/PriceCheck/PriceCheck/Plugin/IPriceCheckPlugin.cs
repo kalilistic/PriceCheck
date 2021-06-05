@@ -25,6 +25,11 @@ namespace PriceCheck
         PriceCheckConfig Configuration { get; }
 
         /// <summary>
+        /// Gets or sets last price check conducted in unix timestamp.
+        /// </summary>
+        long LastPriceCheck { get; set; }
+
+        /// <summary>
         /// Send toast.
         /// </summary>
         /// <param name="pricedItem">priced Item.</param>
