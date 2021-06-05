@@ -35,10 +35,6 @@
     "message": "Obrigado por instalar o PriceCheck!",
     "description": "PriceCheckPlugin.HandleFreshInstall"
   },
-  "OverlayWindow": {
-    "message": "PriceCheck Overlay",
-    "description": "OverlayWindow.DrawView"
-  },
   "PluginDisabled": {
     "message": "PriceCheckPlugin está desativado.",
     "description": "OverlayWindow.DrawView"
@@ -53,14 +49,6 @@
   },
   "General": {
     "message": "Geral",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Overlay": {
-    "message": "Overlay",
-    "description": "SettingsWindow.DrawTabs"
-  },
-  "Chat": {
-    "message": "Chat",
     "description": "SettingsWindow.DrawTabs"
   },
   "Keybind": {
@@ -101,14 +89,6 @@
   },
   "HoverDelay_HelpMarker": {
     "message": "atraso (em segundos) antes de processar após passar o cursor",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "PriceMode": {
-    "message": "Price Mode",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "PriceMode_HelpMarker": {
-    "message": "select price calculation to use",
     "description": "SettingsWindow.DrawGeneral"
   },
   "ShowOverlay": {
@@ -189,14 +169,6 @@
   },
   "RestrictInCombat_HelpMarker": {
     "message": "don't process price checks while in combat",
-    "description": "SettingsWindow.DrawFilters"
-  },
-  "RestrictInContent": {
-    "message": "Don't process in content",
-    "description": "SettingsWindow.DrawFilters"
-  },
-  "RestrictInContent_HelpMarker": {
-    "message": "don't process price checks while in content",
     "description": "SettingsWindow.DrawFilters"
   },
   "ShowUnmarketable": {

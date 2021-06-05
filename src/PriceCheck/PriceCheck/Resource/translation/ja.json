@@ -103,14 +103,6 @@
     "message": "ホバリング後の処理の遅延 (秒)",
     "description": "SettingsWindow.DrawGeneral"
   },
-  "PriceMode": {
-    "message": "Price Mode",
-    "description": "SettingsWindow.DrawGeneral"
-  },
-  "PriceMode_HelpMarker": {
-    "message": "select price calculation to use",
-    "description": "SettingsWindow.DrawGeneral"
-  },
   "ShowOverlay": {
     "message": "オーバーレイを表示する",
     "description": "SettingsWindow.DrawOverlay"
@@ -182,22 +174,6 @@
   "PrimaryKeybind_HelpMarker": {
     "message": "プライマリキーを設定します（例：なし、Z）",
     "description": "SettingsWindow.DrawKeybind"
-  },
-  "RestrictInCombat": {
-    "message": "Don't process in combat",
-    "description": "SettingsWindow.DrawFilters"
-  },
-  "RestrictInCombat_HelpMarker": {
-    "message": "don't process price checks while in combat",
-    "description": "SettingsWindow.DrawFilters"
-  },
-  "RestrictInContent": {
-    "message": "Don't process in content",
-    "description": "SettingsWindow.DrawFilters"
-  },
-  "RestrictInContent_HelpMarker": {
-    "message": "don't process price checks while in content",
-    "description": "SettingsWindow.DrawFilters"
   },
   "ShowUnmarketable": {
     "message": "市場に出回っていないものを表示",
