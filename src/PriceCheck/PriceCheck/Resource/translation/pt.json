@@ -63,6 +63,10 @@
         "message": "Chat",
         "description": "SettingsWindow.DrawTabs"
     },
+    "Toast": {
+        "message": "Toast (Aviso na tela)",
+        "description": "SettingsWindow.DrawTabs"
+    },
     "Keybind": {
         "message": "Teclas de atalho",
         "description": "SettingsWindow.DrawTabs"
@@ -158,6 +162,14 @@
     "UseItemLinks_HelpMarker": {
         "message": "usar links de itens nos resultados no chat",
         "description": "SettingsWindow.DrawChat"
+    },
+    "ShowToast": {
+        "message": "Mostrar Toast",
+        "description": "SettingsWindow.DrawToast"
+    },
+    "ShowToast_HelpMarker": {
+        "message": "mostrar resultados da busca de preços no toast",
+        "description": "SettingsWindow.DrawToast"
     },
     "KeybindEnabled": {
         "message": "Usar Teclas de Atalho",
