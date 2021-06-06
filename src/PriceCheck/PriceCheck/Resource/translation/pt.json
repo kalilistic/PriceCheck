@@ -31,6 +31,10 @@
         "message": "Para verificar preços, segure sua tecla de atalho e então passe o mouse sobre um item do seu inventário ou linkado no chat. Você pode definir seu atalho (ou desativá-lo) nas configurações do PriceCheck. Os preços são uma média da Universalis e não corresponderão a nenhum anúncio específico que possa achar no mercado. Você pode usar /pcheck para abrir o overlay e /pcheckconfig para abrir as configurações. Se precisar de ajuda, entre em contato no Discord ou abra um issue no GitHub. Se você quiser ajudar a adicionar traduções, você pode enviar atualizações no Crowdin. Links para o GitHub e Crowdin estão disponíveis nas configurações.",
         "description": "PriceCheckPlugin.PrintHelpMessage"
     },
+    "ContextMenuItem": {
+        "message": "Verificar preço no Marketboard",
+        "description": "PriceCheckPlugin.OnOpenInventoryContextMenu"
+    },
     "InstallThankYou": {
         "message": "Obrigado por instalar o PriceCheck!",
         "description": "PriceCheckPlugin.HandleFreshInstall"
@@ -137,6 +141,14 @@
     },
     "MaxItems_HelpMarker": {
         "message": "define o número máximo de itens simultâneos no overlay",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "HideOverlayTimer": {
+        "message": "Timer para ocultar sobreposição",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "HideOverlayTimer_HelpMarker": {
+        "message": "ocultar sobreposição após x segundos desde a última verificação de preço - você pode definir como zero.",
         "description": "SettingsWindow.DrawOverlay"
     },
     "ShowInChat": {

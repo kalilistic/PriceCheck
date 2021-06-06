@@ -19,6 +19,10 @@
         "message": "出售给NPC",
         "description": "Result.UpdateLanguage"
     },
+    "BelowMinimum": {
+        "message": "低于最低价格",
+        "description": "Result.UpdateLanguage"
+    },
     "Unmarketable": {
         "message": "该物品无法在市场出售",
         "description": "Result.UpdateLanguage"
@@ -26,6 +30,10 @@
     "HelpMessage": {
         "message": "您可以通过按住快捷键并悬浮在背包物品或消息中的物品上来查看价格。快捷键可以在 PriceCheck 设定中进行更改或禁用。该价格是来自于 Universalis 的平均价格且并不等同于您在市场中看到的价格。您可以使用「/pcheck」命令来打开叠加层，「/pcheckconfig」命令来打开设定。如果您需要帮助，请在 Discord 上联系我们或在 GitHub 上新建一个 Issue。如果您希望对翻译做出贡献，请在我们的 Crowdin 上提交翻译。GitHub 和 Crowdin 的链接都可以在设定中找到。",
         "description": "PriceCheckPlugin.PrintHelpMessage"
+    },
+    "ContextMenuItem": {
+        "message": "查询市场价格",
+        "description": "PriceCheckPlugin.OnOpenInventoryContextMenu"
     },
     "InstallThankYou": {
         "message": "感谢您安装 PriceCheck！",
@@ -37,6 +45,10 @@
     },
     "PluginDisabled": {
         "message": "PriceCheck 插件已禁用。",
+        "description": "OverlayWindow.DrawView"
+    },
+    "WaitingForItems": {
+        "message": "正在等待物品。",
         "description": "OverlayWindow.DrawView"
     },
     "SettingsWindow": {
@@ -129,6 +141,14 @@
     },
     "MaxItems_HelpMarker": {
         "message": "设置叠加层一次可显示的项目数量",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "HideOverlayTimer": {
+        "message": "浮窗显示时间",
+        "description": "SettingsWindow.DrawOverlay"
+    },
+    "HideOverlayTimer_HelpMarker": {
+        "message": "在 X 秒后关闭价格浮窗，你可以将其设置为 0 以禁用该功能。",
         "description": "SettingsWindow.DrawOverlay"
     },
     "ShowInChat": {
