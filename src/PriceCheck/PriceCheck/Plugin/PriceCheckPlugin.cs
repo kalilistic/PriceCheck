@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Dalamud.Plugin;
 using DalamudPluginCommon;
 using Lumina.Excel.GeneratedSheets;
 using XivCommon;
+using XivCommon.Functions.ContextMenu;
 using XivCommon.Functions.ContextMenu.Inventory;
 
 namespace PriceCheck
@@ -236,6 +238,19 @@ namespace PriceCheck
             Result.UpdateLanguage();
         }
 
+        private static int? GetActionIndex(ICollection<byte> configActionIds, IReadOnlyList<byte> currentActionIds)
+        {
+            for (var i = 0; i < currentActionIds.Count; i++)
+            {
+                if (configActionIds.Contains(currentActionIds[i]))
+                {
+                    return i;
+                }
+            }
+
+            return null;
+        }
+
         private void ContextItemChanged(InventoryContextMenuItemSelectedArgs args)
         {
             try
@@ -257,10 +272,39 @@ namespace PriceCheck
 
         private void OnOpenInventoryContextMenu(InventoryContextMenuOpenArgs args)
         {
-            if (args.ParentAddonName is "Inventory" or "InventoryExpansion" or "InventoryLarge" or "InventoryRetainer" or "InventoryRetainerLarge" or "Character")
+            if (!this.Configuration.ShowContextMenu) return;
+
+            // setup
+            var index = 0;
+            var actionIds = args.Items.Select(baseContextMenuItem => ((NativeContextMenuItem)baseContextMenuItem).InternalAction).ToList();
+            var contextMenuItem = new InventoryContextMenuItem(
+                Loc.Localize("ContextMenuItem", "Check Marketboard Price"), this.ContextItemChanged);
+
+            // default
+            if (this.Configuration.ShowContextAboveThis.Count == 0 &&
+                this.Configuration.ShowContextBelowThis.Count == 0)
             {
-                args.Items.Add(new InventoryContextMenuItem(Loc.Localize("ContextMenuItem", "Check Marketboard Price"), this.ContextItemChanged));
+                args.Items.Add(contextMenuItem);
+                return;
             }
+
+            // get show above index
+            var relativeIndex = GetActionIndex(this.Configuration.ShowContextAboveThis, actionIds);
+            if (relativeIndex != null)
+            {
+                index = (int)relativeIndex;
+                actionIds.RemoveRange(index, actionIds.Count - index);
+            }
+
+            // get show below index
+            relativeIndex = GetActionIndex(this.Configuration.ShowContextBelowThis, actionIds);
+            if (relativeIndex != null)
+            {
+                index = (int)relativeIndex + 1;
+            }
+
+            // insert price check menu item
+            args.Items.Insert(index, contextMenuItem);
         }
 
         private void LoadServices()

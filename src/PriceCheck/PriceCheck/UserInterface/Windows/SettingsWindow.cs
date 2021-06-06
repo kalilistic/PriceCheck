@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 
 using CheapLoc;
+using Dalamud.Interface.Colors;
 using Dalamud.Interface.Components;
 using DalamudPluginCommon;
 using ImGuiNET;
@@ -18,6 +19,7 @@ namespace PriceCheck
         private readonly IPriceCheckPlugin plugin;
         private Tab currentTab = Tab.General;
         private float uiScale;
+        private int currentInternalAction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsWindow"/> class.
@@ -42,6 +44,7 @@ namespace PriceCheck
             Keybind,
             Filters,
             Thresholds,
+            ContextMenu,
             Other,
         }
 
@@ -52,7 +55,7 @@ namespace PriceCheck
             if (!this.IsVisible) return;
             var isVisible = this.IsVisible;
             this.uiScale = ImGui.GetIO().FontGlobalScale;
-            ImGui.SetNextWindowSize(new Vector2(450 * this.uiScale, 240 * this.uiScale), ImGuiCond.Appearing);
+            ImGui.SetNextWindowSize(new Vector2(540 * this.uiScale, 300 * this.uiScale), ImGuiCond.Appearing);
             if (ImGui.Begin(
                 Loc.Localize("SettingsWindow", "PriceCheck Settings") + "###PriceCheck_Settings_Window",
                 ref isVisible,
@@ -101,6 +104,12 @@ namespace PriceCheck
                     case Tab.Thresholds:
                     {
                         this.DrawThresholds();
+                        break;
+                    }
+
+                    case Tab.ContextMenu:
+                    {
+                        this.DrawContextMenu();
                         break;
                     }
 
@@ -162,6 +171,12 @@ namespace PriceCheck
                 if (ImGui.BeginTabItem(Loc.Localize("Thresholds", "Thresholds") + "###PriceCheck_Thresholds_Tab"))
                 {
                     this.currentTab = Tab.Thresholds;
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem(Loc.Localize("ContextMenu", "Context Menu") + "###PriceCheck_ContextMenu_Tab"))
+                {
+                    this.currentTab = Tab.ContextMenu;
                     ImGui.EndTabItem();
                 }
 
@@ -462,6 +477,112 @@ namespace PriceCheck
             {
                 this.plugin.Configuration.MaxUploadDays = Math.Abs(maxUploadDays);
                 this.plugin.SaveConfig();
+            }
+        }
+
+        private void DrawContextMenu()
+        {
+            var showContextMenu = this.plugin.Configuration.ShowContextMenu;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowContextMenu", "Show Context Menu") +
+                "###PriceCheck_ShowContextMenu_Checkbox",
+                ref showContextMenu))
+            {
+                this.plugin.Configuration.ShowContextMenu = showContextMenu;
+                this.plugin.SaveConfig();
+            }
+
+            ImGui.Spacing();
+            ImGui.Text(Loc.Localize("ShowContextPosition", "Set context menu item position"));
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowContextPosition_HelpMarker",
+                                           "show above or below the first matching item in the menu."));
+
+            var names = Enum.GetNames(typeof(InternalAction));
+            var values = Enum.GetValues(typeof(InternalAction)).Cast<byte>().ToArray();
+            ImGui.SetNextItemWidth(ImGui.GetWindowSize().X / 2 * this.Scale);
+            ImGui.Combo("###PriceCheck_ShowContext_Combo", ref this.currentInternalAction, names, names.Length);
+            ImGui.SameLine();
+
+            if (ImGui.SmallButton(Loc.Localize("ShowAbove", "Show Above") + "###PriceCheck_ContextAbove_Button"))
+            {
+                if (this.plugin.Configuration.ShowContextAboveThis.Contains(
+                    values[this.currentInternalAction]) || this.plugin.Configuration.ShowContextBelowThis.Contains(
+                        values[this.currentInternalAction]))
+                {
+                    ImGui.OpenPopup("###PriceCheck_DupeContext_Popup");
+                }
+                else
+                {
+                    this.plugin.Configuration.ShowContextAboveThis.Add(
+                        values[this.currentInternalAction]);
+                    this.plugin.SaveConfig();
+                }
+            }
+
+            ImGui.SameLine();
+
+            if (ImGui.SmallButton(Loc.Localize("ShowBelow", "Show Below") + "###PriceCheck_ContextBelow_Button"))
+            {
+                if (this.plugin.Configuration.ShowContextAboveThis.Contains(
+                        values[this.currentInternalAction]) || this.plugin.Configuration.ShowContextBelowThis.Contains(
+                        values[this.currentInternalAction]))
+                {
+                    ImGui.OpenPopup("###PriceCheck_DupeContext_Popup");
+                }
+                else
+                {
+                    this.plugin.Configuration.ShowContextBelowThis.Add(
+                        values[this.currentInternalAction]);
+                    this.plugin.SaveConfig();
+                }
+            }
+
+            ImGui.Spacing();
+            ImGui.Spacing();
+            ImGui.TextColored(ImGuiColors.DalamudGrey, Loc.Localize("ShowAboveList", "Show Above"));
+            if (this.plugin.Configuration.ShowContextAboveThis.Count > 0)
+            {
+                foreach (var contextAbove in this.plugin.Configuration.ShowContextAboveThis.ToList())
+                {
+                    var index = Array.IndexOf(values, contextAbove);
+                    ImGui.Text(names[index]);
+                    if (ImGui.IsItemClicked())
+                    {
+                        this.plugin.Configuration.ShowContextAboveThis.Remove(contextAbove);
+                        this.plugin.SaveConfig();
+                    }
+                }
+            }
+            else
+            {
+                ImGui.Text(Loc.Localize("NoContextItems", "None."));
+            }
+
+            ImGui.Spacing();
+            ImGui.TextColored(ImGuiColors.DalamudGrey, Loc.Localize("ShowBelowList", "Show Below"));
+            if (this.plugin.Configuration.ShowContextBelowThis.Count > 0)
+            {
+                foreach (var contextBelow in this.plugin.Configuration.ShowContextBelowThis.ToList())
+                {
+                    var index = Array.IndexOf(values, contextBelow);
+                    ImGui.Text(names[index]);
+                    if (ImGui.IsItemClicked())
+                    {
+                        this.plugin.Configuration.ShowContextBelowThis.Remove(contextBelow);
+                        this.plugin.SaveConfig();
+                    }
+                }
+            }
+            else
+            {
+                ImGui.Text(Loc.Localize("NoContextItems", "None."));
+            }
+
+            if (ImGui.BeginPopup("###PriceCheck_DupeContext_Popup"))
+            {
+                ImGui.Text(Loc.Localize("DupeContextBelow", "This context item is already added!"));
+                ImGui.EndPopup();
             }
         }
 

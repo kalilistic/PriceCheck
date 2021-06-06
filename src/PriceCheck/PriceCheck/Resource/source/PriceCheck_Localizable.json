@@ -83,6 +83,10 @@
         "message": "Thresholds",
         "description": "SettingsWindow.DrawTabs"
     },
+    "ContextMenu": {
+        "message": "Context Menu",
+        "description": "SettingsWindow.DrawTabs"
+    },
     "Other": {
         "message": "Other",
         "description": "SettingsWindow.DrawTabs"
@@ -246,6 +250,42 @@
     "MaxUploadDays_HelpMarker": {
         "message": "set maximum age to avoid using old data",
         "description": "SettingsWindow.DrawThresholds"
+    },
+    "ShowContextMenu": {
+        "message": "Show Context Menu",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "ShowContextPosition": {
+        "message": "Set context menu item position",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "ShowContextPosition_HelpMarker": {
+        "message": "show above or below the first matching item in the menu.",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "ShowAbove": {
+        "message": "Show Above",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "ShowBelow": {
+        "message": "Show Below",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "ShowAboveList": {
+        "message": "Show Above",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "NoContextItems": {
+        "message": "None.",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "ShowBelowList": {
+        "message": "Show Below",
+        "description": "SettingsWindow.DrawContextMenu"
+    },
+    "DupeContextBelow": {
+        "message": "This context item is already added!",
+        "description": "SettingsWindow.DrawContextMenu"
     },
     "OpenGithub": {
         "message": "Open Github",

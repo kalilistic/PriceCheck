@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using DalamudPluginCommon;
 
 namespace PriceCheck
@@ -116,5 +118,20 @@ namespace PriceCheck
         /// Gets or sets the number of milliseconds to hide overlay after use.
         /// </summary>
         public int HideOverlayElapsed { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether context menu items should be enabled.
+        /// </summary>
+        public bool ShowContextMenu { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets list of items to show above.
+        /// </summary>
+        public List<byte> ShowContextAboveThis { get; set; } = new ();
+
+        /// <summary>
+        /// Gets or sets list of items to show below.
+        /// </summary>
+        public List<byte> ShowContextBelowThis { get; set; } = new ();
     }
 }
