@@ -589,13 +589,11 @@ namespace PriceCheck
         private void DrawOther()
         {
             var buttonSize = new Vector2(160f * this.uiScale, 25f * this.uiScale);
-            var heightOffset = 100f * this.uiScale;
             ImGui.Spacing();
             if (ImGui.Button(Loc.Localize("OpenGithub", "Open Github") + "###PriceCheck_OpenGithub_Button", buttonSize))
                 Process.Start("https://github.com/kalilistic/PriceCheck");
             if (ImGui.Button(Loc.Localize("PrintHelp", "Print Help") + "###PriceCheck_PrintHelp_Button", buttonSize))
                 this.plugin.PrintHelpMessage();
-            ImGui.SetCursorPosY(heightOffset);
             if (ImGui.Button(
                 Loc.Localize("ImproveTranslate", "Improve Translations") + "###PriceCheck_ImproveTranslate_Button",
                 buttonSize))
