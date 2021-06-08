@@ -255,8 +255,21 @@ namespace PriceCheck
         {
             try
             {
-                if (!this.ShouldPriceCheck(args.ItemId)) return;
-                this.BuildCancellationToken();
+                if (!this.ShouldPriceCheck()) return;
+                if (this.itemCancellationTokenSource != null)
+                {
+                    if (!this.itemCancellationTokenSource.IsCancellationRequested)
+                        this.itemCancellationTokenSource.Cancel();
+                    this.itemCancellationTokenSource.Dispose();
+                }
+
+                if (args.ItemId == 0)
+                {
+                    this.itemCancellationTokenSource = null;
+                    return;
+                }
+
+                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
                 Task.Run(async () =>
                 {
                     await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource!.Token)
@@ -320,10 +333,9 @@ namespace PriceCheck
             this.pluginInterface.UiBuilder.OnOpenConfigUi += (_, _) => this.DrawConfigUI();
         }
 
-        private bool ShouldPriceCheck(ulong itemId)
+        private bool ShouldPriceCheck()
         {
             if (this.Configuration.Enabled &&
-                itemId != 0 &&
                 this.PluginInterface.Data.IsDataReady &&
                 this.PluginInterface.ClientState?.LocalPlayer?.HomeWorld != null &&
                 !(this.Configuration.RestrictInCombat && this.ClientState.Condition.InCombat()) &&
@@ -336,25 +348,26 @@ namespace PriceCheck
             return false;
         }
 
-        private void BuildCancellationToken()
-        {
-            if (this.itemCancellationTokenSource != null)
-            {
-                if (!this.itemCancellationTokenSource.IsCancellationRequested)
-                    this.itemCancellationTokenSource.Cancel();
-                this.itemCancellationTokenSource.Dispose();
-            }
-
-            this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
-        }
-
         private void HoveredItemChanged(object sender, ulong itemId)
         {
             try
             {
-                if (!this.ShouldPriceCheck(itemId)) return;
+                if (!this.ShouldPriceCheck()) return;
                 if (!this.IsKeyBindPressed()) return;
-                this.BuildCancellationToken();
+                if (this.itemCancellationTokenSource != null)
+                {
+                    if (!this.itemCancellationTokenSource.IsCancellationRequested)
+                        this.itemCancellationTokenSource.Cancel();
+                    this.itemCancellationTokenSource.Dispose();
+                }
+
+                if (itemId == 0)
+                {
+                    this.itemCancellationTokenSource = null;
+                    return;
+                }
+
+                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
                 Task.Run(async () =>
                 {
                     await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource!.Token)
