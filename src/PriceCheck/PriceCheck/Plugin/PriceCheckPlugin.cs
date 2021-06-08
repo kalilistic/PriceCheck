@@ -302,18 +302,24 @@ namespace PriceCheck
             }
 
             // get show above index
-            var relativeIndex = GetActionIndex(this.Configuration.ShowContextAboveThis, actionIds);
-            if (relativeIndex != null)
+            var relativeAboveIndex = GetActionIndex(this.Configuration.ShowContextAboveThis, actionIds);
+            if (relativeAboveIndex != null)
             {
-                index = (int)relativeIndex;
+                index = (int)relativeAboveIndex;
                 actionIds.RemoveRange(index, actionIds.Count - index);
             }
 
             // get show below index
-            relativeIndex = GetActionIndex(this.Configuration.ShowContextBelowThis, actionIds);
-            if (relativeIndex != null)
+            var relativeBelowIndex = GetActionIndex(this.Configuration.ShowContextBelowThis, actionIds);
+            if (relativeBelowIndex != null)
             {
-                index = (int)relativeIndex + 1;
+                index = (int)relativeBelowIndex + 1;
+            }
+
+            // default to bottom if nothing found
+            if (relativeAboveIndex == null && relativeBelowIndex == null)
+            {
+                index = args.Items.Count;
             }
 
             // insert price check menu item
