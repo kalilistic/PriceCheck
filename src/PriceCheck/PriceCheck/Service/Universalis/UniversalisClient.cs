@@ -8,8 +8,10 @@ using Newtonsoft.Json;
 
 namespace PriceCheck
 {
-    /// <inheritdoc />
-    public class UniversalisClient : IUniversalisClient
+    /// <summary>
+    /// Universalis client.
+    /// </summary>
+    public class UniversalisClient
     {
         private const string Endpoint = "https://universalis.app/api/";
         private readonly HttpClient httpClient;
@@ -18,7 +20,7 @@ namespace PriceCheck
         /// Initializes a new instance of the <see cref="UniversalisClient"/> class.
         /// </summary>
         /// <param name="priceCheckPlugin">price check plugin.</param>
-        public UniversalisClient(IPriceCheckPlugin priceCheckPlugin)
+        public UniversalisClient(PriceCheckPlugin priceCheckPlugin)
         {
             this.httpClient = new HttpClient
             {
@@ -27,14 +29,21 @@ namespace PriceCheck
             };
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Get market board data.
+        /// </summary>
+        /// <param name="worldId">world id.</param>
+        /// <param name="itemId">item id.</param>
+        /// <returns>market board data.</returns>
         public MarketBoardData? GetMarketBoard(uint worldId, ulong itemId)
         {
             var marketBoardFromAPI = this.GetMarketBoardData(worldId, itemId);
             return marketBoardFromAPI;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Dispose client.
+        /// </summary>
         public void Dispose()
         {
             this.httpClient.Dispose();

@@ -2,31 +2,45 @@ using ImGuiNET;
 
 namespace PriceCheck
 {
-    /// <inheritdoc />
-    public abstract class WindowBase : IWindowBase
+    /// <summary>
+    /// Window base.
+    /// </summary>
+    public abstract class WindowBase
     {
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets a value indicating whether gets isVisible.
+        /// </summary>
         public bool IsVisible { get; set; }
 
-        /// <inheritdoc/>
-        public float Scale => ImGui.GetIO().FontGlobalScale;
+        /// <summary>
+        /// Gets UI scale.
+        /// </summary>
+        protected static float Scale => ImGui.GetIO().FontGlobalScale;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Draw view.
+        /// </summary>
         public abstract void DrawView();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Toggle view.
+        /// </summary>
         public void ToggleView()
         {
             this.IsVisible = !this.IsVisible;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Show view.
+        /// </summary>
         public void ShowView()
         {
             this.IsVisible = true;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Hide view.
+        /// </summary>
         public void HideView()
         {
             this.IsVisible = false;

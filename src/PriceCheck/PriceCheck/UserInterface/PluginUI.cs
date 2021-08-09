@@ -7,7 +7,7 @@
         /// Initializes a new instance of the <see cref="PluginUI"/> class.
         /// </summary>
         /// <param name="plugin">price check plugin.</param>
-        public PluginUI(IPriceCheckPlugin plugin)
+        public PluginUI(PriceCheckPlugin plugin)
             : base(plugin)
         {
         }

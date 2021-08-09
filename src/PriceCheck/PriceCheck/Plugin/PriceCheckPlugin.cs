@@ -21,7 +21,7 @@ namespace PriceCheck
     /// <summary>
     /// PriceCheck plugin.
     /// </summary>
-    public class PriceCheckPlugin : IPriceCheckPlugin
+    public class PriceCheckPlugin
     {
         /// <summary>
         /// Plugin service.
@@ -55,21 +55,29 @@ namespace PriceCheck
             this.common.Functions.ContextMenu.OpenInventoryContextMenu += this.OnOpenInventoryContextMenu;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Item detected event handler.
+        /// </summary>
         public event EventHandler<DetectedItem> OnItemDetected = null!;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets last price check conducted in unix timestamp.
+        /// </summary>
         public long LastPriceCheck { get; set; }
 
-        /// <inheritdoc/>
-        public IPriceService PriceService { get; private set; } = null!;
+        /// <summary>
+        /// Gets price service.
+        /// </summary>
+        public PriceService PriceService { get; private set; } = null!;
 
         /// <summary>
         /// Gets or sets plugin configuration.
         /// </summary>
         public PriceCheckConfig Configuration { get; set; } = null!;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets plugin configuration.
+        /// </summary>
         public void PrintHelpMessage()
         {
             this.PluginService.Chat.PrintNotice(Loc.Localize(
@@ -82,32 +90,48 @@ namespace PriceCheck
                                                     "submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings."));
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Find item by id.
+        /// </summary>
+        /// <param name="itemId">item id.</param>
+        /// <returns>item.</returns>
         public Item? GetItemById(uint itemId)
         {
             return this.PluginService.GameData.Item(itemId);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Get player home world id.
+        /// </summary>
+        /// <returns>home world id.</returns>
         public uint GetHomeWorldId()
         {
             return this.PluginService.ClientState.LocalPlayer.HomeWorldId();
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Indicator if logged in.
+        /// </summary>
+        /// <returns>logged in indicator.</returns>
         public bool IsLoggedIn()
         {
             return this.PluginService.ClientState.IsLoggedIn();
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Send toast.
+        /// </summary>
+        /// <param name="pricedItem">priced Item.</param>
         public void SendToast(PricedItem pricedItem)
         {
             this.PluginService.PluginInterface.Framework.Gui.Toast.ShowNormal(
                 $"{pricedItem.DisplayName} {(char)SeIconChar.ArrowRight} {pricedItem.Message}");
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Print item message.
+        /// </summary>
+        /// <param name="pricedItem">priced item.</param>
         public void PrintItemMessage(PricedItem pricedItem)
         {
             var payloadList = new List<Payload>
@@ -172,7 +196,9 @@ namespace PriceCheck
             this.pluginInterface.Dispose();
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Save plugin configuration.
+        /// </summary>
         public void SaveConfig()
         {
             this.PluginService.SaveConfig(this.Configuration);

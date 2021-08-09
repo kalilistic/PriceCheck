@@ -15,13 +15,13 @@ namespace PriceCheck
         /// </summary>
         public SettingsWindow SettingsWindow = null!;
 
-        private readonly IPriceCheckPlugin plugin;
+        private readonly PriceCheckPlugin plugin;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginUIBase"/> class.
         /// </summary>
         /// <param name="plugin">price check plugin.</param>
-        protected PluginUIBase(IPriceCheckPlugin plugin)
+        protected PluginUIBase(PriceCheckPlugin plugin)
         {
             this.plugin = plugin;
             this.BuildWindows();

@@ -16,7 +16,7 @@ namespace PriceCheck
     /// </summary>
     public class SettingsWindow : WindowBase
     {
-        private readonly IPriceCheckPlugin plugin;
+        private readonly PriceCheckPlugin plugin;
         private Tab currentTab = Tab.General;
         private float uiScale;
         private int currentInternalAction;
@@ -25,7 +25,7 @@ namespace PriceCheck
         /// Initializes a new instance of the <see cref="SettingsWindow"/> class.
         /// </summary>
         /// <param name="plugin">price check plugin.</param>
-        public SettingsWindow(IPriceCheckPlugin plugin)
+        public SettingsWindow(PriceCheckPlugin plugin)
         {
             this.plugin = plugin;
         }
@@ -500,7 +500,7 @@ namespace PriceCheck
 
             var names = Enum.GetNames(typeof(InternalAction));
             var values = Enum.GetValues(typeof(InternalAction)).Cast<byte>().ToArray();
-            ImGui.SetNextItemWidth(ImGui.GetWindowSize().X / 2 * this.Scale);
+            ImGui.SetNextItemWidth(ImGui.GetWindowSize().X / 2 * Scale);
             ImGui.Combo("###PriceCheck_ShowContext_Combo", ref this.currentInternalAction, names, names.Length);
             ImGui.SameLine();
 

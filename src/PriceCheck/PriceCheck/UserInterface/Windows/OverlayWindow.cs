@@ -12,14 +12,14 @@ namespace PriceCheck
     /// </summary>
     public class OverlayWindow : WindowBase
     {
-        private readonly IPriceCheckPlugin priceCheckPlugin;
+        private readonly PriceCheckPlugin priceCheckPlugin;
         private float uiScale;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OverlayWindow"/> class.
         /// </summary>
         /// <param name="priceCheckPlugin">price check plugin.</param>
-        public OverlayWindow(IPriceCheckPlugin priceCheckPlugin)
+        public OverlayWindow(PriceCheckPlugin priceCheckPlugin)
         {
             this.priceCheckPlugin = priceCheckPlugin;
         }

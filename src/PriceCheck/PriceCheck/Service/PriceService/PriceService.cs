@@ -11,19 +11,21 @@ using Dalamud.Game.Text;
 
 namespace PriceCheck
 {
-    /// <inheritdoc />
-    public class PriceService : IPriceService
+    /// <summary>
+    /// Pricing service.
+    /// </summary>
+    public class PriceService
     {
-        private readonly IPriceCheckPlugin priceCheckPlugin;
+        private readonly PriceCheckPlugin priceCheckPlugin;
         private readonly List<PricedItem> pricedItems;
-        private readonly IUniversalisClient universalisClient;
+        private readonly UniversalisClient universalisClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceService"/> class.
         /// </summary>
         /// <param name="priceCheckPlugin">price check plugin.</param>
         /// <param name="universalisClient">universalis client.</param>
-        public PriceService(IPriceCheckPlugin priceCheckPlugin, IUniversalisClient universalisClient)
+        public PriceService(PriceCheckPlugin priceCheckPlugin, UniversalisClient universalisClient)
         {
             this.priceCheckPlugin = priceCheckPlugin;
             this.pricedItems = new List<PricedItem>();
@@ -31,13 +33,18 @@ namespace PriceCheck
             this.priceCheckPlugin.OnItemDetected += this.ProcessItem;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Get priced items.
+        /// </summary>
+        /// <returns>list of priced items.</returns>
         public IEnumerable<PricedItem> GetItems()
         {
             return this.pricedItems;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Dispose service.
+        /// </summary>
         public void Dispose()
         {
             this.priceCheckPlugin.OnItemDetected -= this.ProcessItem;
