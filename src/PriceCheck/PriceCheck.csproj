@@ -103,14 +103,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="PriceCheck\Resource\loc\de.json" />
-      <Content Include="PriceCheck\Resource\loc\es.json" />
-      <Content Include="PriceCheck\Resource\loc\fr.json" />
-      <Content Include="PriceCheck\Resource\loc\it.json" />
-      <Content Include="PriceCheck\Resource\loc\ja.json" />
-      <Content Include="PriceCheck\Resource\loc\no.json" />
-      <Content Include="PriceCheck\Resource\loc\pt.json" />
-      <Content Include="PriceCheck\Resource\loc\ru.json" />
       <EmbeddedResource Include="PriceCheck\Resource\translation\de.json" />
       <EmbeddedResource Include="PriceCheck\Resource\translation\es.json" />
       <EmbeddedResource Include="PriceCheck\Resource\translation\fr.json" />
