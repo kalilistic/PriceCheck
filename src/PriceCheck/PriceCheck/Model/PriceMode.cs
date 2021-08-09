@@ -16,7 +16,6 @@ namespace PriceCheck
         /// <summary>
         /// List of price mode names.
         /// </summary>
-        // ReSharper disable once CollectionNeverQueried.Global
         public static readonly List<string> PriceModeNames = new ();
 
         /// <summary>

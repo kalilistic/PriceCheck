@@ -1,8 +1,4 @@
-﻿// ReSharper disable DelegateSubtraction
-// ReSharper disable RedundantJumpStatement
-// ReSharper disable ConvertIfStatementToReturnStatement
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -315,8 +311,7 @@ namespace PriceCheck
             if (isOldData) return;
             var hasHigherPriceOnVendor = CompareVendorPrice(pricedItem);
             if (hasHigherPriceOnVendor) return;
-            var belowMinPrice = this.CompareMinPrice(pricedItem);
-            if (belowMinPrice) return;
+            this.CompareMinPrice(pricedItem);
         }
     }
 }
