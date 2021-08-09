@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-using DalamudPluginCommon;
+using Dalamud.DrunkenToad;
 
 namespace PriceCheck
 {
@@ -97,12 +97,12 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets the modifier key for key bind.
         /// </summary>
-        public ModifierKey.Enum ModifierKey { get; set; } = DalamudPluginCommon.ModifierKey.Enum.VkShift;
+        public ModifierKey.Enum ModifierKey { get; set; } = Dalamud.DrunkenToad.ModifierKey.Enum.VkShift;
 
         /// <summary>
         /// Gets or sets the primary key for key bind.
         /// </summary>
-        public PrimaryKey.Enum PrimaryKey { get; set; } = DalamudPluginCommon.PrimaryKey.Enum.VkZ;
+        public PrimaryKey.Enum PrimaryKey { get; set; } = Dalamud.DrunkenToad.PrimaryKey.Enum.VkZ;
 
         /// <summary>
         /// Gets or sets the minimum price to show.

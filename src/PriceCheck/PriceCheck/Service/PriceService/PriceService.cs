@@ -6,8 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
+using Dalamud.DrunkenToad;
 using Dalamud.Game.Text;
-using DalamudPluginCommon;
 
 namespace PriceCheck
 {

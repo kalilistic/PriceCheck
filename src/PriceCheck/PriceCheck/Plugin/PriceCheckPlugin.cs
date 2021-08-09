@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
 using CheapLoc;
+using Dalamud.DrunkenToad;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
-using DalamudPluginCommon;
 using Lumina.Excel.GeneratedSheets;
 using XivCommon;
 using XivCommon.Functions.ContextMenu;
@@ -22,8 +21,13 @@ namespace PriceCheck
     /// <summary>
     /// PriceCheck plugin.
     /// </summary>
-    public class PriceCheckPlugin : PluginBase, IPriceCheckPlugin
+    public class PriceCheckPlugin : IPriceCheckPlugin
     {
+        /// <summary>
+        /// Plugin service.
+        /// </summary>
+        public readonly PluginService PluginService;
+
         private readonly XivCommonBase common;
         private readonly DalamudPluginInterface pluginInterface;
         private CancellationTokenSource? itemCancellationTokenSource;
@@ -36,9 +40,9 @@ namespace PriceCheck
         /// <param name="pluginName">plugin name.</param>
         /// <param name="pluginInterface">plugin interface.</param>
         public PriceCheckPlugin(string pluginName, DalamudPluginInterface pluginInterface)
-            : base(pluginName, pluginInterface, Assembly.GetExecutingAssembly())
         {
             this.pluginInterface = pluginInterface;
+            this.PluginService = new PluginService(pluginName, pluginInterface);
             this.LoadConfig();
             this.LoadServices();
             this.SetupCommands();
@@ -46,8 +50,8 @@ namespace PriceCheck
             this.HandleFreshInstall();
             Result.UpdateLanguage();
             this.common = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
-            this.PluginInterface.Framework.Gui.HoveredItemChanged += this.HoveredItemChanged;
-            this.PluginInterface.OnLanguageChanged += OnLanguageChanged;
+            this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged += this.HoveredItemChanged;
+            this.PluginService.PluginInterface.OnLanguageChanged += OnLanguageChanged;
             this.common.Functions.ContextMenu.OpenInventoryContextMenu += this.OnOpenInventoryContextMenu;
         }
 
@@ -68,38 +72,38 @@ namespace PriceCheck
         /// <inheritdoc/>
         public void PrintHelpMessage()
         {
-            this.Chat.PrintNotice(Loc.Localize(
-                "HelpMessage",
-                "To check prices, hold your keybind and then hover over an item in your inventory or linked " +
-                "in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are " +
-                "averages from Universalis and will not match any specific listings you see on the market board. " +
-                "You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, " +
-                "reach out on discord or open an issue on GitHub. If you want to help add translations, you can " +
-                "submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings."));
+            this.PluginService.Chat.PrintNotice(Loc.Localize(
+                                                    "HelpMessage",
+                                                    "To check prices, hold your keybind and then hover over an item in your inventory or linked " +
+                                                    "in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are " +
+                                                    "averages from Universalis and will not match any specific listings you see on the market board. " +
+                                                    "You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, " +
+                                                    "reach out on discord or open an issue on GitHub. If you want to help add translations, you can " +
+                                                    "submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings."));
         }
 
         /// <inheritdoc />
         public Item? GetItemById(uint itemId)
         {
-            return this.GameData.Item(itemId);
+            return this.PluginService.GameData.Item(itemId);
         }
 
         /// <inheritdoc />
         public uint GetHomeWorldId()
         {
-            return this.ClientState.LocalPlayer.HomeWorldId();
+            return this.PluginService.ClientState.LocalPlayer.HomeWorldId();
         }
 
         /// <inheritdoc />
         public bool IsLoggedIn()
         {
-            return this.ClientState.IsLoggedIn();
+            return this.PluginService.ClientState.IsLoggedIn();
         }
 
         /// <inheritdoc />
         public void SendToast(PricedItem pricedItem)
         {
-            this.PluginInterface.Framework.Gui.Toast.ShowNormal(
+            this.PluginService.PluginInterface.Framework.Gui.Toast.ShowNormal(
                 $"{pricedItem.DisplayName} {(char)SeIconChar.ArrowRight} {pricedItem.Message}");
         }
 
@@ -108,18 +112,18 @@ namespace PriceCheck
         {
             var payloadList = new List<Payload>
             {
-                new UIForegroundPayload(this.PluginInterface.Data, 0),
-                new TextPayload($"[{this.PluginName}] "),
+                new UIForegroundPayload(this.PluginService.PluginInterface.Data, 0),
+                new TextPayload($"[{this.PluginService.PluginName}] "),
             };
             if (this.Configuration.UseChatColors)
             {
                 if (pricedItem.Result != null)
-                    payloadList.Add(new UIForegroundPayload(this.PluginInterface.Data, pricedItem.Result.ChatColor()));
+                    payloadList.Add(new UIForegroundPayload(this.PluginService.PluginInterface.Data, pricedItem.Result.ChatColor()));
             }
 
             if (this.Configuration.UseItemLinks)
             {
-                payloadList.Add(new ItemPayload(this.PluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ));
+                payloadList.Add(new ItemPayload(this.PluginService.PluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ));
                 payloadList.Add(new TextPayload($"{(char)SeIconChar.LinkMarker}"));
                 payloadList.Add(new TextPayload(" " + pricedItem.DisplayName));
                 payloadList.Add(RawPayload.LinkTerminator);
@@ -131,8 +135,8 @@ namespace PriceCheck
 
             payloadList.Add(new TextPayload(" " + (char)SeIconChar.ArrowRight + " " + pricedItem.Message));
             if (this.Configuration.UseChatColors)
-                payloadList.Add(new UIForegroundPayload(this.PluginInterface.Data, 0));
-            this.Chat.Print(payloadList);
+                payloadList.Add(new UIForegroundPayload(this.PluginService.PluginInterface.Data, 0));
+            this.PluginService.Chat.Print(payloadList);
         }
 
         /// <summary>
@@ -144,23 +148,23 @@ namespace PriceCheck
             if (!this.Configuration.KeybindEnabled) return true;
             if (this.Configuration.PrimaryKey == PrimaryKey.Enum.VkNone)
             {
-                return this.ClientState.KeyState.IsKeyPressed(this.Configuration.ModifierKey);
+                return this.PluginService.ClientState.KeyState.IsKeyPressed(this.Configuration.ModifierKey);
             }
 
-            return this.ClientState.KeyState.IsKeyPressed(this.Configuration.ModifierKey) &&
-                   this.ClientState.KeyState.IsKeyPressed(this.Configuration.PrimaryKey);
+            return this.PluginService.ClientState.KeyState.IsKeyPressed(this.Configuration.ModifierKey) &&
+                   this.PluginService.ClientState.KeyState.IsKeyPressed(this.Configuration.PrimaryKey);
         }
 
         /// <summary>
         /// Dispose plugin.
         /// </summary>
-        public new void Dispose()
+        public void Dispose()
         {
-            base.Dispose();
+            this.PluginService.Dispose();
             this.RemoveCommands();
             this.common.Functions.ContextMenu.OpenInventoryContextMenu -= this.OnOpenInventoryContextMenu;
             this.common.Dispose();
-            this.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
+            this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
             this.pluginInterface.UiBuilder.OnBuildUi -= this.DrawUI;
             this.itemCancellationTokenSource?.Dispose();
             this.PriceService.Dispose();
@@ -171,7 +175,7 @@ namespace PriceCheck
         /// <inheritdoc />
         public void SaveConfig()
         {
-            this.SaveConfig(this.Configuration);
+            this.PluginService.SaveConfig(this.Configuration);
         }
 
         /// <summary>
@@ -342,10 +346,10 @@ namespace PriceCheck
         private bool ShouldPriceCheck()
         {
             if (this.Configuration.Enabled &&
-                this.PluginInterface.Data.IsDataReady &&
-                this.PluginInterface.ClientState?.LocalPlayer?.HomeWorld != null &&
-                !(this.Configuration.RestrictInCombat && this.ClientState.Condition.InCombat()) &&
-                !(this.Configuration.RestrictInContent && this.InContent()))
+                this.PluginService.PluginInterface.Data.IsDataReady &&
+                this.PluginService.PluginInterface.ClientState?.LocalPlayer?.HomeWorld != null &&
+                !(this.Configuration.RestrictInCombat && this.PluginService.ClientState.Condition.InCombat()) &&
+                !(this.Configuration.RestrictInContent && this.PluginService.InContent()))
             {
                 return true;
             }
@@ -391,7 +395,7 @@ namespace PriceCheck
         private void HandleFreshInstall()
         {
             if (!this.Configuration.FreshInstall) return;
-            this.Chat.PrintNotice(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
+            this.PluginService.Chat.PrintNotice(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
             this.PrintHelpMessage();
             this.Configuration.FreshInstall = false;
             this.Configuration.ShowToast = true;
@@ -411,11 +415,11 @@ namespace PriceCheck
             this.pluginUI.SettingsWindow.IsVisible = true;
         }
 
-        private new void LoadConfig()
+        private void LoadConfig()
         {
             try
             {
-                this.Configuration = base.LoadConfig() as PluginConfig ?? new PluginConfig();
+                this.Configuration = this.PluginService.LoadConfig() as PluginConfig ?? new PluginConfig();
             }
             catch (Exception ex)
             {

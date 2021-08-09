@@ -4,9 +4,9 @@ using System.Linq;
 using System.Numerics;
 
 using CheapLoc;
+using Dalamud.DrunkenToad;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Components;
-using DalamudPluginCommon;
 using ImGuiNET;
 
 namespace PriceCheck

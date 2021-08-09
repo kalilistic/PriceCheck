@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-using DalamudPluginCommon;
+using Dalamud.DrunkenToad;
 using Newtonsoft.Json;
 
 namespace PriceCheck

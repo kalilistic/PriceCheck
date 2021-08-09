@@ -2,7 +2,7 @@
 using System.Numerics;
 
 using CheapLoc;
-using DalamudPluginCommon;
+using Dalamud.DrunkenToad;
 using ImGuiNET;
 
 namespace PriceCheck
