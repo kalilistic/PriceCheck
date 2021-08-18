@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 
@@ -45,7 +44,6 @@ namespace PriceCheck
             Filters,
             Thresholds,
             ContextMenu,
-            Other,
         }
 
         /// <inheritdoc />
@@ -113,12 +111,6 @@ namespace PriceCheck
                         break;
                     }
 
-                    case Tab.Other:
-                    {
-                        this.DrawOther();
-                        break;
-                    }
-
                     default:
                         this.DrawGeneral();
                         break;
@@ -177,12 +169,6 @@ namespace PriceCheck
                 if (ImGui.BeginTabItem(Loc.Localize("ContextMenu", "Context Menu") + "###PriceCheck_ContextMenu_Tab"))
                 {
                     this.currentTab = Tab.ContextMenu;
-                    ImGui.EndTabItem();
-                }
-
-                if (ImGui.BeginTabItem(Loc.Localize("Other", "Other") + "###PriceCheck_Other_Tab"))
-                {
-                    this.currentTab = Tab.Other;
                     ImGui.EndTabItem();
                 }
 
@@ -584,20 +570,6 @@ namespace PriceCheck
                 ImGui.Text(Loc.Localize("DupeContextBelow", "This context item is already added!"));
                 ImGui.EndPopup();
             }
-        }
-
-        private void DrawOther()
-        {
-            var buttonSize = new Vector2(160f * this.uiScale, 25f * this.uiScale);
-            ImGui.Spacing();
-            if (ImGui.Button(Loc.Localize("OpenGithub", "Open Github") + "###PriceCheck_OpenGithub_Button", buttonSize))
-                Process.Start("https://github.com/kalilistic/PriceCheck");
-            if (ImGui.Button(Loc.Localize("PrintHelp", "Print Help") + "###PriceCheck_PrintHelp_Button", buttonSize))
-                this.plugin.PrintHelpMessage();
-            if (ImGui.Button(
-                Loc.Localize("ImproveTranslate", "Improve Translations") + "###PriceCheck_ImproveTranslate_Button",
-                buttonSize))
-                Process.Start("https://crowdin.com/project/pricecheck");
         }
     }
 }
