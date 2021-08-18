@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.DrunkenToad;
-using Dalamud.Game.Command;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
@@ -44,7 +43,7 @@ namespace PriceCheck
             this.PluginService = new PluginService(pluginName, pluginInterface);
             this.LoadConfig();
             this.LoadServices();
-            this.SetupCommands();
+            this.CommandManager = new CommandManager(this);
             this.LoadUI();
             this.HandleFreshInstall();
             Result.UpdateLanguage();
@@ -63,6 +62,11 @@ namespace PriceCheck
         /// Gets or sets last price check conducted in unix timestamp.
         /// </summary>
         public long LastPriceCheck { get; set; }
+
+        /// <summary>
+        /// Gets or sets command manager to handle user commands.
+        /// </summary>
+        public CommandManager CommandManager { get; set; }
 
         /// <summary>
         /// Gets price service.
@@ -190,7 +194,7 @@ namespace PriceCheck
         {
             this.WindowManager.Dispose();
             this.PluginService.Dispose();
-            this.RemoveCommands();
+            this.CommandManager.Dispose();
             this.common.Functions.ContextMenu.OpenInventoryContextMenu -= this.OnOpenInventoryContextMenu;
             this.common.Dispose();
             this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
@@ -206,65 +210,6 @@ namespace PriceCheck
         public void SaveConfig()
         {
             this.PluginService.SaveConfig(this.Configuration);
-        }
-
-        /// <summary>
-        /// Setup commands.
-        /// </summary>
-        public void SetupCommands()
-        {
-            this.pluginInterface.CommandManager.AddHandler("/pcheck", new CommandInfo(this.TogglePriceCheck)
-            {
-                HelpMessage = "Show price check.",
-                ShowInHelp = true,
-            });
-            this.pluginInterface.CommandManager.AddHandler("/pricecheck", new CommandInfo(this.TogglePriceCheck)
-            {
-                ShowInHelp = false,
-            });
-            this.pluginInterface.CommandManager.AddHandler("/pcheckconfig", new CommandInfo(this.ToggleConfig)
-            {
-                HelpMessage = "Show price check config.",
-                ShowInHelp = true,
-            });
-            this.pluginInterface.CommandManager.AddHandler("/pricecheckconfig", new CommandInfo(this.ToggleConfig)
-            {
-                ShowInHelp = false,
-            });
-        }
-
-        /// <summary>
-        /// Remove Commands.
-        /// </summary>
-        public void RemoveCommands()
-        {
-            this.pluginInterface.CommandManager.RemoveHandler("/pcheck");
-            this.pluginInterface.CommandManager.RemoveHandler("/pricecheck");
-            this.pluginInterface.CommandManager.RemoveHandler("/pcheckconfig");
-            this.pluginInterface.CommandManager.RemoveHandler("/pricecheckconfig");
-        }
-
-        /// <summary>
-        /// Toggle price check.
-        /// </summary>
-        /// <param name="command">command.</param>
-        /// <param name="args">args.</param>
-        public void TogglePriceCheck(string command, string args)
-        {
-            Logger.LogInfo("Running command {0} with args {1}", command, args);
-            this.Configuration.ShowOverlay = !this.Configuration.ShowOverlay;
-            this.WindowManager.MainWindow!.Toggle();
-        }
-
-        /// <summary>
-        /// Toggle config.
-        /// </summary>
-        /// <param name="command">command.</param>
-        /// <param name="args">args.</param>
-        public void ToggleConfig(string command, string args)
-        {
-            Logger.LogInfo("Running command {0} with args {1}", command, args);
-            this.WindowManager.ConfigWindow!.Toggle();
         }
 
         private static void OnLanguageChanged(string langCode)
