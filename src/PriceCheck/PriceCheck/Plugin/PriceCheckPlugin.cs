@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,8 +11,6 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
 using Lumina.Excel.GeneratedSheets;
 using XivCommon;
-using XivCommon.Functions.ContextMenu;
-using XivCommon.Functions.ContextMenu.Inventory;
 
 namespace PriceCheck
 {
@@ -27,9 +24,18 @@ namespace PriceCheck
         /// </summary>
         public readonly PluginService PluginService;
 
-        private readonly XivCommonBase common;
+        /// <summary>
+        /// XivCommon library instance.
+        /// </summary>
+        public XivCommonBase XivCommon;
+
+        /// <summary>
+        /// Cancellation token to terminate request if interrupted.
+        /// </summary>
+        public CancellationTokenSource? ItemCancellationTokenSource;
+
         private readonly DalamudPluginInterface pluginInterface;
-        private CancellationTokenSource? itemCancellationTokenSource;
+
         private UniversalisClient universalisClient = null!;
 
         /// <summary>
@@ -47,10 +53,10 @@ namespace PriceCheck
             this.LoadUI();
             this.HandleFreshInstall();
             Result.UpdateLanguage();
-            this.common = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
+            this.XivCommon = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
+            this.ContextMenuManager = new ContextMenuManager(this);
             this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged += this.HoveredItemChanged;
             this.PluginService.PluginInterface.OnLanguageChanged += OnLanguageChanged;
-            this.common.Functions.ContextMenu.OpenInventoryContextMenu += this.OnOpenInventoryContextMenu;
         }
 
         /// <summary>
@@ -82,6 +88,11 @@ namespace PriceCheck
         /// Gets or sets window manager.
         /// </summary>
         public WindowManager WindowManager { get; set; } = null!;
+
+        /// <summary>
+        /// Gets or sets context Menu manager to handle item context menu.
+        /// </summary>
+        public ContextMenuManager ContextMenuManager { get; set; }
 
         /// <summary>
         /// Gets plugin configuration.
@@ -192,15 +203,22 @@ namespace PriceCheck
         /// </summary>
         public void Dispose()
         {
-            this.WindowManager.Dispose();
-            this.PluginService.Dispose();
-            this.CommandManager.Dispose();
-            this.common.Functions.ContextMenu.OpenInventoryContextMenu -= this.OnOpenInventoryContextMenu;
-            this.common.Dispose();
-            this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
-            this.itemCancellationTokenSource?.Dispose();
-            this.PriceService.Dispose();
-            this.universalisClient.Dispose();
+            try
+            {
+                this.WindowManager.Dispose();
+                this.PluginService.Dispose();
+                this.CommandManager.Dispose();
+                this.ContextMenuManager.Dispose();
+                this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
+                this.ItemCancellationTokenSource?.Dispose();
+                this.PriceService.Dispose();
+                this.universalisClient.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed to dispose plugin properly.");
+            }
+
             this.pluginInterface.Dispose();
         }
 
@@ -212,97 +230,38 @@ namespace PriceCheck
             this.PluginService.SaveConfig(this.Configuration);
         }
 
+        /// <summary>
+        /// Trigger item detection handling.
+        /// </summary>
+        /// <param name="itemId">item id.</param>
+        /// <param name="itemHq">item hq state.</param>
+        public void ItemDetected(ulong itemId, bool itemHq)
+        {
+            this.OnItemDetected.Invoke(this, new DetectedItem(itemId, itemHq));
+        }
+
+        /// <summary>
+        /// Check state and configuration to determine if price check should be made.
+        /// </summary>
+        /// <returns>indicator whether or not price check should be made.</returns>
+        public bool ShouldPriceCheck()
+        {
+            if (this.Configuration.Enabled &&
+                this.PluginService.PluginInterface.Data.IsDataReady &&
+                this.PluginService.PluginInterface.ClientState?.LocalPlayer?.HomeWorld != null &&
+                !(this.Configuration.RestrictInCombat && this.PluginService.ClientState.Condition.InCombat()) &&
+                !(this.Configuration.RestrictInContent && this.PluginService.InContent()))
+            {
+                return true;
+            }
+
+            this.ItemCancellationTokenSource = null;
+            return false;
+        }
+
         private static void OnLanguageChanged(string langCode)
         {
             Result.UpdateLanguage();
-        }
-
-        private static int? GetActionIndex(ICollection<byte> configActionIds, IReadOnlyList<byte> currentActionIds)
-        {
-            for (var i = 0; i < currentActionIds.Count; i++)
-            {
-                if (configActionIds.Contains(currentActionIds[i]))
-                {
-                    return i;
-                }
-            }
-
-            return null;
-        }
-
-        private void ContextItemChanged(InventoryContextMenuItemSelectedArgs args)
-        {
-            try
-            {
-                if (!this.ShouldPriceCheck()) return;
-                if (this.itemCancellationTokenSource != null)
-                {
-                    if (!this.itemCancellationTokenSource.IsCancellationRequested)
-                        this.itemCancellationTokenSource.Cancel();
-                    this.itemCancellationTokenSource.Dispose();
-                }
-
-                if (args.ItemId == 0)
-                {
-                    this.itemCancellationTokenSource = null;
-                    return;
-                }
-
-                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
-                Task.Run(async () =>
-                {
-                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource!.Token)
-                              .ConfigureAwait(false);
-                    this.OnItemDetected.Invoke(this, new DetectedItem(args.ItemId, args.ItemHq));
-                });
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, "Failed to price check item via context menu.");
-            }
-        }
-
-        private void OnOpenInventoryContextMenu(InventoryContextMenuOpenArgs args)
-        {
-            if (!this.Configuration.ShowContextMenu) return;
-
-            // setup
-            var index = 0;
-            var actionIds = args.Items.Select(baseContextMenuItem => ((NativeContextMenuItem)baseContextMenuItem).InternalAction).ToList();
-            var contextMenuItem = new InventoryContextMenuItem(
-                Loc.Localize("ContextMenuItem", "Check Marketboard Price"), this.ContextItemChanged);
-
-            // default
-            if (this.Configuration.ShowContextAboveThis.Count == 0 &&
-                this.Configuration.ShowContextBelowThis.Count == 0)
-            {
-                args.Items.Add(contextMenuItem);
-                return;
-            }
-
-            // get show above index
-            var relativeAboveIndex = GetActionIndex(this.Configuration.ShowContextAboveThis, actionIds);
-            if (relativeAboveIndex != null)
-            {
-                index = (int)relativeAboveIndex;
-                actionIds.RemoveRange(index, actionIds.Count - index);
-            }
-
-            // get show below index
-            var relativeBelowIndex = GetActionIndex(this.Configuration.ShowContextBelowThis, actionIds);
-            if (relativeBelowIndex != null)
-            {
-                index = (int)relativeBelowIndex + 1;
-            }
-
-            // default to bottom if nothing found
-            if (relativeAboveIndex == null && relativeBelowIndex == null)
-            {
-                index = args.Items.Count;
-            }
-
-            // insert price check menu item
-            args.Items.Insert(index, contextMenuItem);
         }
 
         private void LoadServices()
@@ -316,44 +275,29 @@ namespace PriceCheck
             this.WindowManager = new WindowManager(this);
         }
 
-        private bool ShouldPriceCheck()
-        {
-            if (this.Configuration.Enabled &&
-                this.PluginService.PluginInterface.Data.IsDataReady &&
-                this.PluginService.PluginInterface.ClientState?.LocalPlayer?.HomeWorld != null &&
-                !(this.Configuration.RestrictInCombat && this.PluginService.ClientState.Condition.InCombat()) &&
-                !(this.Configuration.RestrictInContent && this.PluginService.InContent()))
-            {
-                return true;
-            }
-
-            this.itemCancellationTokenSource = null;
-            return false;
-        }
-
         private void HoveredItemChanged(object sender, ulong itemId)
         {
             try
             {
                 if (!this.ShouldPriceCheck()) return;
                 if (!this.IsKeyBindPressed()) return;
-                if (this.itemCancellationTokenSource != null)
+                if (this.ItemCancellationTokenSource != null)
                 {
-                    if (!this.itemCancellationTokenSource.IsCancellationRequested)
-                        this.itemCancellationTokenSource.Cancel();
-                    this.itemCancellationTokenSource.Dispose();
+                    if (!this.ItemCancellationTokenSource.IsCancellationRequested)
+                        this.ItemCancellationTokenSource.Cancel();
+                    this.ItemCancellationTokenSource.Dispose();
                 }
 
                 if (itemId == 0)
                 {
-                    this.itemCancellationTokenSource = null;
+                    this.ItemCancellationTokenSource = null;
                     return;
                 }
 
-                this.itemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
+                this.ItemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
                 Task.Run(async () =>
                 {
-                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.itemCancellationTokenSource!.Token)
+                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.ItemCancellationTokenSource!.Token)
                               .ConfigureAwait(false);
                     this.OnItemDetected.Invoke(this, new DetectedItem(itemId));
                 });
@@ -361,7 +305,7 @@ namespace PriceCheck
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Failed to price check.");
-                this.itemCancellationTokenSource = null;
+                this.ItemCancellationTokenSource = null;
             }
         }
 
