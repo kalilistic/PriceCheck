@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.DrunkenToad;
@@ -55,7 +54,7 @@ namespace PriceCheck
             Result.UpdateLanguage();
             this.XivCommon = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
             this.ContextMenuManager = new ContextMenuManager(this);
-            this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged += this.HoveredItemChanged;
+            this.HoveredItemManager = new HoveredItemManager(this);
             this.PluginService.PluginInterface.OnLanguageChanged += OnLanguageChanged;
         }
 
@@ -93,6 +92,11 @@ namespace PriceCheck
         /// Gets or sets context Menu manager to handle item context menu.
         /// </summary>
         public ContextMenuManager ContextMenuManager { get; set; }
+
+        /// <summary>
+        /// Gets or sets hovered item manager to handle hover item events.
+        /// </summary>
+        public HoveredItemManager HoveredItemManager { get; set; }
 
         /// <summary>
         /// Gets plugin configuration.
@@ -209,7 +213,7 @@ namespace PriceCheck
                 this.PluginService.Dispose();
                 this.CommandManager.Dispose();
                 this.ContextMenuManager.Dispose();
-                this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
+                this.HoveredItemManager.Dispose();
                 this.ItemCancellationTokenSource?.Dispose();
                 this.PriceService.Dispose();
                 this.universalisClient.Dispose();
@@ -233,11 +237,10 @@ namespace PriceCheck
         /// <summary>
         /// Trigger item detection handling.
         /// </summary>
-        /// <param name="itemId">item id.</param>
-        /// <param name="itemHq">item hq state.</param>
-        public void ItemDetected(ulong itemId, bool itemHq)
+        /// <param name="item">detected item.</param>
+        public void ItemDetected(DetectedItem item)
         {
-            this.OnItemDetected.Invoke(this, new DetectedItem(itemId, itemHq));
+            this.OnItemDetected.Invoke(this, item);
         }
 
         /// <summary>
@@ -273,40 +276,6 @@ namespace PriceCheck
         private void LoadUI()
         {
             this.WindowManager = new WindowManager(this);
-        }
-
-        private void HoveredItemChanged(object sender, ulong itemId)
-        {
-            try
-            {
-                if (!this.ShouldPriceCheck()) return;
-                if (!this.IsKeyBindPressed()) return;
-                if (this.ItemCancellationTokenSource != null)
-                {
-                    if (!this.ItemCancellationTokenSource.IsCancellationRequested)
-                        this.ItemCancellationTokenSource.Cancel();
-                    this.ItemCancellationTokenSource.Dispose();
-                }
-
-                if (itemId == 0)
-                {
-                    this.ItemCancellationTokenSource = null;
-                    return;
-                }
-
-                this.ItemCancellationTokenSource = new CancellationTokenSource(this.Configuration.RequestTimeout * 2);
-                Task.Run(async () =>
-                {
-                    await Task.Delay(this.Configuration.HoverDelay * 1000, this.ItemCancellationTokenSource!.Token)
-                              .ConfigureAwait(false);
-                    this.OnItemDetected.Invoke(this, new DetectedItem(itemId));
-                });
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, "Failed to price check.");
-                this.ItemCancellationTokenSource = null;
-            }
         }
 
         private void HandleFreshInstall()
