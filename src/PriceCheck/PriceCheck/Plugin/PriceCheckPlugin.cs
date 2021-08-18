@@ -31,7 +31,6 @@ namespace PriceCheck
         private readonly XivCommonBase common;
         private readonly DalamudPluginInterface pluginInterface;
         private CancellationTokenSource? itemCancellationTokenSource;
-        private PluginUI pluginUI = null!;
         private UniversalisClient universalisClient = null!;
 
         /// <summary>
@@ -74,6 +73,11 @@ namespace PriceCheck
         /// Gets or sets plugin configuration.
         /// </summary>
         public PriceCheckConfig Configuration { get; set; } = null!;
+
+        /// <summary>
+        /// Gets or sets window manager.
+        /// </summary>
+        public WindowManager WindowManager { get; set; } = null!;
 
         /// <summary>
         /// Gets plugin configuration.
@@ -184,12 +188,12 @@ namespace PriceCheck
         /// </summary>
         public void Dispose()
         {
+            this.WindowManager.Dispose();
             this.PluginService.Dispose();
             this.RemoveCommands();
             this.common.Functions.ContextMenu.OpenInventoryContextMenu -= this.OnOpenInventoryContextMenu;
             this.common.Dispose();
             this.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
-            this.pluginInterface.UiBuilder.OnBuildUi -= this.DrawUI;
             this.itemCancellationTokenSource?.Dispose();
             this.PriceService.Dispose();
             this.universalisClient.Dispose();
@@ -249,7 +253,7 @@ namespace PriceCheck
         {
             Logger.LogInfo("Running command {0} with args {1}", command, args);
             this.Configuration.ShowOverlay = !this.Configuration.ShowOverlay;
-            this.pluginUI.OverlayWindow.IsVisible = !this.pluginUI.OverlayWindow.IsVisible;
+            this.WindowManager.MainWindow!.Toggle();
         }
 
         /// <summary>
@@ -260,7 +264,7 @@ namespace PriceCheck
         public void ToggleConfig(string command, string args)
         {
             Logger.LogInfo("Running command {0} with args {1}", command, args);
-            this.pluginUI.SettingsWindow.IsVisible = !this.pluginUI.SettingsWindow.IsVisible;
+            this.WindowManager.ConfigWindow!.Toggle();
         }
 
         private static void OnLanguageChanged(string langCode)
@@ -364,9 +368,7 @@ namespace PriceCheck
 
         private void LoadUI()
         {
-            this.pluginUI = new PluginUI(this);
-            this.pluginInterface.UiBuilder.OnBuildUi += this.DrawUI;
-            this.pluginInterface.UiBuilder.OnOpenConfigUi += (_, _) => this.DrawConfigUI();
+            this.WindowManager = new WindowManager(this);
         }
 
         private bool ShouldPriceCheck()
@@ -428,17 +430,7 @@ namespace PriceCheck
             this.Configuration.RestrictInCombat = true;
             this.Configuration.RestrictInContent = true;
             this.SaveConfig();
-            this.pluginUI.SettingsWindow.IsVisible = true;
-        }
-
-        private void DrawUI()
-        {
-            this.pluginUI.Draw();
-        }
-
-        private void DrawConfigUI()
-        {
-            this.pluginUI.SettingsWindow.IsVisible = true;
+            this.WindowManager.ConfigWindow!.IsOpen = true;
         }
 
         private void LoadConfig()

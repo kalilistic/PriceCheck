@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Numerics;
 
@@ -11,28 +11,25 @@ using ImGuiNET;
 namespace PriceCheck
 {
     /// <summary>
-    /// Settings window.
+    /// Config window for the plugin.
     /// </summary>
-    public class SettingsWindow : WindowBase
+    public class ConfigWindow : PluginWindow
     {
         private readonly PriceCheckPlugin plugin;
         private Tab currentTab = Tab.General;
-        private float uiScale;
         private int currentInternalAction;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsWindow"/> class.
+        /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
         /// </summary>
-        /// <param name="plugin">price check plugin.</param>
-        public SettingsWindow(PriceCheckPlugin plugin)
+        /// <param name="plugin">PriceCheck plugin.</param>
+        public ConfigWindow(PriceCheckPlugin plugin)
+            : base(plugin, "PriceCheck Config")
         {
             this.plugin = plugin;
+            this.Size = new Vector2(540f, 300f);
+            this.SizeCondition = ImGuiCond.Appearing;
         }
-
-        /// <summary>
-        /// Overlay visibility changed event.
-        /// </summary>
-        public event EventHandler<bool> OnOverlayVisibilityUpdated = null!;
 
         private enum Tab
         {
@@ -46,78 +43,64 @@ namespace PriceCheck
             ContextMenu,
         }
 
-        /// <inheritdoc />
-        public override void DrawView()
+        /// <inheritdoc/>
+        public override void Draw()
         {
-            if (!this.plugin.IsLoggedIn()) return;
-            if (!this.IsVisible) return;
-            var isVisible = this.IsVisible;
-            this.uiScale = ImGui.GetIO().FontGlobalScale;
-            ImGui.SetNextWindowSize(new Vector2(540 * this.uiScale, 300 * this.uiScale), ImGuiCond.Appearing);
-            if (ImGui.Begin(
-                Loc.Localize("SettingsWindow", "PriceCheck Settings") + "###PriceCheck_Settings_Window",
-                ref isVisible,
-                ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.NoScrollbar))
+            this.DrawTabs();
+            switch (this.currentTab)
             {
-                this.IsVisible = isVisible;
-                this.DrawTabs();
-                switch (this.currentTab)
+                case Tab.General:
                 {
-                    case Tab.General:
-                    {
-                        this.DrawGeneral();
-                        break;
-                    }
-
-                    case Tab.Overlay:
-                    {
-                        this.DrawOverlay();
-                        break;
-                    }
-
-                    case Tab.Chat:
-                    {
-                        this.DrawChat();
-                        break;
-                    }
-
-                    case Tab.Toast:
-                    {
-                        this.DrawToast();
-                        break;
-                    }
-
-                    case Tab.Keybind:
-                    {
-                        this.DrawKeybind();
-                        break;
-                    }
-
-                    case Tab.Filters:
-                    {
-                        this.DrawFilters();
-                        break;
-                    }
-
-                    case Tab.Thresholds:
-                    {
-                        this.DrawThresholds();
-                        break;
-                    }
-
-                    case Tab.ContextMenu:
-                    {
-                        this.DrawContextMenu();
-                        break;
-                    }
-
-                    default:
-                        this.DrawGeneral();
-                        break;
+                    this.DrawGeneral();
+                    break;
                 }
-            }
 
-            ImGui.End();
+                case Tab.Overlay:
+                {
+                    this.DrawOverlay();
+                    break;
+                }
+
+                case Tab.Chat:
+                {
+                    this.DrawChat();
+                    break;
+                }
+
+                case Tab.Toast:
+                {
+                    this.DrawToast();
+                    break;
+                }
+
+                case Tab.Keybind:
+                {
+                    this.DrawKeybind();
+                    break;
+                }
+
+                case Tab.Filters:
+                {
+                    this.DrawFilters();
+                    break;
+                }
+
+                case Tab.Thresholds:
+                {
+                    this.DrawThresholds();
+                    break;
+                }
+
+                case Tab.ContextMenu:
+                {
+                    this.DrawContextMenu();
+                    break;
+                }
+
+                default:
+                    this.DrawGeneral();
+                    break;
+            }
         }
 
         private void DrawTabs()
@@ -244,7 +227,7 @@ namespace PriceCheck
                 ref showOverlay))
             {
                 this.plugin.Configuration.ShowOverlay = showOverlay;
-                this.OnOverlayVisibilityUpdated(this, showOverlay);
+                this.plugin.WindowManager.MainWindow!.IsOpen = showOverlay;
                 this.plugin.SaveConfig();
             }
 
@@ -486,7 +469,7 @@ namespace PriceCheck
 
             var names = Enum.GetNames(typeof(InternalAction));
             var values = Enum.GetValues(typeof(InternalAction)).Cast<byte>().ToArray();
-            ImGui.SetNextItemWidth(ImGui.GetWindowSize().X / 2 * Scale);
+            ImGui.SetNextItemWidth(ImGui.GetWindowSize().X / 2);
             ImGui.Combo("###PriceCheck_ShowContext_Combo", ref this.currentInternalAction, names, names.Length);
             ImGui.SameLine();
 
