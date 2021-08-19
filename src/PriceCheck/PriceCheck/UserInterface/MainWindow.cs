@@ -30,7 +30,7 @@ namespace PriceCheck
         public override void Draw()
         {
             if (this.plugin.Configuration.HideOverlayElapsed != 0 &&
-                DateUtil.CurrentTime() - this.plugin.LastPriceCheck >
+                DateUtil.CurrentTime() - this.plugin.PriceService.LastPriceCheck >
                 this.plugin.Configuration.HideOverlayElapsed) return;
             if (!this.plugin.Configuration.Enabled)
             {

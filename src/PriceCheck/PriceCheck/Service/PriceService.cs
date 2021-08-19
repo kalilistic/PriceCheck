@@ -4,6 +4,7 @@ using System.Globalization;
 
 using Dalamud.DrunkenToad;
 using Dalamud.Game.Text;
+using Lumina.Excel.GeneratedSheets;
 
 namespace PriceCheck
 {
@@ -28,6 +29,11 @@ namespace PriceCheck
             this.universalisClient = universalisClient;
             this.priceCheckPlugin.OnItemDetected += this.ProcessItem;
         }
+
+        /// <summary>
+        /// Gets or sets last price check conducted in unix timestamp.
+        /// </summary>
+        public long LastPriceCheck { get; set; }
 
         /// <summary>
         /// Get priced items.
@@ -109,14 +115,14 @@ namespace PriceCheck
             }
         }
 
-        /// <summary>
-        /// Enrich item with data from lumina.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        /// <returns>indicator if successful.</returns>
-        internal bool EnrichWithExcelData(PricedItem pricedItem)
+        private Item? GetItemById(uint itemId)
         {
-            var excelItem = this.priceCheckPlugin.GetItemById(pricedItem.ItemId);
+            return this.priceCheckPlugin.PluginService.GameData.Item(itemId);
+        }
+
+        private bool EnrichWithExcelData(PricedItem pricedItem)
+        {
+            var excelItem = this.GetItemById(pricedItem.ItemId);
             if (excelItem == null) return true;
             if (excelItem.ItemSearchCategory.Row == 0)
             {
@@ -135,12 +141,7 @@ namespace PriceCheck
             return false;
         }
 
-        /// <summary>
-        /// Enrich item with market data from universalis.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        /// <returns>indicator if successful.</returns>
-        internal bool EnrichWithMarketBoardData(PricedItem pricedItem)
+        private bool EnrichWithMarketBoardData(PricedItem pricedItem)
         {
             if (!pricedItem.IsMarketable)
             {
@@ -184,12 +185,7 @@ namespace PriceCheck
             return false;
         }
 
-        /// <summary>
-        /// Check if data age is within threshold.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        /// <returns>indicator if successful.</returns>
-        internal bool EvaluateDataAge(PricedItem pricedItem)
+        private bool EvaluateDataAge(PricedItem pricedItem)
         {
             var currentTime = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
             var diffInSeconds = currentTime - pricedItem.LastUpdated;
@@ -199,24 +195,13 @@ namespace PriceCheck
             return true;
         }
 
-        /// <summary>
-        /// Check if price is within threshold.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        /// <returns>indicator if successful.</returns>
-        internal bool CompareMinPrice(PricedItem pricedItem)
+        private void CompareMinPrice(PricedItem pricedItem)
         {
-            if (pricedItem.MarketPrice >= this.priceCheckPlugin.Configuration.MinPrice)
-                return false;
+            if (pricedItem.MarketPrice >= this.priceCheckPlugin.Configuration.MinPrice) return;
             pricedItem.Result = Result.BelowMinimum !;
-            return true;
         }
 
-        /// <summary>
-        /// Remove previous price record.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        internal void RemoveExistingRecord(PricedItem pricedItem)
+        private void RemoveExistingRecord(PricedItem pricedItem)
         {
             for (var i = 0; i < this.pricedItems.Count; i++)
             {
@@ -226,23 +211,15 @@ namespace PriceCheck
             }
         }
 
-        /// <summary>
-        /// Remove items over max entries.
-        /// </summary>
-        internal void RemoveItemsOverMax()
+        private void RemoveItemsOverMax()
         {
             while (this.pricedItems.Count >= this.priceCheckPlugin.Configuration.MaxItemsInOverlay)
                 this.pricedItems.RemoveAt(this.pricedItems.Count - 1);
         }
 
-        /// <summary>
-        /// Check if price is within threshold.
-        /// </summary>
-        /// <param name="sender">event sender.</param>
-        /// <param name="detectedItem">detected item.</param>
-        internal void ProcessItem(object sender, DetectedItem detectedItem)
+        private void ProcessItem(object sender, DetectedItem detectedItem)
         {
-            this.priceCheckPlugin.LastPriceCheck = DateUtil.CurrentTime();
+            this.priceCheckPlugin.PriceService.LastPriceCheck = DateUtil.CurrentTime();
             PricedItem pricedItem;
             if (detectedItem.IsHQ == null)
             {

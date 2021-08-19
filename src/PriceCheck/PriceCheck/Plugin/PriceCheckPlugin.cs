@@ -8,7 +8,6 @@ using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
-using Lumina.Excel.GeneratedSheets;
 using XivCommon;
 
 namespace PriceCheck
@@ -64,11 +63,6 @@ namespace PriceCheck
         public event EventHandler<DetectedItem> OnItemDetected = null!;
 
         /// <summary>
-        /// Gets or sets last price check conducted in unix timestamp.
-        /// </summary>
-        public long LastPriceCheck { get; set; }
-
-        /// <summary>
         /// Gets or sets command manager to handle user commands.
         /// </summary>
         public CommandManager CommandManager { get; set; }
@@ -114,31 +108,12 @@ namespace PriceCheck
         }
 
         /// <summary>
-        /// Find item by id.
-        /// </summary>
-        /// <param name="itemId">item id.</param>
-        /// <returns>item.</returns>
-        public Item? GetItemById(uint itemId)
-        {
-            return this.PluginService.GameData.Item(itemId);
-        }
-
-        /// <summary>
         /// Get player home world id.
         /// </summary>
         /// <returns>home world id.</returns>
         public uint GetHomeWorldId()
         {
             return this.PluginService.ClientState.LocalPlayer.HomeWorldId();
-        }
-
-        /// <summary>
-        /// Indicator if logged in.
-        /// </summary>
-        /// <returns>logged in indicator.</returns>
-        public bool IsLoggedIn()
-        {
-            return this.PluginService.ClientState.IsLoggedIn();
         }
 
         /// <summary>
