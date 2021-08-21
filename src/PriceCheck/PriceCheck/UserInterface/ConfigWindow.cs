@@ -28,7 +28,7 @@ namespace PriceCheck
             : base(plugin, "PriceCheck Config")
         {
             this.plugin = plugin;
-            this.Size = new Vector2(540f, 300f);
+            this.Size = new Vector2(600f, 500f);
             this.SizeCondition = ImGuiCond.Appearing;
         }
 
@@ -276,6 +276,112 @@ namespace PriceCheck
                 this.plugin.Configuration.HideOverlayElapsed = hideOverlayTimer.FromSecondsToMilliseconds();
                 this.plugin.SaveConfig();
             }
+
+            ImGui.Spacing();
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("MessageTypeFiltersHeading", "Message type filters"));
+            var showSuccessInOverlay = this.plugin.Configuration.ShowSuccessInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowSuccessInOverlay", "Show successful price check") + "###PriceCheck_ShowSuccessInOverlay_Checkbox",
+                ref showSuccessInOverlay))
+            {
+                this.plugin.Configuration.ShowSuccessInOverlay = showSuccessInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowSuccessInOverlay_HelpMarker",
+                                           "show successful price check"));
+
+            var showFailedToProcessInOverlay = this.plugin.Configuration.ShowFailedToProcessInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowFailedToProcessInOverlay", "Show failed to process error") + "###PriceCheck_ShowFailedToProcessInOverlay_Checkbox",
+                ref showFailedToProcessInOverlay))
+            {
+                this.plugin.Configuration.ShowFailedToProcessInOverlay = showFailedToProcessInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowFailedToProcessInOverlay_HelpMarker",
+                                           "show error where something went wrong unexpectedly"));
+
+            var showFailedToGetDataInOverlay = this.plugin.Configuration.ShowFailedToGetDataInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowFailedToGetDataInOverlay", "Show failed to get data error") + "###PriceCheck_ShowFailedToGetDataInOverlay_Checkbox",
+                ref showFailedToGetDataInOverlay))
+            {
+                this.plugin.Configuration.ShowFailedToGetDataInOverlay = showFailedToGetDataInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowFailedToGetDataInOverlay_HelpMarker",
+                                           "show error where the plugin couldn't connect to universalis to get the data - usually a problem with your connection or universalis is down"));
+
+            var showNoDataAvailableInOverlay = this.plugin.Configuration.ShowNoDataAvailableInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowNoDataAvailableInOverlay", "Show no data available warning") + "###PriceCheck_ShowNoDataAvailableInOverlay_Checkbox",
+                ref showNoDataAvailableInOverlay))
+            {
+                this.plugin.Configuration.ShowNoDataAvailableInOverlay = showNoDataAvailableInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowNoDataAvailableInOverlay_HelpMarker",
+                                           "show warning where there was no data from universalis available for the item"));
+
+            var showNoRecentDataAvailableInOverlay = this.plugin.Configuration.ShowNoRecentDataAvailableInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowNoRecentDataAvailableInOverlay", "Show no recent data available warning") + "###PriceCheck_ShowNoRecentDataAvailableInOverlay_Checkbox",
+                ref showNoRecentDataAvailableInOverlay))
+            {
+                this.plugin.Configuration.ShowNoRecentDataAvailableInOverlay = showNoRecentDataAvailableInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowNoRecentDataAvailableInOverlay_HelpMarker",
+                                           "show warning where there was no recent data from universalis available for the item within your threshold"));
+
+            var showBelowVendorInOverlay = this.plugin.Configuration.ShowBelowVendorInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowBelowVendorInOverlay", "Show cheaper than vendor price warning") + "###PriceCheck_ShowBelowVendorInOverlay_Checkbox",
+                ref showBelowVendorInOverlay))
+            {
+                this.plugin.Configuration.ShowBelowVendorInOverlay = showBelowVendorInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowBelowVendorInOverlay_HelpMarker",
+                                           "show warning that the market price is cheaper than what you can sell it to a vendor for"));
+
+            var showBelowMinimumInOverlay = this.plugin.Configuration.ShowBelowMinimumInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowBelowMinimumInOverlay", "Show cheaper than minimum threshold warning") + "###PriceCheck_ShowBelowMinimumInOverlay_Checkbox",
+                ref showBelowMinimumInOverlay))
+            {
+                this.plugin.Configuration.ShowBelowMinimumInOverlay = showBelowMinimumInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowBelowMinimumInOverlay_HelpMarker",
+                                           "show warning the price is below your minimum threshold"));
+
+            var showUnmarketableInOverlay = this.plugin.Configuration.ShowUnmarketableInOverlay;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowUnmarketableInOverlay", "Show unmarketable warning") + "###PriceCheck_ShowUnmarketableInOverlay_Checkbox",
+                ref showUnmarketableInOverlay))
+            {
+                this.plugin.Configuration.ShowUnmarketableInOverlay = showUnmarketableInOverlay;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowUnmarketableInOverlay_HelpMarker",
+                                           "show warning that the item can't be sold on the market board"));
         }
 
         private void DrawChat()
@@ -337,6 +443,112 @@ namespace PriceCheck
 
                 ImGui.EndCombo();
             }
+
+            ImGui.Spacing();
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("MessageTypeFiltersHeading", "Message type filters"));
+            var showSuccessInChat = this.plugin.Configuration.ShowSuccessInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowSuccessInChat", "Show successful price check") + "###PriceCheck_ShowSuccessInChat_Checkbox",
+                ref showSuccessInChat))
+            {
+                this.plugin.Configuration.ShowSuccessInChat = showSuccessInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowSuccessInChat_HelpMarker",
+                                           "show successful price check"));
+
+            var showFailedToProcessInChat = this.plugin.Configuration.ShowFailedToProcessInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowFailedToProcessInChat", "Show failed to process error") + "###PriceCheck_ShowFailedToProcessInChat_Checkbox",
+                ref showFailedToProcessInChat))
+            {
+                this.plugin.Configuration.ShowFailedToProcessInChat = showFailedToProcessInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowFailedToProcessInChat_HelpMarker",
+                                           "show error where something went wrong unexpectedly"));
+
+            var showFailedToGetDataInChat = this.plugin.Configuration.ShowFailedToGetDataInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowFailedToGetDataInChat", "Show failed to get data error") + "###PriceCheck_ShowFailedToGetDataInChat_Checkbox",
+                ref showFailedToGetDataInChat))
+            {
+                this.plugin.Configuration.ShowFailedToGetDataInChat = showFailedToGetDataInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowFailedToGetDataInChat_HelpMarker",
+                                           "show error where the plugin couldn't connect to universalis to get the data - usually a problem with your connection or universalis is down"));
+
+            var showNoDataAvailableInChat = this.plugin.Configuration.ShowNoDataAvailableInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowNoDataAvailableInChat", "Show no data available warning") + "###PriceCheck_ShowNoDataAvailableInChat_Checkbox",
+                ref showNoDataAvailableInChat))
+            {
+                this.plugin.Configuration.ShowNoDataAvailableInChat = showNoDataAvailableInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowNoDataAvailableInChat_HelpMarker",
+                                           "show warning where there was no data from universalis available for the item"));
+
+            var showNoRecentDataAvailableInChat = this.plugin.Configuration.ShowNoRecentDataAvailableInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowNoRecentDataAvailableInChat", "Show no recent data available warning") + "###PriceCheck_ShowNoRecentDataAvailableInChat_Checkbox",
+                ref showNoRecentDataAvailableInChat))
+            {
+                this.plugin.Configuration.ShowNoRecentDataAvailableInChat = showNoRecentDataAvailableInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowNoRecentDataAvailableInChat_HelpMarker",
+                                           "show warning where there was no recent data from universalis available for the item within your threshold"));
+
+            var showBelowVendorInChat = this.plugin.Configuration.ShowBelowVendorInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowBelowVendorInChat", "Show cheaper than vendor price warning") + "###PriceCheck_ShowBelowVendorInChat_Checkbox",
+                ref showBelowVendorInChat))
+            {
+                this.plugin.Configuration.ShowBelowVendorInChat = showBelowVendorInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowBelowVendorInChat_HelpMarker",
+                                           "show warning that the market price is cheaper than what you can sell it to a vendor for"));
+
+            var showBelowMinimumInChat = this.plugin.Configuration.ShowBelowMinimumInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowBelowMinimumInChat", "Show cheaper than minimum threshold warning") + "###PriceCheck_ShowBelowMinimumInChat_Checkbox",
+                ref showBelowMinimumInChat))
+            {
+                this.plugin.Configuration.ShowBelowMinimumInChat = showBelowMinimumInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowBelowMinimumInChat_HelpMarker",
+                                           "show warning the price is below your minimum threshold"));
+
+            var showUnmarketableInChat = this.plugin.Configuration.ShowUnmarketableInChat;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowUnmarketableInChat", "Show unmarketable warning") + "###PriceCheck_ShowUnmarketableInChat_Checkbox",
+                ref showUnmarketableInChat))
+            {
+                this.plugin.Configuration.ShowUnmarketableInChat = showUnmarketableInChat;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowUnmarketableInChat_HelpMarker",
+                                           "show warning that the item can't be sold on the market board"));
         }
 
         private void DrawToast()
@@ -432,19 +644,6 @@ namespace PriceCheck
             ImGuiComponents.HelpMarker(Loc.Localize(
                 "RestrictInContent_HelpMarker",
                 "don't process price checks while in content"));
-
-            var showUnmarketable = this.plugin.Configuration.ShowUnmarketable;
-            if (ImGui.Checkbox(
-                Loc.Localize("ShowUnmarketable", "Show Unmarketable") + "###PriceCheck_ShowUnmarketable_Checkbox",
-                ref showUnmarketable))
-            {
-                this.plugin.Configuration.ShowUnmarketable = showUnmarketable;
-                this.plugin.SaveConfig();
-            }
-
-            ImGuiComponents.HelpMarker(Loc.Localize(
-                "ShowUnmarketable_HelpMarker",
-                "toggle whether to show items unmarketable items"));
         }
 
         private void DrawThresholds()

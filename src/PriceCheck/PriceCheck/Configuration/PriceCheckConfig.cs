@@ -36,11 +36,6 @@ namespace PriceCheck
         public bool ShowPrices { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether to show unmarketable items.
-        /// </summary>
-        public bool ShowUnmarketable { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to prevent price checks in combat.
         /// </summary>
         public bool RestrictInCombat { get; set; }
@@ -139,5 +134,85 @@ namespace PriceCheck
         /// Gets or sets chat channel to use for price check messages.
         /// </summary>
         public XivChatType ChatChannel { get; set; } = XivChatType.None;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show Success in overlay.
+        /// </summary>
+        public bool ShowSuccessInOverlay { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show FailedToProcess in overlay.
+        /// </summary>
+        public bool ShowFailedToProcessInOverlay { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show FailedToGetData in overlay.
+        /// </summary>
+        public bool ShowFailedToGetDataInOverlay { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show NoDataAvailable in overlay.
+        /// </summary>
+        public bool ShowNoDataAvailableInOverlay { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show RecentDataAvailable in overlay.
+        /// </summary>
+        public bool ShowNoRecentDataAvailableInOverlay { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show BelowVendor in overlay.
+        /// </summary>
+        public bool ShowBelowVendorInOverlay { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show BelowMinimum in overlay.
+        /// </summary>
+        public bool ShowBelowMinimumInOverlay { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show Unmarketable in overlay.
+        /// </summary>
+        public bool ShowUnmarketableInOverlay { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show Success in chat.
+        /// </summary>
+        public bool ShowSuccessInChat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show FailedToProcess in chat.
+        /// </summary>
+        public bool ShowFailedToProcessInChat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show FailedToGetData in chat.
+        /// </summary>
+        public bool ShowFailedToGetDataInChat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show NoDataAvailable in chat.
+        /// </summary>
+        public bool ShowNoDataAvailableInChat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show RecentDataAvailable in chat.
+        /// </summary>
+        public bool ShowNoRecentDataAvailableInChat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show BelowVendor in chat.
+        /// </summary>
+        public bool ShowBelowVendorInChat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show BelowMinimum in chat.
+        /// </summary>
+        public bool ShowBelowMinimumInChat { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show Unmarketable in chat.
+        /// </summary>
+        public bool ShowUnmarketableInChat { get; set; }
     }
 }

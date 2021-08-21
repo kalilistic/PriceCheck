@@ -71,22 +71,88 @@ namespace PriceCheck
                 break;
             }
 
-            // remove items over max
-            while (this.pricedItems.Count >= this.plugin.Configuration.MaxItemsInOverlay)
-            {
-                this.pricedItems.RemoveAt(this.pricedItems.Count - 1);
-            }
-
-            // add to top of list
-            this.pricedItems.Insert(0, pricedItem);
-
             // determine message and colors
             this.SetFieldsByResult(pricedItem);
+
+            // add to overlay
+            if (this.plugin.Configuration.ShowOverlay)
+            {
+                // remove items over max
+                while (this.pricedItems.Count >= this.plugin.Configuration.MaxItemsInOverlay)
+                {
+                    this.pricedItems.RemoveAt(this.pricedItems.Count - 1);
+                }
+
+                // add item depending on result
+                switch (pricedItem.Result)
+                {
+                    case ItemResult.None:
+                        break;
+                    case ItemResult.Success:
+                        if (this.plugin.Configuration.ShowSuccessInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    case ItemResult.FailedToProcess:
+                        if (this.plugin.Configuration.ShowFailedToProcessInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    case ItemResult.FailedToGetData:
+                        if (this.plugin.Configuration.ShowFailedToGetDataInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    case ItemResult.NoDataAvailable:
+                        if (this.plugin.Configuration.ShowNoDataAvailableInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    case ItemResult.NoRecentDataAvailable:
+                        if (this.plugin.Configuration.ShowNoRecentDataAvailableInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    case ItemResult.BelowVendor:
+                        if (this.plugin.Configuration.ShowBelowVendorInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    case ItemResult.BelowMinimum:
+                        if (this.plugin.Configuration.ShowBelowMinimumInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    case ItemResult.Unmarketable:
+                        if (this.plugin.Configuration.ShowUnmarketableInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        break;
+                    default:
+                        Logger.LogError("Unrecognized item result.");
+                        break;
+                }
+            }
 
             // send chat message
             if (this.plugin.Configuration.ShowInChat)
             {
-                this.plugin.PrintItemMessage(pricedItem);
+                switch (pricedItem.Result)
+                {
+                    case ItemResult.None:
+                        break;
+                    case ItemResult.Success:
+                        if (this.plugin.Configuration.ShowSuccessInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    case ItemResult.FailedToProcess:
+                        if (this.plugin.Configuration.ShowFailedToProcessInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    case ItemResult.FailedToGetData:
+                        if (this.plugin.Configuration.ShowFailedToGetDataInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    case ItemResult.NoDataAvailable:
+                        if (this.plugin.Configuration.ShowNoDataAvailableInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    case ItemResult.NoRecentDataAvailable:
+                        if (this.plugin.Configuration.ShowNoRecentDataAvailableInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    case ItemResult.BelowVendor:
+                        if (this.plugin.Configuration.ShowBelowVendorInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    case ItemResult.BelowMinimum:
+                        if (this.plugin.Configuration.ShowBelowMinimumInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    case ItemResult.Unmarketable:
+                        if (this.plugin.Configuration.ShowUnmarketableInChat) this.plugin.PrintItemMessage(pricedItem);
+                        break;
+                    default:
+                        Logger.LogError("Unrecognized item result.");
+                        break;
+                }
             }
 
             // send toast
