@@ -156,7 +156,14 @@ namespace PriceCheck
             payloadList.Add(new TextPayload(" " + (char)SeIconChar.ArrowRight + " " + pricedItem.Message));
             if (this.Configuration.UseChatColors)
                 payloadList.Add(new UIForegroundPayload(this.PluginService.PluginInterface.Data, 0));
-            this.PluginService.Chat.Print(payloadList);
+            if (this.Configuration.ChatChannel == XivChatType.None)
+            {
+                this.PluginService.Chat.Print(payloadList);
+            }
+            else
+            {
+                this.PluginService.Chat.Print(payloadList, this.Configuration.ChatChannel);
+            }
         }
 
         /// <summary>

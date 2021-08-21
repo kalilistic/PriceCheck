@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using Dalamud.DrunkenToad;
+using Dalamud.Game.Text;
 
 namespace PriceCheck
 {
@@ -133,5 +134,10 @@ namespace PriceCheck
         /// Gets or sets list of items to show below.
         /// </summary>
         public List<byte> ShowContextBelowThis { get; set; } = new ();
+
+        /// <summary>
+        /// Gets or sets chat channel to use for price check messages.
+        /// </summary>
+        public XivChatType ChatChannel { get; set; } = XivChatType.None;
     }
 }

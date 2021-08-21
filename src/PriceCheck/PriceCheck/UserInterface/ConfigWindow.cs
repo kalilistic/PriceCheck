@@ -4,6 +4,7 @@ using System.Numerics;
 
 using CheapLoc;
 using Dalamud.DrunkenToad;
+using Dalamud.Game.Text;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Components;
 using ImGuiNET;
@@ -317,6 +318,25 @@ namespace PriceCheck
             ImGuiComponents.HelpMarker(Loc.Localize(
                 "UseItemLinks_HelpMarker",
                 "use item links in chat results"));
+
+            ImGui.Text(Loc.Localize("ChatChannel", "Chat Channel"));
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ChatChannel_HelpMarker",
+                                           "set the chat channel to send messages"));
+            var chatChannel = this.plugin.Configuration.ChatChannel;
+            if (ImGui.BeginCombo("###PriceCheck_ChatChannel_Combo", chatChannel.ToString()))
+            {
+                foreach (var type in Enum.GetValues(typeof(XivChatType)).Cast<XivChatType>())
+                {
+                    if (ImGui.Selectable(type.ToString(), type == chatChannel))
+                    {
+                        this.plugin.Configuration.ChatChannel = type;
+                        this.plugin.SaveConfig();
+                    }
+                }
+
+                ImGui.EndCombo();
+            }
         }
 
         private void DrawToast()
