@@ -61,7 +61,7 @@ namespace PriceCheck
         public static void UpdateLanguage()
         {
             Success = new Result(Loc.Localize("SellOnMarketboard", "Sell on marketboard"), 45, new Vector4(0f, .8f, .133f, 1));
-            FailedToGetData = new Result(Loc.Localize("FailedToGetData", "Failed to get data"), 17, new Vector4(.863f, 0, 0, 1));
+            FailedToGetData = new Result(Loc.Localize("FailedToGetData", "Failed to get data - universalis may be down"), 17, new Vector4(.863f, 0, 0, 1));
             NoDataAvailable = new Result(Loc.Localize("NoDataAvailable", "No data available"), 17, new Vector4(.863f, 0, 0, 1));
             NoRecentDataAvailable = new Result(Loc.Localize("NoRecentDataAvailable", "No recent data"), 17, new Vector4(.863f, 0, 0, 1));
             BelowVendor = new Result(Loc.Localize("BelowVendor", "Sell to vendor"), 25, new Vector4(1f, 1f, .4f, 1f));
