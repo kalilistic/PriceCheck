@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using CheapLoc;
+
 namespace PriceCheck
 {
     /// <summary>
@@ -21,27 +23,42 @@ namespace PriceCheck
         /// <summary>
         /// Price mode: historical average.
         /// </summary>
-        public static readonly PriceMode HistoricalAverage = new PriceMode(0, "Historical Average");
+        public static readonly PriceMode AveragePrice = new (
+            0,
+            Loc.Localize("AveragePrice", "Average Price"),
+            Loc.Localize("AveragePriceDesc", "The average sale price in recent sale history with outliers removed beyond three standard deviations of the mean."));
 
         /// <summary>
         /// Price mode: current average.
         /// </summary>
-        public static readonly PriceMode CurrentAverage = new PriceMode(1, "Current Average");
+        public static readonly PriceMode CurrentAveragePrice = new (
+        1,
+        Loc.Localize("CurrentAveragePrice", "Current Average Price"),
+        Loc.Localize("CurrentAveragePriceDesc", "The average sale price in current listings with outliers removed beyond three standard deviations of the mean."));
 
         /// <summary>
         /// Price mode: minimum price.
         /// </summary>
-        public static readonly PriceMode HistoricalMinimumPrice = new PriceMode(2, "Historical Minimum");
+        public static readonly PriceMode MinimumPrice = new (
+            2,
+            Loc.Localize("MinimumPrice", "Minimum Price"),
+            Loc.Localize("MinimumPriceDesc", "The minimum price in current listings."));
 
         /// <summary>
         /// Price mode: maximum price.
         /// </summary>
-        public static readonly PriceMode HistoricalMaximumPrice = new PriceMode(3, "Historical Maximum");
+        public static readonly PriceMode MaximumPrice = new (
+            3,
+            Loc.Localize("MaximumPrice", "Maximum Price"),
+            Loc.Localize("MaximumPriceDesc", "The maximum price in current listings."));
 
         /// <summary>
         /// Price mode: current minimum price.
         /// </summary>
-        public static readonly PriceMode CurrentMinimumPrice = new PriceMode(4, "Current Minimum Price");
+        public static readonly PriceMode CurrentMinimumPrice = new (
+            4,
+            Loc.Localize("CurrentMinimumPrice", "Current Minimum Price"),
+            Loc.Localize("CurrentMinimumPriceDesc", "The minimum price in current listings across both normal and high quality items."));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceMode"/> class.
@@ -50,10 +67,11 @@ namespace PriceCheck
         {
         }
 
-        private PriceMode(int index, string name)
+        private PriceMode(int index, string name, string description)
         {
             this.Index = index;
             this.Name = name;
+            this.Description = description;
             PriceModes.Add(this);
             PriceModeNames.Add(name);
         }
@@ -67,6 +85,11 @@ namespace PriceCheck
         /// Gets or sets price mode name.
         /// </summary>
         public string Name { get; set; } = null!;
+
+        /// <summary>
+        /// Gets or sets price mode description.
+        /// </summary>
+        public string Description { get; set; } = null!;
 
         /// <summary>
         /// Find price mode by index.

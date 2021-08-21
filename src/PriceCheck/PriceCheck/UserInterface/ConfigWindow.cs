@@ -216,6 +216,10 @@ namespace PriceCheck
                 this.plugin.SaveConfig();
             }
 
+            ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+            ImGui.TextWrapped(PriceMode.GetPriceModeByIndex(priceMode)?.Description);
+            ImGui.PopStyleColor();
+
             ImGui.Spacing();
         }
 

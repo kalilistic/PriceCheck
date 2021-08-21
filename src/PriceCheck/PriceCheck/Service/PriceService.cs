@@ -226,13 +226,13 @@ namespace PriceCheck
 
             // set market price
             double? marketPrice = null;
-            if (this.plugin.Configuration.PriceMode == PriceMode.HistoricalAverage.Index)
+            if (this.plugin.Configuration.PriceMode == PriceMode.AveragePrice.Index)
                 marketPrice = pricedItem.IsHQ ? marketBoardData.AveragePriceHQ : marketBoardData.AveragePriceNQ;
-            else if (this.plugin.Configuration.PriceMode == PriceMode.CurrentAverage.Index)
+            else if (this.plugin.Configuration.PriceMode == PriceMode.CurrentAveragePrice.Index)
                 marketPrice = pricedItem.IsHQ ? marketBoardData.CurrentAveragePriceHQ : marketBoardData.CurrentAveragePriceNQ;
-            else if (this.plugin.Configuration.PriceMode == PriceMode.HistoricalMinimumPrice.Index)
+            else if (this.plugin.Configuration.PriceMode == PriceMode.MinimumPrice.Index)
                 marketPrice = pricedItem.IsHQ ? marketBoardData.MinimumPriceHQ : marketBoardData.MinimumPriceNQ;
-            else if (this.plugin.Configuration.PriceMode == PriceMode.HistoricalMaximumPrice.Index)
+            else if (this.plugin.Configuration.PriceMode == PriceMode.MaximumPrice.Index)
                 marketPrice = pricedItem.IsHQ ? marketBoardData.MaximumPriceHQ : marketBoardData.MaximumPriceNQ;
             else if (this.plugin.Configuration.PriceMode == PriceMode.CurrentMinimumPrice.Index)
                 marketPrice = marketBoardData.CurrentMinimumPrice;
