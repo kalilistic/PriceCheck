@@ -122,7 +122,7 @@ namespace PriceCheck
                 {
                     await Task.Delay(this.plugin.Configuration.HoverDelay * 1000, this.plugin.ItemCancellationTokenSource!.Token)
                               .ConfigureAwait(false);
-                    this.plugin.ItemDetected(new DetectedItem(args.ItemId, args.ItemHq));
+                    this.plugin.PriceService.ProcessItem(args.ItemId, args.ItemHq);
                 });
             }
             catch (Exception ex)

@@ -34,8 +34,6 @@ namespace PriceCheck
 
         private readonly DalamudPluginInterface pluginInterface;
 
-        private UniversalisClient universalisClient = null!;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceCheckPlugin"/> class.
         /// </summary>
@@ -51,16 +49,12 @@ namespace PriceCheck
             this.LoadUI();
             this.HandleFreshInstall();
             Result.UpdateLanguage();
+            this.UniversalisClient = new UniversalisClient(this);
             this.XivCommon = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
             this.ContextMenuManager = new ContextMenuManager(this);
             this.HoveredItemManager = new HoveredItemManager(this);
             this.PluginService.PluginInterface.OnLanguageChanged += OnLanguageChanged;
         }
-
-        /// <summary>
-        /// Item detected event handler.
-        /// </summary>
-        public event EventHandler<DetectedItem> OnItemDetected = null!;
 
         /// <summary>
         /// Gets or sets command manager to handle user commands.
@@ -71,6 +65,11 @@ namespace PriceCheck
         /// Gets price service.
         /// </summary>
         public PriceService PriceService { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets universalis client.
+        /// </summary>
+        public UniversalisClient UniversalisClient { get; private set; }
 
         /// <summary>
         /// Gets or sets plugin configuration.
@@ -123,7 +122,7 @@ namespace PriceCheck
         public void SendToast(PricedItem pricedItem)
         {
             this.PluginService.PluginInterface.Framework.Gui.Toast.ShowNormal(
-                $"{pricedItem.DisplayName} {(char)SeIconChar.ArrowRight} {pricedItem.Message}");
+                $"{pricedItem.ItemName} {(char)SeIconChar.ArrowRight} {pricedItem.Message}");
         }
 
         /// <summary>
@@ -139,20 +138,19 @@ namespace PriceCheck
             };
             if (this.Configuration.UseChatColors)
             {
-                if (pricedItem.Result != null)
-                    payloadList.Add(new UIForegroundPayload(this.PluginService.PluginInterface.Data, pricedItem.Result.ChatColor()));
+                payloadList.Add(new UIForegroundPayload(this.PluginService.PluginInterface.Data, pricedItem.ChatColor));
             }
 
             if (this.Configuration.UseItemLinks)
             {
                 payloadList.Add(new ItemPayload(this.PluginService.PluginInterface.Data, pricedItem.ItemId, pricedItem.IsHQ));
                 payloadList.Add(new TextPayload($"{(char)SeIconChar.LinkMarker}"));
-                payloadList.Add(new TextPayload(" " + pricedItem.DisplayName));
+                payloadList.Add(new TextPayload(" " + pricedItem.ItemName));
                 payloadList.Add(RawPayload.LinkTerminator);
             }
             else
             {
-                payloadList.Add(new TextPayload(pricedItem.DisplayName));
+                payloadList.Add(new TextPayload(pricedItem.ItemName));
             }
 
             payloadList.Add(new TextPayload(" " + (char)SeIconChar.ArrowRight + " " + pricedItem.Message));
@@ -190,8 +188,7 @@ namespace PriceCheck
                 this.ContextMenuManager.Dispose();
                 this.HoveredItemManager.Dispose();
                 this.ItemCancellationTokenSource?.Dispose();
-                this.PriceService.Dispose();
-                this.universalisClient.Dispose();
+                this.UniversalisClient.Dispose();
             }
             catch (Exception ex)
             {
@@ -207,15 +204,6 @@ namespace PriceCheck
         public void SaveConfig()
         {
             this.PluginService.SaveConfig(this.Configuration);
-        }
-
-        /// <summary>
-        /// Trigger item detection handling.
-        /// </summary>
-        /// <param name="item">detected item.</param>
-        public void ItemDetected(DetectedItem item)
-        {
-            this.OnItemDetected.Invoke(this, item);
         }
 
         /// <summary>
@@ -244,8 +232,7 @@ namespace PriceCheck
 
         private void LoadServices()
         {
-            this.universalisClient = new UniversalisClient(this);
-            this.PriceService = new PriceService(this, this.universalisClient);
+            this.PriceService = new PriceService(this);
         }
 
         private void LoadUI()

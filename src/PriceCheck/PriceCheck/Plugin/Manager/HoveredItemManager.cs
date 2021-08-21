@@ -55,7 +55,14 @@ namespace PriceCheck
                 {
                     await Task.Delay(this.plugin.Configuration.HoverDelay * 1000, this.plugin.ItemCancellationTokenSource!.Token)
                               .ConfigureAwait(false);
-                    this.plugin.ItemDetected(new DetectedItem(itemId));
+                    if (itemId >= 1000000)
+                    {
+                        this.plugin.PriceService.ProcessItem(Convert.ToUInt32(itemId - 1000000), true);
+                    }
+                    else
+                    {
+                        this.plugin.PriceService.ProcessItem(Convert.ToUInt32(itemId), false);
+                    }
                 });
             }
             catch (Exception ex)

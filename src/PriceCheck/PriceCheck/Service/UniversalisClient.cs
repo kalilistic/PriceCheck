@@ -19,12 +19,12 @@ namespace PriceCheck
         /// <summary>
         /// Initializes a new instance of the <see cref="UniversalisClient"/> class.
         /// </summary>
-        /// <param name="priceCheckPlugin">price check plugin.</param>
-        public UniversalisClient(PriceCheckPlugin priceCheckPlugin)
+        /// <param name="plugin">price check plugin.</param>
+        public UniversalisClient(PriceCheckPlugin plugin)
         {
             this.httpClient = new HttpClient
             {
-                Timeout = TimeSpan.FromMilliseconds(priceCheckPlugin.Configuration
+                Timeout = TimeSpan.FromMilliseconds(plugin.Configuration
                     .RequestTimeout),
             };
         }
@@ -67,6 +67,8 @@ namespace PriceCheck
                 return null;
             }
 
+            Logger.LogDebug($"universalisResponse={result}");
+
             if (result.StatusCode != HttpStatusCode.OK)
             {
                 Logger.LogError(
@@ -78,6 +80,7 @@ namespace PriceCheck
             }
 
             var json = JsonConvert.DeserializeObject<dynamic>(result.Content.ReadAsStringAsync().Result);
+            Logger.LogDebug($"universalisResponseBody={json}");
             if (json == null)
             {
                 Logger.LogError(
@@ -103,6 +106,7 @@ namespace PriceCheck
                     MaximumPriceHQ = json.maxPriceHQ?.Value,
                     CurrentMinimumPrice = json.listings[0]?.pricePerUnit?.Value,
                 };
+                Logger.LogDebug($"marketBoardData={JsonConvert.SerializeObject(marketBoardData)}");
                 return marketBoardData;
             }
             catch (Exception ex)
@@ -118,7 +122,9 @@ namespace PriceCheck
 
         private async Task<HttpResponseMessage> GetMarketBoardDataAsync(uint? worldId, ulong itemId)
         {
-            return await this.httpClient.GetAsync(new Uri(Endpoint + "/" + worldId + "/" + itemId));
+            var request = Endpoint + "/" + worldId + "/" + itemId;
+            Logger.LogDebug($"universalisRequest={request}");
+            return await this.httpClient.GetAsync(new Uri(request));
         }
     }
 }

@@ -48,16 +48,13 @@ namespace PriceCheck
                         {
                             if (this.plugin.Configuration.UseOverlayColors)
                             {
-                                if (item.Result != null)
-                                {
-                                    ImGui.TextColored(item.Result.OverlayColor(), item.DisplayName);
-                                    ImGui.NextColumn();
-                                    ImGui.TextColored(item.Result.OverlayColor(), item.Message);
-                                }
+                                ImGui.TextColored(item.OverlayColor, item.ItemName);
+                                ImGui.NextColumn();
+                                ImGui.TextColored(item.OverlayColor, item.Message);
                             }
                             else
                             {
-                                ImGui.Text(item.DisplayName);
+                                ImGui.Text(item.ItemName);
                                 ImGui.NextColumn();
                                 ImGui.Text(item.Message);
                             }

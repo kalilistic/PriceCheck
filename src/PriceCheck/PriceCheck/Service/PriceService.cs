@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
+using CheapLoc;
 using Dalamud.DrunkenToad;
 using Dalamud.Game.Text;
-using Lumina.Excel.GeneratedSheets;
+using Dalamud.Interface.Colors;
 
 namespace PriceCheck
 {
@@ -13,21 +15,17 @@ namespace PriceCheck
     /// </summary>
     public class PriceService
     {
-        private readonly PriceCheckPlugin priceCheckPlugin;
-        private readonly List<PricedItem> pricedItems;
-        private readonly UniversalisClient universalisClient;
+        private readonly PriceCheckPlugin plugin;
+        private readonly List<PricedItem> pricedItems = new ();
+        private readonly object locker = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceService"/> class.
         /// </summary>
-        /// <param name="priceCheckPlugin">price check plugin.</param>
-        /// <param name="universalisClient">universalis client.</param>
-        public PriceService(PriceCheckPlugin priceCheckPlugin, UniversalisClient universalisClient)
+        /// <param name="plugin">price check plugin.</param>
+        public PriceService(PriceCheckPlugin plugin)
         {
-            this.priceCheckPlugin = priceCheckPlugin;
-            this.pricedItems = new List<PricedItem>();
-            this.universalisClient = universalisClient;
-            this.priceCheckPlugin.OnItemDetected += this.ProcessItem;
+            this.plugin = plugin;
         }
 
         /// <summary>
@@ -41,254 +39,238 @@ namespace PriceCheck
         /// <returns>list of priced items.</returns>
         public IEnumerable<PricedItem> GetItems()
         {
-            return this.pricedItems;
+            lock (this.locker)
+            {
+                return this.pricedItems.ToList();
+            }
         }
 
         /// <summary>
-        /// Dispose service.
+        /// Conduct price check.
         /// </summary>
-        public void Dispose()
+        /// <param name="itemId">item id to lookup.</param>
+        /// <param name="isHQ">indicator if item is hq.</param>
+        public void ProcessItem(uint itemId, bool isHQ)
         {
-            this.priceCheckPlugin.OnItemDetected -= this.ProcessItem;
-        }
-
-        /// <summary>
-        /// Build priced item from item id.
-        /// </summary>
-        /// <param name="itemId">item id.</param>
-        /// <returns>priced item.</returns>
-        internal static PricedItem BuildPricedItemFromId(ulong itemId)
-        {
-            var pricedItem = new PricedItem { RawItemId = itemId };
-            if (pricedItem.RawItemId >= 1000000)
+            // create priced item
+            Logger.LogDebug($"Pricing itemId={itemId} hq={isHQ}");
+            var pricedItem = new PricedItem
             {
-                pricedItem.ItemId = Convert.ToUInt32(pricedItem.RawItemId - 1000000);
-                pricedItem.IsHQ = true;
-            }
-            else
-            {
-                pricedItem.ItemId = Convert.ToUInt32(pricedItem.RawItemId);
-                pricedItem.IsHQ = false;
-            }
+                ItemId = itemId,
+                IsHQ = isHQ,
+            };
 
-            return pricedItem;
-        }
+            // run price check
+            this.PriceCheck(pricedItem);
 
-        /// <summary>
-        /// Validate market board data from universalis.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        /// <returns>indicator if successful.</returns>
-        internal static bool ValidateMarketBoardData(PricedItem pricedItem)
-        {
-            if (pricedItem.LastUpdated != 0 && pricedItem.MarketPrice != 0) return false;
-            pricedItem.Result = Result.NoDataAvailable !;
-            return true;
-        }
-
-        /// <summary>
-        /// Compare market price with vendor price.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        /// <returns>indicator if successful.</returns>
-        internal static bool CompareVendorPrice(PricedItem pricedItem)
-        {
-            if (pricedItem.VendorPrice < pricedItem.MarketPrice) return false;
-            pricedItem.Result = Result.BelowVendor !;
-            return true;
-        }
-
-        /// <summary>
-        /// Remove previous price record.
-        /// </summary>
-        /// <param name="pricedItem">priced item.</param>
-        internal static void SetDisplayName(PricedItem pricedItem)
-        {
-            if (pricedItem.IsHQ)
-            {
-                pricedItem.DisplayName =
-                    pricedItem.ItemName + " " + (char)SeIconChar.HighQuality;
-            }
-            else
-            {
-                pricedItem.DisplayName = pricedItem.ItemName;
-            }
-        }
-
-        private Item? GetItemById(uint itemId)
-        {
-            return this.priceCheckPlugin.PluginService.GameData.Item(itemId);
-        }
-
-        private bool EnrichWithExcelData(PricedItem pricedItem)
-        {
-            var excelItem = this.GetItemById(pricedItem.ItemId);
-            if (excelItem == null) return true;
-            if (excelItem.ItemSearchCategory.Row == 0)
-            {
-                if (this.priceCheckPlugin.Configuration.ShowUnmarketable)
-                    pricedItem.IsMarketable = false;
-                else
-                    return true;
-            }
-            else
-            {
-                pricedItem.IsMarketable = true;
-            }
-
-            pricedItem.ItemName = excelItem.Name;
-            pricedItem.VendorPrice = excelItem.PriceLow;
-            return false;
-        }
-
-        private bool EnrichWithMarketBoardData(PricedItem pricedItem)
-        {
-            if (!pricedItem.IsMarketable)
-            {
-                pricedItem.Result = Result.Unmarketable !;
-                return true;
-            }
-
-            var worldId = this.priceCheckPlugin.GetHomeWorldId();
-            if (worldId == 0)
-            {
-                pricedItem.Result = Result.FailedToGetData !;
-                return true;
-            }
-
-            var marketBoard =
-                this.universalisClient.GetMarketBoard(worldId, pricedItem.ItemId);
-            if (marketBoard == null)
-            {
-                pricedItem.Result = Result.FailedToGetData !;
-                return true;
-            }
-
-            pricedItem.LastUpdated = marketBoard.LastUploadTime;
-
-            double? marketPrice = null;
-            if (this.priceCheckPlugin.Configuration.PriceMode == PriceMode.HistoricalAverage.Index)
-                marketPrice = pricedItem.IsHQ ? marketBoard.AveragePriceHQ : marketBoard.AveragePriceNQ;
-            else if (this.priceCheckPlugin.Configuration.PriceMode == PriceMode.CurrentAverage.Index)
-                marketPrice = pricedItem.IsHQ ? marketBoard.CurrentAveragePriceHQ : marketBoard.CurrentAveragePriceNQ;
-            else if (this.priceCheckPlugin.Configuration.PriceMode == PriceMode.HistoricalMinimumPrice.Index)
-                marketPrice = pricedItem.IsHQ ? marketBoard.MinimumPriceHQ : marketBoard.MinimumPriceNQ;
-            else if (this.priceCheckPlugin.Configuration.PriceMode == PriceMode.HistoricalMaximumPrice.Index)
-                marketPrice = pricedItem.IsHQ ? marketBoard.MaximumPriceHQ : marketBoard.MaximumPriceNQ;
-            else if (this.priceCheckPlugin.Configuration.PriceMode == PriceMode.CurrentMinimumPrice.Index)
-                marketPrice = marketBoard.CurrentMinimumPrice;
-            if (marketPrice == null)
-                marketPrice = 0;
-            else
-                marketPrice = Math.Round((double)marketPrice);
-            pricedItem.MarketPrice = (uint)marketPrice;
-            return false;
-        }
-
-        private bool EvaluateDataAge(PricedItem pricedItem)
-        {
-            var currentTime = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds;
-            var diffInSeconds = currentTime - pricedItem.LastUpdated;
-            var diffInDays = diffInSeconds / 86400000;
-            if (!(diffInDays > this.priceCheckPlugin.Configuration.MaxUploadDays)) return false;
-            pricedItem.Result = Result.NoRecentDataAvailable !;
-            return true;
-        }
-
-        private void CompareMinPrice(PricedItem pricedItem)
-        {
-            if (pricedItem.MarketPrice >= this.priceCheckPlugin.Configuration.MinPrice) return;
-            pricedItem.Result = Result.BelowMinimum !;
-        }
-
-        private void RemoveExistingRecord(PricedItem pricedItem)
-        {
+            // check for existing entry for this itemId
             for (var i = 0; i < this.pricedItems.Count; i++)
             {
                 if (this.pricedItems[i].ItemId != pricedItem.ItemId) continue;
                 this.pricedItems.RemoveAt(i);
                 break;
             }
-        }
 
-        private void RemoveItemsOverMax()
-        {
-            while (this.pricedItems.Count >= this.priceCheckPlugin.Configuration.MaxItemsInOverlay)
+            // remove items over max
+            while (this.pricedItems.Count >= this.plugin.Configuration.MaxItemsInOverlay)
+            {
                 this.pricedItems.RemoveAt(this.pricedItems.Count - 1);
-        }
-
-        private void ProcessItem(object sender, DetectedItem detectedItem)
-        {
-            this.priceCheckPlugin.PriceService.LastPriceCheck = DateUtil.CurrentTime();
-            PricedItem pricedItem;
-            if (detectedItem.IsHQ == null)
-            {
-                pricedItem = BuildPricedItemFromId(detectedItem.ItemId);
-            }
-            else
-            {
-                pricedItem = new PricedItem
-                {
-                    RawItemId = detectedItem.ItemId,
-                    ItemId = Convert.ToUInt32(detectedItem.ItemId),
-                    IsHQ = (bool)detectedItem.IsHQ,
-                };
             }
 
-            var failedToEnrichItem = this.EnrichWithExcelData(pricedItem);
-            if (failedToEnrichItem) return;
-            this.ProcessItem(pricedItem);
-            SetDisplayName(pricedItem);
-            this.SetMessage(pricedItem);
-            this.RemoveExistingRecord(pricedItem);
-            this.RemoveItemsOverMax();
-            this.AddItemToList(pricedItem);
-            this.SendChatMessage(pricedItem);
-            this.SendToast(pricedItem);
-        }
-
-        private void AddItemToList(PricedItem pricedItem)
-        {
+            // add to top of list
             this.pricedItems.Insert(0, pricedItem);
-        }
 
-        private void SendChatMessage(PricedItem pricedItem)
-        {
-            if (this.priceCheckPlugin.Configuration.ShowInChat)
-                this.priceCheckPlugin.PrintItemMessage(pricedItem);
-        }
+            // determine message and colors
+            this.SetFieldsByResult(pricedItem);
 
-        private void SendToast(PricedItem pricedItem)
-        {
-            if (this.priceCheckPlugin.Configuration.ShowToast) this.priceCheckPlugin.SendToast(pricedItem);
-        }
-
-        private void SetMessage(PricedItem pricedItem)
-        {
-            if (pricedItem.Result == null)
+            // send chat message
+            if (this.plugin.Configuration.ShowInChat)
             {
-                pricedItem.Result = Result.Success !;
-                pricedItem.Message = (this.priceCheckPlugin.Configuration.ShowPrices
-                                          ? pricedItem.MarketPrice.ToString("N0", CultureInfo.InvariantCulture)
-                                          : pricedItem.Result?.ToString()) ?? string.Empty;
+                this.plugin.PrintItemMessage(pricedItem);
             }
+
+            // send toast
+            if (this.plugin.Configuration.ShowToast)
+            {
+                this.plugin.SendToast(pricedItem);
+            }
+        }
+
+        private void SetFieldsByResult(PricedItem pricedItem)
+        {
+            switch (pricedItem.Result)
+            {
+                case ItemResult.Success:
+                    pricedItem.Message = (this.plugin.Configuration.ShowPrices
+                                              ? pricedItem.MarketPrice.ToString("N0", CultureInfo.InvariantCulture)
+                                              : Loc.Localize("SellOnMarketboard", "Sell on marketboard")) ?? string.Empty;
+                    pricedItem.OverlayColor = ImGuiColors.HealerGreen;
+                    pricedItem.ChatColor = 45;
+                    break;
+                case ItemResult.None:
+                    pricedItem.Message = Loc.Localize("FailedToGetData", "Failed to get data");
+                    pricedItem.OverlayColor = ImGuiColors.DPSRed;
+                    pricedItem.ChatColor = 17;
+                    break;
+                case ItemResult.FailedToProcess:
+                    pricedItem.Message = Loc.Localize("FailedToProcess", "Failed to process item");
+                    pricedItem.OverlayColor = ImGuiColors.DPSRed;
+                    pricedItem.ChatColor = 17;
+                    break;
+                case ItemResult.FailedToGetData:
+                    pricedItem.Message = Loc.Localize("FailedToGetData", "Failed to get data");
+                    pricedItem.OverlayColor = ImGuiColors.DPSRed;
+                    pricedItem.ChatColor = 17;
+                    break;
+                case ItemResult.NoDataAvailable:
+                    pricedItem.Message = Loc.Localize("NoDataAvailable", "No data available");
+                    pricedItem.OverlayColor = ImGuiColors.DPSRed;
+                    pricedItem.ChatColor = 17;
+                    break;
+                case ItemResult.NoRecentDataAvailable:
+                    pricedItem.Message = Loc.Localize("NoRecentDataAvailable", "No recent data");
+                    pricedItem.OverlayColor = ImGuiColors.DPSRed;
+                    pricedItem.ChatColor = 17;
+                    break;
+                case ItemResult.BelowVendor:
+                    pricedItem.Message = Loc.Localize("BelowVendor", "Sell to vendor");
+                    pricedItem.OverlayColor = ImGuiColors2.ToadYellow;
+                    pricedItem.ChatColor = 25;
+                    break;
+                case ItemResult.BelowMinimum:
+                    pricedItem.Message = Loc.Localize("BelowMinimum", "Below minimum price");
+                    pricedItem.OverlayColor = ImGuiColors2.ToadYellow;
+                    pricedItem.ChatColor = 25;
+                    break;
+                case ItemResult.Unmarketable:
+                    pricedItem.Message = Loc.Localize("Unmarketable", "Can't sell on marketboard");
+                    pricedItem.OverlayColor = ImGuiColors2.ToadYellow;
+                    pricedItem.ChatColor = 25;
+                    break;
+                default:
+                    pricedItem.Message = Loc.Localize("FailedToProcess", "Failed to process item");
+                    pricedItem.OverlayColor = ImGuiColors.DPSRed;
+                    pricedItem.ChatColor = 17;
+                    break;
+            }
+
+            Logger.LogDebug($"Message={pricedItem.Message}");
+        }
+
+        private void PriceCheck(PricedItem pricedItem)
+        {
+            // record current time for window visibility
+            this.LastPriceCheck = DateUtil.CurrentTime();
+            Logger.LogDebug($"LastPriceCheck={this.LastPriceCheck}");
+
+            // look up item game data
+            var item = this.plugin.PluginService.GameData.Item(pricedItem.ItemId);
+
+            if (item == null)
+            {
+                pricedItem.Result = ItemResult.FailedToProcess;
+                Logger.LogError($"Failed to retrieve game data for itemId {pricedItem.ItemId}.");
+                return;
+            }
+
+            // set fields from game data
+            pricedItem.ItemName = pricedItem.IsHQ ? item.Name + " " + (char)SeIconChar.HighQuality : item.Name;
+            Logger.LogDebug($"ItemName={pricedItem.ItemName}");
+            pricedItem.IsMarketable = item.ItemSearchCategory.Row != 0;
+            Logger.LogDebug($"IsMarketable={pricedItem.IsMarketable}");
+            pricedItem.VendorPrice = item.PriceLow;
+            Logger.LogDebug($"VendorPrice={pricedItem.VendorPrice}");
+
+            // check if marketable
+            if (!pricedItem.IsMarketable)
+            {
+                pricedItem.Result = ItemResult.Unmarketable;
+                return;
+            }
+
+            // set worldId
+            var worldId = this.plugin.PluginService.ClientState.LocalPlayer.HomeWorldId();
+            Logger.LogDebug($"worldId={worldId}");
+            if (worldId == 0)
+            {
+                pricedItem.Result = ItemResult.FailedToProcess;
+                return;
+            }
+
+            // lookup market data
+            MarketBoardData? marketBoardData;
+            try
+            {
+                marketBoardData = this.plugin.UniversalisClient.GetMarketBoard(worldId, pricedItem.ItemId);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Caught exception trying to get marketboard data.");
+                marketBoardData = null;
+            }
+
+            // validate marketboard response
+            if (marketBoardData == null)
+            {
+                pricedItem.Result = ItemResult.FailedToGetData;
+                Logger.LogError("Failed to get marketboard data.");
+                return;
+            }
+
+            // validate marketboard data
+            if (marketBoardData.AveragePriceNQ == null || marketBoardData.LastCheckTime == 0)
+            {
+                pricedItem.Result = ItemResult.NoDataAvailable;
+                return;
+            }
+
+            // set market price
+            double? marketPrice = null;
+            if (this.plugin.Configuration.PriceMode == PriceMode.HistoricalAverage.Index)
+                marketPrice = pricedItem.IsHQ ? marketBoardData.AveragePriceHQ : marketBoardData.AveragePriceNQ;
+            else if (this.plugin.Configuration.PriceMode == PriceMode.CurrentAverage.Index)
+                marketPrice = pricedItem.IsHQ ? marketBoardData.CurrentAveragePriceHQ : marketBoardData.CurrentAveragePriceNQ;
+            else if (this.plugin.Configuration.PriceMode == PriceMode.HistoricalMinimumPrice.Index)
+                marketPrice = pricedItem.IsHQ ? marketBoardData.MinimumPriceHQ : marketBoardData.MinimumPriceNQ;
+            else if (this.plugin.Configuration.PriceMode == PriceMode.HistoricalMaximumPrice.Index)
+                marketPrice = pricedItem.IsHQ ? marketBoardData.MaximumPriceHQ : marketBoardData.MaximumPriceNQ;
+            else if (this.plugin.Configuration.PriceMode == PriceMode.CurrentMinimumPrice.Index)
+                marketPrice = marketBoardData.CurrentMinimumPrice;
+            if (marketPrice == null)
+                marketPrice = 0;
             else
-            {
-                pricedItem.Message = pricedItem.Result.ToString();
-            }
-        }
+                marketPrice = Math.Round((double)marketPrice);
+            pricedItem.MarketPrice = (uint)marketPrice;
+            Logger.LogDebug($"marketPrice={pricedItem.MarketPrice}");
 
-        private void ProcessItem(PricedItem pricedItem)
-        {
-            var failedToGetMarketBoardData = this.EnrichWithMarketBoardData(pricedItem);
-            if (failedToGetMarketBoardData) return;
-            var invalidMarketBoardData = ValidateMarketBoardData(pricedItem);
-            if (invalidMarketBoardData) return;
-            var isOldData = this.EvaluateDataAge(pricedItem);
-            if (isOldData) return;
-            var hasHigherPriceOnVendor = CompareVendorPrice(pricedItem);
-            if (hasHigherPriceOnVendor) return;
-            this.CompareMinPrice(pricedItem);
+            // compare with date threshold
+            var diffInSeconds = DateUtil.CurrentTime() - pricedItem.LastUpdated;
+            var diffInDays = diffInSeconds / 86400000;
+            Logger.LogDebug($"Max Days Check: diffDays={diffInDays} >= maxUpload={this.plugin.Configuration.MaxUploadDays}");
+            if (diffInDays >= this.plugin.Configuration.MaxUploadDays)
+            {
+                pricedItem.Result = ItemResult.NoRecentDataAvailable;
+                return;
+            }
+
+            // compare with vendor price
+            Logger.LogDebug($"Vendor Check: vendorPrice={pricedItem.VendorPrice} >= marketPrice={pricedItem.MarketPrice}");
+            if (pricedItem.VendorPrice >= pricedItem.MarketPrice)
+            {
+                pricedItem.Result = ItemResult.BelowVendor;
+                return;
+            }
+
+            // compare with price threshold
+            Logger.LogDebug($"Min Check: marketPrice={pricedItem.MarketPrice} < minPrice={this.plugin.Configuration.MinPrice}");
+            if (pricedItem.MarketPrice < this.plugin.Configuration.MinPrice)
+            {
+                pricedItem.Result = ItemResult.BelowMinimum;
+                return;
+            }
+
+            // made it - set as success
+            pricedItem.Result = ItemResult.Success;
         }
     }
 }
