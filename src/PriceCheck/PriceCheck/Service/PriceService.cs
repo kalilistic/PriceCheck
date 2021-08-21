@@ -46,6 +46,17 @@ namespace PriceCheck
         }
 
         /// <summary>
+        /// Clear all items.
+        /// </summary>
+        public void ClearItems()
+        {
+            lock (this.locker)
+            {
+                this.pricedItems.Clear();
+            }
+        }
+
+        /// <summary>
         /// Conduct price check.
         /// </summary>
         /// <param name="itemId">item id to lookup.</param>

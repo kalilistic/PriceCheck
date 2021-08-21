@@ -43,6 +43,7 @@ namespace PriceCheck
                     var items = this.plugin.PriceService.GetItems().ToList();
                     if (items is { Count: > 0 })
                     {
+                        ImGui.BeginGroup();
                         ImGui.Columns(2);
                         foreach (var item in items)
                         {
@@ -62,6 +63,12 @@ namespace PriceCheck
                             ImGui.NextColumn();
                             ImGui.Separator();
                         }
+
+                        ImGui.EndGroup();
+                        if (ImGui.IsItemClicked(ImGuiMouseButton.Right))
+                        {
+                            ImGui.OpenPopup("###PriceCheck_Overlay_Popup");
+                        }
                     }
                     else
                     {
@@ -71,6 +78,17 @@ namespace PriceCheck
                 catch
                 {
                     // ignored
+                }
+
+                if (ImGui.BeginPopup("###PriceCheck_Overlay_Popup"))
+                {
+                    if (ImGui.MenuItem(
+                        Loc.Localize("ClearPriceHistory", "Clear History")))
+                    {
+                        this.plugin.PriceService.ClearItems();
+                    }
+
+                    ImGui.EndPopup();
                 }
             }
         }
