@@ -54,6 +54,7 @@ namespace PriceCheck
             this.ContextMenuManager = new ContextMenuManager(this);
             this.HoveredItemManager = new HoveredItemManager(this);
             this.PluginService.PluginInterface.OnLanguageChanged += OnLanguageChanged;
+            this.PluginService.PluginInterface.ClientState.OnLogin += this.ClientStateOnOnLogin;
         }
 
         /// <summary>
@@ -235,6 +236,11 @@ namespace PriceCheck
         private static void OnLanguageChanged(string langCode)
         {
             Result.UpdateLanguage();
+        }
+
+        private void ClientStateOnOnLogin(object sender, EventArgs e)
+        {
+            this.WindowManager.MainWindow?.OpenOnLogin();
         }
 
         private void LoadServices()

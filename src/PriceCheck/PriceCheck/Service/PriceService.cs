@@ -26,6 +26,7 @@ namespace PriceCheck
         public PriceService(PriceCheckPlugin plugin)
         {
             this.plugin = plugin;
+            this.LastPriceCheck = DateUtil.CurrentTime();
         }
 
         /// <summary>
@@ -100,28 +101,28 @@ namespace PriceCheck
                     case ItemResult.None:
                         break;
                     case ItemResult.Success:
-                        if (this.plugin.Configuration.ShowSuccessInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowSuccessInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     case ItemResult.FailedToProcess:
-                        if (this.plugin.Configuration.ShowFailedToProcessInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowFailedToProcessInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     case ItemResult.FailedToGetData:
-                        if (this.plugin.Configuration.ShowFailedToGetDataInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowFailedToGetDataInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     case ItemResult.NoDataAvailable:
-                        if (this.plugin.Configuration.ShowNoDataAvailableInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowNoDataAvailableInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     case ItemResult.NoRecentDataAvailable:
-                        if (this.plugin.Configuration.ShowNoRecentDataAvailableInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowNoRecentDataAvailableInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     case ItemResult.BelowVendor:
-                        if (this.plugin.Configuration.ShowBelowVendorInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowBelowVendorInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     case ItemResult.BelowMinimum:
-                        if (this.plugin.Configuration.ShowBelowMinimumInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowBelowMinimumInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     case ItemResult.Unmarketable:
-                        if (this.plugin.Configuration.ShowUnmarketableInOverlay) this.pricedItems.Insert(0, pricedItem);
+                        if (this.plugin.Configuration.ShowUnmarketableInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     default:
                         Logger.LogError("Unrecognized item result.");
@@ -171,6 +172,12 @@ namespace PriceCheck
             {
                 this.plugin.SendToast(pricedItem);
             }
+        }
+
+        private void AddItemToOverlay(PricedItem pricedItem)
+        {
+            this.plugin.WindowManager.MainWindow!.IsOpen = true;
+            this.pricedItems.Insert(0, pricedItem);
         }
 
         private void SetFieldsByResult(PricedItem pricedItem)

@@ -56,6 +56,11 @@ namespace PriceCheck
         public bool ShowOverlay { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether to show overlay on login.
+        /// </summary>
+        public bool ShowOverlayOnLogin { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether to use overlay colors.
         /// </summary>
         public bool UseOverlayColors { get; set; } = true;

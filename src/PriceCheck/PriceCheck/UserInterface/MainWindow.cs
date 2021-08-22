@@ -24,6 +24,21 @@ namespace PriceCheck
             this.plugin = plugin;
             this.Size = new Vector2(300f, 150f);
             this.SizeCondition = ImGuiCond.Appearing;
+            if (this.plugin.PluginService.ClientState.IsLoggedIn())
+            {
+                this.OpenOnLogin();
+            }
+        }
+
+        /// <summary>
+        /// Open window on login depending on config.
+        /// </summary>
+        public void OpenOnLogin()
+        {
+            if (this.plugin.Configuration.ShowOverlay && this.plugin.Configuration.ShowOverlayOnLogin)
+            {
+                this.IsOpen = true;
+            }
         }
 
         /// <inheritdoc />
@@ -31,7 +46,12 @@ namespace PriceCheck
         {
             if (this.plugin.Configuration.HideOverlayElapsed != 0 &&
                 DateUtil.CurrentTime() - this.plugin.PriceService.LastPriceCheck >
-                this.plugin.Configuration.HideOverlayElapsed) return;
+                this.plugin.Configuration.HideOverlayElapsed)
+            {
+                this.IsOpen = false;
+                return;
+            }
+
             if (!this.plugin.Configuration.Enabled)
             {
                 ImGui.Text(Loc.Localize("PluginDisabled", "PriceCheckPlugin is disabled."));

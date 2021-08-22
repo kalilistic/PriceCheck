@@ -240,6 +240,19 @@ namespace PriceCheck
                 "ShowOverlay_HelpMarker",
                 "show price check results in overlay window"));
 
+            var showOverlayOnLogin = this.plugin.Configuration.ShowOverlayOnLogin;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowOverlayOnLogin", "Show Overlay on Login") + "###PriceCheck_ShowOverlayOnLogin_Checkbox",
+                ref showOverlayOnLogin))
+            {
+                this.plugin.Configuration.ShowOverlayOnLogin = showOverlayOnLogin;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowOverlayOnLogin_HelpMarker",
+                                           "show overlay window on login"));
+
             var useOverlayColors = this.plugin.Configuration.UseOverlayColors;
             if (ImGui.Checkbox(
                 Loc.Localize("UseOverlayColors", "Use Overlay Colors") + "###PriceCheck_UseOverlayColors_Checkbox",
