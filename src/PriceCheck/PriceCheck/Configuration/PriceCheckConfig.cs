@@ -61,6 +61,11 @@ namespace PriceCheck
         public bool ShowOverlayOnLogin { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether to show keybind in title bar.
+        /// </summary>
+        public bool ShowKeybindInTitleBar { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to use overlay colors.
         /// </summary>
         public bool UseOverlayColors { get; set; } = true;

@@ -595,6 +595,20 @@ namespace PriceCheck
                 "KeybindEnabled_HelpMarker",
                 "toggle if keybind is used or just hover"));
 
+            var showKeybindInTitleBar = this.plugin.Configuration.ShowKeybindInTitleBar;
+            if (ImGui.Checkbox(
+                Loc.Localize("ShowKeybindInTitleBar", "Show Keybind in TitleBar") + "###PriceCheck_ShowKeybindInTitleBar_Checkbox",
+                ref showKeybindInTitleBar))
+            {
+                this.plugin.Configuration.ShowKeybindInTitleBar = showKeybindInTitleBar;
+                this.plugin.SaveConfig();
+                this.plugin.WindowManager.MainWindow?.UpdateWindowTitle();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "ShowKeybindInTitleBar_HelpMarker",
+                                           "toggle if keybind is displayed in titlebar"));
+
             ImGui.Spacing();
             ImGui.Text(Loc.Localize("ModifierKeybind", "Modifier"));
             ImGuiComponents.HelpMarker(Loc.Localize(
@@ -611,6 +625,7 @@ namespace PriceCheck
                 this.plugin.Configuration.ModifierKey =
                     ModifierKey.IndexToEnum(modifierKey);
                 this.plugin.SaveConfig();
+                this.plugin.WindowManager.MainWindow?.UpdateWindowTitle();
             }
 
             ImGui.Spacing();
@@ -627,6 +642,7 @@ namespace PriceCheck
             {
                 this.plugin.Configuration.PrimaryKey = PrimaryKey.IndexToEnum(primaryKey);
                 this.plugin.SaveConfig();
+                this.plugin.WindowManager.MainWindow?.UpdateWindowTitle();
             }
         }
 

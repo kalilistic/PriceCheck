@@ -24,6 +24,7 @@ namespace PriceCheck
             this.plugin = plugin;
             this.Size = new Vector2(300f, 150f);
             this.SizeCondition = ImGuiCond.Appearing;
+            this.UpdateWindowTitle();
             if (this.plugin.PluginService.ClientState.IsLoggedIn())
             {
                 this.OpenOnLogin();
@@ -38,6 +39,33 @@ namespace PriceCheck
             if (this.plugin.Configuration.ShowOverlay && this.plugin.Configuration.ShowOverlayOnLogin)
             {
                 this.IsOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// Update window title.
+        /// </summary>
+        public void UpdateWindowTitle()
+        {
+            if (this.plugin.Configuration.ShowKeybindInTitleBar && this.plugin.Configuration.KeybindEnabled)
+            {
+                if (this.plugin.Configuration.PrimaryKey.Equals(PrimaryKey.Enum.VkNone))
+                {
+                    this.WindowName = string.Format(
+                        Loc.Localize("TitleBarWithKeybind1", "PriceCheck ({0})"),
+                        ModifierKey.Names[ModifierKey.EnumToIndex(this.plugin.Configuration.ModifierKey)]);
+                }
+                else
+                {
+                    this.WindowName = string.Format(
+                        Loc.Localize("TitleBarWithKeybind2", "PriceCheck ({0}+{1})"),
+                        ModifierKey.Names[ModifierKey.EnumToIndex(this.plugin.Configuration.ModifierKey)],
+                        PrimaryKey.Names[PrimaryKey.EnumToIndex(this.plugin.Configuration.PrimaryKey)]);
+                }
+            }
+            else
+            {
+                this.WindowName = "PriceCheck";
             }
         }
 
