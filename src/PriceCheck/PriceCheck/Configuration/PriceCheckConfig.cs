@@ -36,6 +36,11 @@ namespace PriceCheck
         public bool ShowPrices { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether to allow keybind trigger after item hover.
+        /// </summary>
+        public bool AllowKeybindAfterHover { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether to prevent price checks in combat.
         /// </summary>
         public bool RestrictInCombat { get; set; }

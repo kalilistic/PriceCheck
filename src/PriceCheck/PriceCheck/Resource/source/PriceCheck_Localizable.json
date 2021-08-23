@@ -131,6 +131,14 @@
         "message": "show price or just show advice",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "AllowKeybindAfterHover": {
+        "message": "Allow keybind to be pressed after hovering over item",
+        "description": "ConfigWindow.DrawGeneral"
+    },
+    "AllowKeybindAfterHover_HelpMarker": {
+        "message": "allows you to hold the keybind after the item tooltip has been opened (disable for legacy mode)",
+        "description": "ConfigWindow.DrawGeneral"
+    },
     "HoverDelay": {
         "message": "Hover delay",
         "description": "ConfigWindow.DrawGeneral"

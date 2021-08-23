@@ -189,6 +189,19 @@ namespace PriceCheck
                 "ShowPrices_HelpMarker",
                 "show price or just show advice"));
 
+            var allowKeybindAfterHover = this.plugin.Configuration.AllowKeybindAfterHover;
+            if (ImGui.Checkbox(
+                Loc.Localize("AllowKeybindAfterHover", "Allow keybind to be pressed after hovering over item") + "###PriceCheck_AllowKeybindAfterHover_Checkbox",
+                ref allowKeybindAfterHover))
+            {
+                this.plugin.Configuration.AllowKeybindAfterHover = allowKeybindAfterHover;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                                           "AllowKeybindAfterHover_HelpMarker",
+                                           "allows you to hold the keybind after the item tooltip has been opened (disable for legacy mode)"));
+
             ImGui.Spacing();
             ImGui.Text(Loc.Localize("HoverDelay", "Hover delay"));
             ImGuiComponents.HelpMarker(Loc.Localize(

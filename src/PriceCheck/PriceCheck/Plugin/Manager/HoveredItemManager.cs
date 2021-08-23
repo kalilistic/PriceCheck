@@ -43,6 +43,7 @@ namespace PriceCheck
         {
             try
             {
+                if (!this.plugin.IsKeyBindPressed() && !this.plugin.Configuration.AllowKeybindAfterHover) return;
                 if (Convert.ToUInt32(itemId) == this.ItemId) return;
                 if (itemId >= 1000000)
                 {
