@@ -96,8 +96,6 @@ namespace PriceCheck
                 await Task.Delay(this.plugin.Configuration.HoverDelay * 1000, this.plugin.ItemCancellationTokenSource!.Token)
                           .ConfigureAwait(false);
                 this.plugin.PriceService.ProcessItem(itemId, isHQ);
-                this.itemWIP = 0;
-                this.itemHQWIP = false;
             });
         }
 
