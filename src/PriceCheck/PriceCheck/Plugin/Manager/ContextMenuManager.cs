@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.DrunkenToad;
@@ -103,27 +101,7 @@ namespace PriceCheck
         {
             try
             {
-                if (!this.plugin.ShouldPriceCheck()) return;
-                if (this.plugin.ItemCancellationTokenSource != null)
-                {
-                    if (!this.plugin.ItemCancellationTokenSource.IsCancellationRequested)
-                        this.plugin.ItemCancellationTokenSource.Cancel();
-                    this.plugin.ItemCancellationTokenSource.Dispose();
-                }
-
-                if (args.ItemId == 0)
-                {
-                    this.plugin.ItemCancellationTokenSource = null;
-                    return;
-                }
-
-                this.plugin.ItemCancellationTokenSource = new CancellationTokenSource(this.plugin.Configuration.RequestTimeout * 2);
-                Task.Run(async () =>
-                {
-                    await Task.Delay(this.plugin.Configuration.HoverDelay * 1000, this.plugin.ItemCancellationTokenSource!.Token)
-                              .ConfigureAwait(false);
-                    this.plugin.PriceService.ProcessItem(args.ItemId, args.ItemHq);
-                });
+                this.plugin.PriceService.ProcessItemAsync(args.ItemId, args.ItemHq);
             }
             catch (Exception ex)
             {

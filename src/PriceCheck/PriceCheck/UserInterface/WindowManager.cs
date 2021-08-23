@@ -77,6 +77,13 @@ namespace PriceCheck
             // only show when logged in
             if (!this.Plugin.PluginService.ClientState.IsLoggedIn()) return;
 
+            // check if keybind is pressed
+            if (this.Plugin.IsKeyBindPressed() && this.Plugin.HoveredItemManager.ItemId != 0)
+            {
+                this.Plugin.PriceService.ProcessItemAsync(this.Plugin.HoveredItemManager.ItemId, this.Plugin.HoveredItemManager.ItemQuality);
+            }
+
+            // draw windows
             this.WindowSystem.Draw();
         }
 

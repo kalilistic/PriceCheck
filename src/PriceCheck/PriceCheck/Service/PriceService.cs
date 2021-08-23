@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.DrunkenToad;
@@ -18,6 +20,8 @@ namespace PriceCheck
         private readonly PriceCheckPlugin plugin;
         private readonly List<PricedItem> pricedItems = new ();
         private readonly object locker = new ();
+        private uint itemWIP;
+        private bool itemHQWIP;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceService"/> class.
@@ -62,8 +66,46 @@ namespace PriceCheck
         /// </summary>
         /// <param name="itemId">item id to lookup.</param>
         /// <param name="isHQ">indicator if item is hq.</param>
-        public void ProcessItem(uint itemId, bool isHQ)
+        public void ProcessItemAsync(uint itemId, bool isHQ)
         {
+            if (!this.plugin.ShouldPriceCheck()) return;
+            lock (this.locker)
+            {
+                if (itemId == this.itemWIP && isHQ == this.itemHQWIP) return;
+                if (itemId == 0)
+                {
+                    this.plugin.ItemCancellationTokenSource = null;
+                    return;
+                }
+
+                this.itemWIP = itemId;
+                this.itemHQWIP = isHQ;
+                if (this.plugin.ItemCancellationTokenSource != null)
+                {
+                    if (!this.plugin.ItemCancellationTokenSource.IsCancellationRequested)
+                        this.plugin.ItemCancellationTokenSource.Cancel();
+                    this.plugin.ItemCancellationTokenSource.Dispose();
+                }
+
+                this.plugin.ItemCancellationTokenSource =
+                    new CancellationTokenSource(this.plugin.Configuration.RequestTimeout * 2);
+            }
+
+            Task.Run(async () =>
+            {
+                await Task.Delay(this.plugin.Configuration.HoverDelay * 1000, this.plugin.ItemCancellationTokenSource!.Token)
+                          .ConfigureAwait(false);
+                this.plugin.PriceService.ProcessItem(itemId, isHQ);
+                this.itemWIP = 0;
+                this.itemHQWIP = false;
+            });
+        }
+
+        private void ProcessItem(uint itemId, bool isHQ)
+        {
+            // reject invalid item id
+            if (itemId == 0) return;
+
             // create priced item
             Logger.LogDebug($"Pricing itemId={itemId} hq={isHQ}");
             var pricedItem = new PricedItem

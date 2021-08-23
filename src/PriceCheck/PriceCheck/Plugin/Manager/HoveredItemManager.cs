@@ -1,6 +1,4 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 using Dalamud.DrunkenToad;
 
@@ -11,6 +9,16 @@ namespace PriceCheck
     /// </summary>
     public class HoveredItemManager
     {
+        /// <summary>
+        /// Previous id from item hover to allow for holding keybind after hover.
+        /// </summary>
+        public uint ItemId;
+
+        /// <summary>
+        /// Previous item quality from item hover to allow for holding keybind after hover.
+        /// </summary>
+        public bool ItemQuality;
+
         private readonly PriceCheckPlugin plugin;
 
         /// <summary>
@@ -35,35 +43,20 @@ namespace PriceCheck
         {
             try
             {
-                if (!this.plugin.ShouldPriceCheck()) return;
+                if (Convert.ToUInt32(itemId) == this.ItemId) return;
+                if (itemId >= 1000000)
+                {
+                    this.ItemId = Convert.ToUInt32(itemId - 1000000);
+                    this.ItemQuality = true;
+                }
+                else
+                {
+                    this.ItemId = Convert.ToUInt32(itemId);
+                    this.ItemQuality = false;
+                }
+
                 if (!this.plugin.IsKeyBindPressed()) return;
-                if (this.plugin.ItemCancellationTokenSource != null)
-                {
-                    if (!this.plugin.ItemCancellationTokenSource.IsCancellationRequested)
-                        this.plugin.ItemCancellationTokenSource.Cancel();
-                    this.plugin.ItemCancellationTokenSource.Dispose();
-                }
-
-                if (itemId == 0)
-                {
-                    this.plugin.ItemCancellationTokenSource = null;
-                    return;
-                }
-
-                this.plugin.ItemCancellationTokenSource = new CancellationTokenSource(this.plugin.Configuration.RequestTimeout * 2);
-                Task.Run(async () =>
-                {
-                    await Task.Delay(this.plugin.Configuration.HoverDelay * 1000, this.plugin.ItemCancellationTokenSource!.Token)
-                              .ConfigureAwait(false);
-                    if (itemId >= 1000000)
-                    {
-                        this.plugin.PriceService.ProcessItem(Convert.ToUInt32(itemId - 1000000), true);
-                    }
-                    else
-                    {
-                        this.plugin.PriceService.ProcessItem(Convert.ToUInt32(itemId), false);
-                    }
-                });
+                this.plugin.PriceService.ProcessItemAsync(this.ItemId, this.ItemQuality);
             }
             catch (Exception ex)
             {
