@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.DrunkenToad;
@@ -20,19 +21,19 @@ namespace PriceCheck
         /// <summary>
         /// Plugin service.
         /// </summary>
-        public readonly PluginService PluginService;
+        public PluginService PluginService = null!;
 
         /// <summary>
         /// XivCommon library instance.
         /// </summary>
-        public XivCommonBase XivCommon;
+        public XivCommonBase XivCommon = null!;
 
         /// <summary>
         /// Cancellation token to terminate request if interrupted.
         /// </summary>
         public CancellationTokenSource? ItemCancellationTokenSource;
 
-        private readonly DalamudPluginInterface pluginInterface;
+        private DalamudPluginInterface pluginInterface = null!;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceCheckPlugin"/> class.
@@ -41,26 +42,34 @@ namespace PriceCheck
         /// <param name="pluginInterface">plugin interface.</param>
         public PriceCheckPlugin(string pluginName, DalamudPluginInterface pluginInterface)
         {
-            this.pluginInterface = pluginInterface;
-            this.PluginService = new PluginService(pluginName, pluginInterface);
-            this.LoadConfig();
-            this.LoadServices();
-            this.CommandManager = new CommandManager(this);
-            this.LoadUI();
-            this.HandleFreshInstall();
-            Result.UpdateLanguage();
-            this.UniversalisClient = new UniversalisClient(this);
-            this.XivCommon = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
-            this.ContextMenuManager = new ContextMenuManager(this);
-            this.HoveredItemManager = new HoveredItemManager(this);
-            this.PluginService.PluginInterface.OnLanguageChanged += OnLanguageChanged;
-            this.PluginService.PluginInterface.ClientState.OnLogin += this.ClientStateOnOnLogin;
+            Task.Run(() =>
+            {
+                try
+                {
+                    this.pluginInterface = pluginInterface;
+                    this.PluginService = new PluginService(pluginName, pluginInterface);
+                    this.LoadConfig();
+                    this.LoadUI();
+                    this.HandleFreshInstall();
+                    this.PriceService = new PriceService(this);
+                    this.CommandManager = new CommandManager(this);
+                    this.UniversalisClient = new UniversalisClient(this);
+                    this.XivCommon = new XivCommonBase(pluginInterface, Hooks.ContextMenu);
+                    this.ContextMenuManager = new ContextMenuManager(this);
+                    this.HoveredItemManager = new HoveredItemManager(this);
+                    this.PluginService.PluginInterface.ClientState.OnLogin += this.OnLogin;
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Failed to initialize plugin.");
+                }
+            });
         }
 
         /// <summary>
         /// Gets or sets command manager to handle user commands.
         /// </summary>
-        public CommandManager CommandManager { get; set; }
+        public CommandManager CommandManager { get; set; } = null!;
 
         /// <summary>
         /// Gets price service.
@@ -70,7 +79,7 @@ namespace PriceCheck
         /// <summary>
         /// Gets universalis client.
         /// </summary>
-        public UniversalisClient UniversalisClient { get; private set; }
+        public UniversalisClient UniversalisClient { get; private set; } = null!;
 
         /// <summary>
         /// Gets or sets plugin configuration.
@@ -85,12 +94,12 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets context Menu manager to handle item context menu.
         /// </summary>
-        public ContextMenuManager ContextMenuManager { get; set; }
+        public ContextMenuManager ContextMenuManager { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets hovered item manager to handle hover item events.
         /// </summary>
-        public HoveredItemManager HoveredItemManager { get; set; }
+        public HoveredItemManager HoveredItemManager { get; set; } = null!;
 
         /// <summary>
         /// Gets plugin configuration.
@@ -233,19 +242,9 @@ namespace PriceCheck
             return false;
         }
 
-        private static void OnLanguageChanged(string langCode)
-        {
-            Result.UpdateLanguage();
-        }
-
-        private void ClientStateOnOnLogin(object sender, EventArgs e)
+        private void OnLogin(object sender, EventArgs e)
         {
             this.WindowManager.MainWindow?.OpenOnLogin();
-        }
-
-        private void LoadServices()
-        {
-            this.PriceService = new PriceService(this);
         }
 
         private void LoadUI()
