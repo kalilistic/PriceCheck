@@ -72,7 +72,7 @@ namespace PriceCheck
         /// <inheritdoc />
         public override void Draw()
         {
-            if (this.plugin.Configuration.HideOverlayElapsed != 0 &&
+            if (!this.plugin.WindowManager.IsOpenByKeybind && this.plugin.Configuration.HideOverlayElapsed != 0 &&
                 DateUtil.CurrentTime() - this.plugin.PriceService.LastPriceCheck >
                 this.plugin.Configuration.HideOverlayElapsed)
             {

@@ -11,6 +11,11 @@ namespace PriceCheck
     public class WindowManager
     {
         /// <summary>
+        /// Is main window open due to keybind being held.
+        /// </summary>
+        public bool IsOpenByKeybind;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WindowManager"/> class.
         /// </summary>
         /// <param name="priceCheckPlugin">PriceCheck plugin.</param>
@@ -78,9 +83,22 @@ namespace PriceCheck
             if (!this.Plugin.PluginService.ClientState.IsLoggedIn()) return;
 
             // check if keybind is pressed
-            if (this.Plugin.IsKeyBindPressed() && this.Plugin.HoveredItemManager.ItemId != 0)
+            if (this.Plugin.IsKeyBindPressed())
             {
-                this.Plugin.PriceService.ProcessItemAsync(this.Plugin.HoveredItemManager.ItemId, this.Plugin.HoveredItemManager.ItemQuality);
+                if (this.Plugin.Configuration.ShowOverlay && this.Plugin.Configuration.ShowOverlayByKeybind && !this.MainWindow!.IsOpen)
+                {
+                    this.IsOpenByKeybind = true;
+                    this.MainWindow.IsOpen = true;
+                }
+
+                if (this.Plugin.HoveredItemManager.ItemId != 0)
+                {
+                    this.Plugin.PriceService.ProcessItemAsync(this.Plugin.HoveredItemManager.ItemId, this.Plugin.HoveredItemManager.ItemQuality);
+                }
+            }
+            else
+            {
+                this.IsOpenByKeybind = false;
             }
 
             // draw windows
