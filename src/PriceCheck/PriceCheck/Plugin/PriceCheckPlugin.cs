@@ -199,6 +199,8 @@ namespace PriceCheck
         {
             try
             {
+                this.PluginService.PluginInterface.ClientState.OnLogin -= this.OnLogin;
+                this.XivCommon.Dispose();
                 this.WindowManager.Dispose();
                 this.PluginService.Dispose();
                 this.CommandManager.Dispose();
