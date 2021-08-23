@@ -82,7 +82,7 @@ namespace PriceCheck
 
             if (!this.plugin.Configuration.Enabled)
             {
-                ImGui.Text(Loc.Localize("PluginDisabled", "PriceCheckPlugin is disabled."));
+                ImGui.Text(Loc.Localize("PluginDisabled", "PriceCheck is disabled."));
             }
             else
             {
@@ -131,7 +131,7 @@ namespace PriceCheck
                 if (ImGui.BeginPopup("###PriceCheck_Overlay_Popup"))
                 {
                     if (ImGui.MenuItem(
-                        Loc.Localize("ClearPriceHistory", "Clear History")))
+                        Loc.Localize("ClearPricedItems", "Clear items")))
                     {
                         this.plugin.PriceService.ClearItems();
                     }

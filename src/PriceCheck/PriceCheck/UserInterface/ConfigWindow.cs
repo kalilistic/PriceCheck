@@ -28,7 +28,7 @@ namespace PriceCheck
             : base(plugin, "PriceCheck Config")
         {
             this.plugin = plugin;
-            this.Size = new Vector2(600f, 500f);
+            this.Size = new Vector2(600f, 600f);
             this.SizeCondition = ImGuiCond.Appearing;
         }
 
@@ -165,7 +165,7 @@ namespace PriceCheck
         {
             var enabled = this.plugin.Configuration.Enabled;
             if (ImGui.Checkbox(
-                Loc.Localize("PluginEnabled", "Plugin Enabled") + "###PriceCheck_PluginEnabled_Checkbox",
+                Loc.Localize("PluginEnabled", "Plugin enabled") + "###PriceCheck_PluginEnabled_Checkbox",
                 ref enabled))
             {
                 this.plugin.Configuration.Enabled = enabled;
@@ -178,7 +178,7 @@ namespace PriceCheck
 
             var showPrices = this.plugin.Configuration.ShowPrices;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowPrices", "Show Prices") + "###PriceCheck_ShowPrices_Checkbox",
+                Loc.Localize("ShowPrices", "Show prices") + "###PriceCheck_ShowPrices_Checkbox",
                 ref showPrices))
             {
                 this.plugin.Configuration.ShowPrices = showPrices;
@@ -190,7 +190,7 @@ namespace PriceCheck
                 "show price or just show advice"));
 
             ImGui.Spacing();
-            ImGui.Text(Loc.Localize("HoverDelay", "Hover Delay"));
+            ImGui.Text(Loc.Localize("HoverDelay", "Hover delay"));
             ImGuiComponents.HelpMarker(Loc.Localize(
                 "HoverDelay_HelpMarker",
                 "delay (in seconds) before processing after hovering"));
@@ -202,7 +202,7 @@ namespace PriceCheck
             }
 
             ImGui.Spacing();
-            ImGui.Text(Loc.Localize("PriceMode", "Price Mode"));
+            ImGui.Text(Loc.Localize("PriceMode", "Price mode"));
             ImGuiComponents.HelpMarker(Loc.Localize(
                 "PriceMode_HelpMarker",
                 "select price calculation to use"));
@@ -226,9 +226,12 @@ namespace PriceCheck
 
         private void DrawOverlay()
         {
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("DisplayHeading", "Display"));
+            ImGui.Spacing();
+
             var showOverlay = this.plugin.Configuration.ShowOverlay;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowOverlay", "Show Overlay") + "###PriceCheck_ShowOverlay_Checkbox",
+                Loc.Localize("ShowOverlay", "Show overlay") + "###PriceCheck_ShowOverlay_Checkbox",
                 ref showOverlay))
             {
                 this.plugin.Configuration.ShowOverlay = showOverlay;
@@ -242,7 +245,7 @@ namespace PriceCheck
 
             var showOverlayOnLogin = this.plugin.Configuration.ShowOverlayOnLogin;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowOverlayOnLogin", "Show Overlay on Login") + "###PriceCheck_ShowOverlayOnLogin_Checkbox",
+                Loc.Localize("ShowOverlayOnLogin", "Show overlay on login") + "###PriceCheck_ShowOverlayOnLogin_Checkbox",
                 ref showOverlayOnLogin))
             {
                 this.plugin.Configuration.ShowOverlayOnLogin = showOverlayOnLogin;
@@ -255,7 +258,7 @@ namespace PriceCheck
 
             var showOverlayByKeybind = this.plugin.Configuration.ShowOverlayByKeybind;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowOverlayByKeybind", "Show Overlay By Keybind") + "###PriceCheck_ShowOverlayByKeybind_Checkbox",
+                Loc.Localize("ShowOverlayByKeybind", "Show overlay by keybind") + "###PriceCheck_ShowOverlayByKeybind_Checkbox",
                 ref showOverlayByKeybind))
             {
                 this.plugin.Configuration.ShowOverlayByKeybind = showOverlayByKeybind;
@@ -266,9 +269,12 @@ namespace PriceCheck
                                            "ShowOverlayByKeybind_HelpMarker",
                                            "show overlay window when keybind is being held"));
 
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("StyleHeading", "Style"));
+            ImGui.Spacing();
+
             var useOverlayColors = this.plugin.Configuration.UseOverlayColors;
             if (ImGui.Checkbox(
-                Loc.Localize("UseOverlayColors", "Use Overlay Colors") + "###PriceCheck_UseOverlayColors_Checkbox",
+                Loc.Localize("UseOverlayColors", "Use overlay colors") + "###PriceCheck_UseOverlayColors_Checkbox",
                 ref useOverlayColors))
             {
                 this.plugin.Configuration.UseOverlayColors = useOverlayColors;
@@ -280,7 +286,7 @@ namespace PriceCheck
                 "use different colors for overlay based on result"));
 
             ImGui.Spacing();
-            ImGui.Text(Loc.Localize("MaxItems", "Max Items"));
+            ImGui.Text(Loc.Localize("MaxItems", "Max items"));
             ImGuiComponents.HelpMarker(Loc.Localize(
                 "MaxItems_HelpMarker",
                 "set max number of items in overlay at a time"));
@@ -292,7 +298,7 @@ namespace PriceCheck
             }
 
             ImGui.Spacing();
-            ImGui.Text(Loc.Localize("HideOverlayTimer", "Hide Overlay Timer"));
+            ImGui.Text(Loc.Localize("HideOverlayTimer", "Hide overlay timer"));
             ImGuiComponents.HelpMarker(Loc.Localize(
                                            "HideOverlayTimer_HelpMarker",
                                            "hide overlay after x amount of seconds since last price check - you can this by setting to zero."));
@@ -304,7 +310,8 @@ namespace PriceCheck
             }
 
             ImGui.Spacing();
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("MessageTypeFiltersHeading", "Message type filters"));
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("FiltersHeading", "Filters"));
+            ImGui.Spacing();
             var showSuccessInOverlay = this.plugin.Configuration.ShowSuccessInOverlay;
             if (ImGui.Checkbox(
                 Loc.Localize("ShowSuccessInOverlay", "Show successful price check") + "###PriceCheck_ShowSuccessInOverlay_Checkbox",
@@ -412,9 +419,12 @@ namespace PriceCheck
 
         private void DrawChat()
         {
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("DisplayHeading", "Display"));
+            ImGui.Spacing();
+
             var showInChat = this.plugin.Configuration.ShowInChat;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowInChat", "Show in Chat") + "###PriceCheck_ShowInChat_Checkbox",
+                Loc.Localize("ShowInChat", "Show in chat") + "###PriceCheck_ShowInChat_Checkbox",
                 ref showInChat))
             {
                 this.plugin.Configuration.ShowInChat = showInChat;
@@ -425,37 +435,12 @@ namespace PriceCheck
                 "ShowInChat_HelpMarker",
                 "show price check results in chat"));
 
-            var useChatColors = this.plugin.Configuration.UseChatColors;
-            if (ImGui.Checkbox(
-                Loc.Localize("UseChatColors", "Use Chat Colors") + "###PriceCheck_UseChatColors_Checkbox",
-                ref useChatColors))
-            {
-                this.plugin.Configuration.UseChatColors = useChatColors;
-                this.plugin.SaveConfig();
-            }
-
-            ImGuiComponents.HelpMarker(Loc.Localize(
-                "UseChatColors_HelpMarker",
-                "use different colors for chat based on result"));
-
-            var useItemLinks = this.plugin.Configuration.UseItemLinks;
-            if (ImGui.Checkbox(
-                Loc.Localize("UseItemLinks", "Use Item Links") + "###PriceCheck_UseItemLinks_Checkbox",
-                ref useItemLinks))
-            {
-                this.plugin.Configuration.UseItemLinks = useItemLinks;
-                this.plugin.SaveConfig();
-            }
-
-            ImGuiComponents.HelpMarker(Loc.Localize(
-                "UseItemLinks_HelpMarker",
-                "use item links in chat results"));
-
-            ImGui.Text(Loc.Localize("ChatChannel", "Chat Channel"));
+            ImGui.Text(Loc.Localize("ChatChannel", "Chat channel"));
             ImGuiComponents.HelpMarker(Loc.Localize(
                                            "ChatChannel_HelpMarker",
                                            "set the chat channel to send messages"));
             var chatChannel = this.plugin.Configuration.ChatChannel;
+            ImGui.SetNextItemWidth(ImGui.GetWindowSize().X / 3);
             if (ImGui.BeginCombo("###PriceCheck_ChatChannel_Combo", chatChannel.ToString()))
             {
                 foreach (var type in Enum.GetValues(typeof(XivChatType)).Cast<XivChatType>())
@@ -470,8 +455,37 @@ namespace PriceCheck
                 ImGui.EndCombo();
             }
 
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("StyleHeading", "Style"));
             ImGui.Spacing();
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("MessageTypeFiltersHeading", "Message type filters"));
+
+            var useChatColors = this.plugin.Configuration.UseChatColors;
+            if (ImGui.Checkbox(
+                Loc.Localize("UseChatColors", "Use chat colors") + "###PriceCheck_UseChatColors_Checkbox",
+                ref useChatColors))
+            {
+                this.plugin.Configuration.UseChatColors = useChatColors;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                "UseChatColors_HelpMarker",
+                "use different colors for chat based on result"));
+
+            var useItemLinks = this.plugin.Configuration.UseItemLinks;
+            if (ImGui.Checkbox(
+                Loc.Localize("UseItemLinks", "Use item links") + "###PriceCheck_UseItemLinks_Checkbox",
+                ref useItemLinks))
+            {
+                this.plugin.Configuration.UseItemLinks = useItemLinks;
+                this.plugin.SaveConfig();
+            }
+
+            ImGuiComponents.HelpMarker(Loc.Localize(
+                "UseItemLinks_HelpMarker",
+                "use item links in chat results"));
+
+            ImGui.Spacing();
+            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("FiltersHeading", "Filters"));
             var showSuccessInChat = this.plugin.Configuration.ShowSuccessInChat;
             if (ImGui.Checkbox(
                 Loc.Localize("ShowSuccessInChat", "Show successful price check") + "###PriceCheck_ShowSuccessInChat_Checkbox",
@@ -581,7 +595,7 @@ namespace PriceCheck
         {
             var showToast = this.plugin.Configuration.ShowToast;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowToast", "Show Toast") + "###PriceCheck_ShowToast_Checkbox",
+                Loc.Localize("ShowToast", "Show toast") + "###PriceCheck_ShowToast_Checkbox",
                 ref showToast))
             {
                 this.plugin.Configuration.ShowToast = showToast;
@@ -597,7 +611,7 @@ namespace PriceCheck
         {
             var keybindEnabled = this.plugin.Configuration.KeybindEnabled;
             if (ImGui.Checkbox(
-                Loc.Localize("KeybindEnabled", "Use Keybind") + "###PriceCheck_KeybindEnabled_Checkbox",
+                Loc.Localize("KeybindEnabled", "Enable keybind") + "###PriceCheck_KeybindEnabled_Checkbox",
                 ref keybindEnabled))
             {
                 this.plugin.Configuration.KeybindEnabled = keybindEnabled;
@@ -610,7 +624,7 @@ namespace PriceCheck
 
             var showKeybindInTitleBar = this.plugin.Configuration.ShowKeybindInTitleBar;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowKeybindInTitleBar", "Show Keybind in TitleBar") + "###PriceCheck_ShowKeybindInTitleBar_Checkbox",
+                Loc.Localize("ShowKeybindInTitleBar", "Show keybind in titlebar") + "###PriceCheck_ShowKeybindInTitleBar_Checkbox",
                 ref showKeybindInTitleBar))
             {
                 this.plugin.Configuration.ShowKeybindInTitleBar = showKeybindInTitleBar;
@@ -718,7 +732,7 @@ namespace PriceCheck
         {
             var showContextMenu = this.plugin.Configuration.ShowContextMenu;
             if (ImGui.Checkbox(
-                Loc.Localize("ShowContextMenu", "Show Context Menu") +
+                Loc.Localize("ShowContextMenu", "Show context menu") +
                 "###PriceCheck_ShowContextMenu_Checkbox",
                 ref showContextMenu))
             {
