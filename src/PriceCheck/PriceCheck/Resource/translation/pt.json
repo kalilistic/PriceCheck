@@ -1,262 +1,266 @@
 {
-    "SellOnMarketboard": {
-        "message": "Vender no mercado",
-        "description": "Result.UpdateLanguage"
+    "MinimumPrice": {
+        "message": "Preço Mínimo",
+        "description": "PriceMode..cctor"
     },
-    "FailedToGetData": {
-        "message": "Falha ao obter dados",
-        "description": "Result.UpdateLanguage"
-    },
-    "NoDataAvailable": {
-        "message": "Sem dados disponíveis",
-        "description": "Result.UpdateLanguage"
-    },
-    "NoRecentDataAvailable": {
-        "message": "Nenhum dado recente",
-        "description": "Result.UpdateLanguage"
-    },
-    "BelowVendor": {
-        "message": "Vender ao NPC",
-        "description": "Result.UpdateLanguage"
-    },
-    "BelowMinimum": {
-        "message": "Preço abaixo do mínimo",
-        "description": "Result.UpdateLanguage"
-    },
-    "Unmarketable": {
-        "message": "Não é possível vender no mercado",
-        "description": "Result.UpdateLanguage"
+    "ContextMenuItem": {
+        "message": "Verificar preço no Marketboard",
+        "description": "ContextMenuManager..ctor"
     },
     "HelpMessage": {
         "message": "Para verificar preços, segure sua tecla de atalho e então passe o mouse sobre um item do seu inventário ou linkado no chat. Você pode definir seu atalho (ou desativá-lo) nas configurações do PriceCheck. Os preços são uma média da Universalis e não corresponderão a nenhum anúncio específico que possa achar no mercado. Você pode usar /pcheck para abrir o overlay e /pcheckconfig para abrir as configurações. Se precisar de ajuda, entre em contato no Discord ou abra um issue no GitHub. Se você quiser ajudar a adicionar traduções, você pode enviar atualizações no Crowdin. Links para o GitHub e Crowdin estão disponíveis nas configurações.",
         "description": "PriceCheckPlugin.PrintHelpMessage"
     },
-    "ContextMenuItem": {
-        "message": "Verificar preço no Marketboard",
-        "description": "PriceCheckPlugin.OnOpenInventoryContextMenu"
-    },
     "InstallThankYou": {
         "message": "Obrigado por instalar o PriceCheck!",
         "description": "PriceCheckPlugin.HandleFreshInstall"
     },
-    "OverlayWindow": {
-        "message": "PriceCheck Overlay",
-        "description": "OverlayWindow.DrawView"
+    "SellOnMarketboard": {
+        "message": "Vender no mercado",
+        "description": "PriceService.SetFieldsByResult"
     },
-    "PluginDisabled": {
-        "message": "PriceCheckPlugin está desativado.",
-        "description": "OverlayWindow.DrawView"
+    "FailedToGetData": {
+        "message": "Falha ao obter dados",
+        "description": "PriceService.SetFieldsByResult"
     },
-    "WaitingForItems": {
-        "message": "Aguardando itens.",
-        "description": "OverlayWindow.DrawView"
+    "NoDataAvailable": {
+        "message": "Sem dados disponíveis",
+        "description": "PriceService.SetFieldsByResult"
     },
-    "SettingsWindow": {
-        "message": "Configurações do PriceCheck",
-        "description": "SettingsWindow.DrawView"
+    "NoRecentDataAvailable": {
+        "message": "Nenhum dado recente",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "BelowVendor": {
+        "message": "Vender ao NPC",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "BelowMinimum": {
+        "message": "Preço abaixo do mínimo",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "Unmarketable": {
+        "message": "Não é possível vender no mercado",
+        "description": "PriceService.SetFieldsByResult"
     },
     "General": {
         "message": "Geral",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Overlay": {
         "message": "Overlay",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Chat": {
         "message": "Chat",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Toast": {
         "message": "Toast (Aviso na tela)",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Keybind": {
         "message": "Teclas de atalho",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Filters": {
         "message": "Filters",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Thresholds": {
         "message": "Limites",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
-    "Other": {
-        "message": "Outros",
-        "description": "SettingsWindow.DrawTabs"
+    "ContextMenu": {
+        "message": "Menu de Contexto",
+        "description": "ConfigWindow.DrawTabs"
     },
     "PluginEnabled": {
         "message": "Plugin ativado",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "PluginEnabled_HelpMarker": {
         "message": "ativar/desativar o plugin",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "ShowPrices": {
         "message": "Mostrar preços",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "ShowPrices_HelpMarker": {
         "message": "mostrar preço ou apenas conselhos",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "HoverDelay": {
         "message": "Atraso de seleção",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "HoverDelay_HelpMarker": {
         "message": "atraso (em segundos) antes de processar após passar o cursor",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "PriceMode": {
         "message": "Price Mode",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "PriceMode_HelpMarker": {
         "message": "select price calculation to use",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "ShowOverlay": {
         "message": "Mostrar overlay",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "ShowOverlay_HelpMarker": {
         "message": "mostrar resultados da busca de preços na janela de overlay",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors": {
         "message": "Usar Cores do Overlay",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors_HelpMarker": {
         "message": "usar cores diferentes para overlay com base no resultado",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "MaxItems": {
         "message": "Máximo de Itens",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "MaxItems_HelpMarker": {
         "message": "define o número máximo de itens simultâneos no overlay",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "HideOverlayTimer": {
         "message": "Timer para ocultar sobreposição",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "HideOverlayTimer_HelpMarker": {
         "message": "ocultar sobreposição após x segundos desde a última verificação de preço - você pode definir como zero.",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "ShowInChat": {
         "message": "Mostrar no chat",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
     },
     "ShowInChat_HelpMarker": {
         "message": "mostrar resultados da busca de preços no chat",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors": {
         "message": "Usar Cores do Chat",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors_HelpMarker": {
         "message": "usar cores diferentes no chat dependendo do resultado",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
     },
     "UseItemLinks": {
         "message": "Usar Links de Itens",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
     },
     "UseItemLinks_HelpMarker": {
         "message": "usar links de itens nos resultados no chat",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
     },
     "ShowToast": {
         "message": "Mostrar Toast",
-        "description": "SettingsWindow.DrawToast"
+        "description": "ConfigWindow.DrawToast"
     },
     "ShowToast_HelpMarker": {
         "message": "mostrar resultados da busca de preços no toast",
-        "description": "SettingsWindow.DrawToast"
+        "description": "ConfigWindow.DrawToast"
     },
     "KeybindEnabled": {
         "message": "Usar Teclas de Atalho",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "KeybindEnabled_HelpMarker": {
         "message": "alternar uso do atalho ou apenar passe do mouse",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "ModifierKeybind": {
         "message": "Modificador",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "ModifierKeybind_HelpMarker": {
         "message": "definir tecla modificadora (por exemplo, shift)",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "PrimaryKeybind": {
         "message": "Principal",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "PrimaryKeybind_HelpMarker": {
         "message": "definir tecla principal (por exemplo, Nenhuma, Z)",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "RestrictInCombat": {
         "message": "Don't process in combat",
-        "description": "SettingsWindow.DrawFilters"
+        "description": "ConfigWindow.DrawFilters"
     },
     "RestrictInCombat_HelpMarker": {
         "message": "don't process price checks while in combat",
-        "description": "SettingsWindow.DrawFilters"
+        "description": "ConfigWindow.DrawFilters"
     },
     "RestrictInContent": {
         "message": "Don't process in content",
-        "description": "SettingsWindow.DrawFilters"
+        "description": "ConfigWindow.DrawFilters"
     },
     "RestrictInContent_HelpMarker": {
         "message": "don't process price checks while in content",
-        "description": "SettingsWindow.DrawFilters"
-    },
-    "ShowUnmarketable": {
-        "message": "Mostrar não comercializáveis",
-        "description": "SettingsWindow.DrawFilters"
-    },
-    "ShowUnmarketable_HelpMarker": {
-        "message": "alterna se mostrar itens não comercializáveis",
-        "description": "SettingsWindow.DrawFilters"
-    },
-    "MinimumPrice": {
-        "message": "Preço Mínimo",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawFilters"
     },
     "MinimumPrice_HelpMarker": {
         "message": "definir preço mínimo no qual a média real será mostrada",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawThresholds"
     },
     "MaxUploadDays": {
         "message": "Máximo de Dias de Upload",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawThresholds"
     },
     "MaxUploadDays_HelpMarker": {
         "message": "definir idade máxima para evitar uso de dados antigos",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawThresholds"
     },
-    "OpenGithub": {
-        "message": "Abrir GitHub",
-        "description": "SettingsWindow.DrawOther"
+    "ShowContextPosition": {
+        "message": "Definir posição do menu de contexto do item",
+        "description": "ConfigWindow.DrawContextMenu"
     },
-    "PrintHelp": {
-        "message": "Mostrar Ajuda",
-        "description": "SettingsWindow.DrawOther"
+    "ShowContextPosition_HelpMarker": {
+        "message": "exibir acima ou abaixo do primeiro item correspondente no menu.",
+        "description": "ConfigWindow.DrawContextMenu"
     },
-    "ImproveTranslate": {
-        "message": "Melhorar Traduções",
-        "description": "SettingsWindow.DrawOther"
+    "ShowAbove": {
+        "message": "Exibir acima",
+        "description": "ConfigWindow.DrawContextMenu"
+    },
+    "ShowBelow": {
+        "message": "Exibir abaixo",
+        "description": "ConfigWindow.DrawContextMenu"
+    },
+    "ShowAboveList": {
+        "message": "Exibir acima",
+        "description": "ConfigWindow.DrawContextMenu"
+    },
+    "NoContextItems": {
+        "message": "Nenhum.",
+        "description": "ConfigWindow.DrawContextMenu"
+    },
+    "ShowBelowList": {
+        "message": "Exibir abaixo",
+        "description": "ConfigWindow.DrawContextMenu"
+    },
+    "DupeContextBelow": {
+        "message": "Este item de contexto já foi adicionado!",
+        "description": "ConfigWindow.DrawContextMenu"
+    },
+    "PluginDisabled": {
+        "message": "PriceCheckPlugin está desativado.",
+        "description": "MainWindow.Draw"
+    },
+    "WaitingForItems": {
+        "message": "Aguardando itens.",
+        "description": "MainWindow.Draw"
     }
 }
