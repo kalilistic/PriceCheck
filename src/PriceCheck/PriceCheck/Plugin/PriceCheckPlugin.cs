@@ -113,7 +113,7 @@ namespace PriceCheck
                                                     "averages from Universalis and will not match any specific listings you see on the market board. " +
                                                     "You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, " +
                                                     "reach out on discord or open an issue on GitHub. If you want to help add translations, you can " +
-                                                    "submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings."));
+                                                    "submit updates on Crowdin."));
         }
 
         /// <summary>

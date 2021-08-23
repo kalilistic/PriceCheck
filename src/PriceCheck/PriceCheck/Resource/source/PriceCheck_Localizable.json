@@ -1,302 +1,494 @@
 {
-    "SellOnMarketboard": {
-        "message": "Sell on marketboard",
-        "description": "Result.UpdateLanguage"
+    "AveragePrice": {
+        "message": "Average Price",
+        "description": "PriceMode..cctor"
     },
-    "FailedToGetData": {
-        "message": "Failed to get data",
-        "description": "Result.UpdateLanguage"
+    "AveragePriceDesc": {
+        "message": "The average sale price in recent sale history with outliers removed beyond three standard deviations of the mean.",
+        "description": "PriceMode..cctor"
     },
-    "NoDataAvailable": {
-        "message": "No data available",
-        "description": "Result.UpdateLanguage"
+    "CurrentAveragePrice": {
+        "message": "Current Average Price",
+        "description": "PriceMode..cctor"
     },
-    "NoRecentDataAvailable": {
-        "message": "No recent data",
-        "description": "Result.UpdateLanguage"
+    "CurrentAveragePriceDesc": {
+        "message": "The average sale price in current listings with outliers removed beyond three standard deviations of the mean.",
+        "description": "PriceMode..cctor"
     },
-    "BelowVendor": {
-        "message": "Sell to vendor",
-        "description": "Result.UpdateLanguage"
+    "MinimumPrice": {
+        "message": "Minimum Price",
+        "description": "PriceMode..cctor"
     },
-    "BelowMinimum": {
-        "message": "Below minimum price",
-        "description": "Result.UpdateLanguage"
+    "MinimumPriceDesc": {
+        "message": "The minimum price in current listings.",
+        "description": "PriceMode..cctor"
     },
-    "Unmarketable": {
-        "message": "Can't sell on marketboard",
-        "description": "Result.UpdateLanguage"
+    "MaximumPrice": {
+        "message": "Maximum Price",
+        "description": "PriceMode..cctor"
     },
-    "HelpMessage": {
-        "message": "To check prices, hold your keybind and then hover over an item in your inventory or linked in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, reach out on discord or open an issue on GitHub. If you want to help add translations, you can submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings.",
-        "description": "PriceCheckPlugin.PrintHelpMessage"
+    "MaximumPriceDesc": {
+        "message": "The maximum price in current listings.",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPrice": {
+        "message": "Current Minimum Price",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPriceDesc": {
+        "message": "The minimum price in current listings across both normal and high quality items.",
+        "description": "PriceMode..cctor"
     },
     "ContextMenuItem": {
         "message": "Check Marketboard Price",
-        "description": "PriceCheckPlugin.OnOpenInventoryContextMenu"
+        "description": "ContextMenuManager..ctor"
+    },
+    "HelpMessage": {
+        "message": "To check prices, hold your keybind and then hover over an item in your inventory or linked in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, reach out on discord or open an issue on GitHub. If you want to help add translations, you can submit updates on Crowdin.",
+        "description": "PriceCheckPlugin.PrintHelpMessage"
     },
     "InstallThankYou": {
         "message": "Thank you for installing PriceCheck!",
         "description": "PriceCheckPlugin.HandleFreshInstall"
     },
-    "OverlayWindow": {
-        "message": "PriceCheck",
-        "description": "OverlayWindow.DrawView"
+    "SellOnMarketboard": {
+        "message": "Sell on marketboard",
+        "description": "PriceService.SetFieldsByResult"
     },
-    "PluginDisabled": {
-        "message": "PriceCheckPlugin is disabled.",
-        "description": "OverlayWindow.DrawView"
+    "FailedToGetData": {
+        "message": "Failed to get data",
+        "description": "PriceService.SetFieldsByResult"
     },
-    "WaitingForItems": {
-        "message": "Waiting for items.",
-        "description": "OverlayWindow.DrawView"
+    "FailedToProcess": {
+        "message": "Failed to process item",
+        "description": "PriceService.SetFieldsByResult"
     },
-    "SettingsWindow": {
-        "message": "PriceCheck Settings",
-        "description": "SettingsWindow.DrawView"
+    "NoDataAvailable": {
+        "message": "No data available",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "NoRecentDataAvailable": {
+        "message": "No recent data",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "BelowVendor": {
+        "message": "Sell to vendor",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "BelowMinimum": {
+        "message": "Below minimum price",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "Unmarketable": {
+        "message": "Can't sell on marketboard",
+        "description": "PriceService.SetFieldsByResult"
     },
     "General": {
         "message": "General",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Overlay": {
         "message": "Overlay",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Chat": {
         "message": "Chat",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Toast": {
         "message": "Toast",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Keybind": {
         "message": "Keybind",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Filters": {
         "message": "Filters",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "Thresholds": {
         "message": "Thresholds",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "ContextMenu": {
         "message": "Context Menu",
-        "description": "SettingsWindow.DrawTabs"
-    },
-    "Other": {
-        "message": "Other",
-        "description": "SettingsWindow.DrawTabs"
+        "description": "ConfigWindow.DrawTabs"
     },
     "PluginEnabled": {
-        "message": "Plugin Enabled",
-        "description": "SettingsWindow.DrawGeneral"
+        "message": "Plugin enabled",
+        "description": "ConfigWindow.DrawGeneral"
     },
     "PluginEnabled_HelpMarker": {
         "message": "toggle the plugin on/off",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "ShowPrices": {
-        "message": "Show Prices",
-        "description": "SettingsWindow.DrawGeneral"
+        "message": "Show prices",
+        "description": "ConfigWindow.DrawGeneral"
     },
     "ShowPrices_HelpMarker": {
         "message": "show price or just show advice",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "HoverDelay": {
-        "message": "Hover Delay",
-        "description": "SettingsWindow.DrawGeneral"
+        "message": "Hover delay",
+        "description": "ConfigWindow.DrawGeneral"
     },
     "HoverDelay_HelpMarker": {
         "message": "delay (in seconds) before processing after hovering",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
     },
     "PriceMode": {
-        "message": "Price Mode",
-        "description": "SettingsWindow.DrawGeneral"
+        "message": "Price mode",
+        "description": "ConfigWindow.DrawGeneral"
     },
     "PriceMode_HelpMarker": {
         "message": "select price calculation to use",
-        "description": "SettingsWindow.DrawGeneral"
+        "description": "ConfigWindow.DrawGeneral"
+    },
+    "DisplayHeading": {
+        "message": "Display",
+        "description": "ConfigWindow.DrawOverlay"
     },
     "ShowOverlay": {
-        "message": "Show Overlay",
-        "description": "SettingsWindow.DrawOverlay"
+        "message": "Show overlay",
+        "description": "ConfigWindow.DrawOverlay"
     },
     "ShowOverlay_HelpMarker": {
         "message": "show price check results in overlay window",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin": {
+        "message": "Show overlay on login",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin_HelpMarker": {
+        "message": "show overlay window on login",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind": {
+        "message": "Show overlay by keybind",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind_HelpMarker": {
+        "message": "show overlay window when keybind is being held",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "StyleHeading": {
+        "message": "Style",
+        "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors": {
-        "message": "Use Overlay Colors",
-        "description": "SettingsWindow.DrawOverlay"
+        "message": "Use overlay colors",
+        "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors_HelpMarker": {
         "message": "use different colors for overlay based on result",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "MaxItems": {
-        "message": "Max Items",
-        "description": "SettingsWindow.DrawOverlay"
+        "message": "Max items",
+        "description": "ConfigWindow.DrawOverlay"
     },
     "MaxItems_HelpMarker": {
         "message": "set max number of items in overlay at a time",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
     },
     "HideOverlayTimer": {
-        "message": "Hide Overlay Timer",
-        "description": "SettingsWindow.DrawOverlay"
+        "message": "Hide overlay timer",
+        "description": "ConfigWindow.DrawOverlay"
     },
     "HideOverlayTimer_HelpMarker": {
         "message": "hide overlay after x amount of seconds since last price check - you can this by setting to zero.",
-        "description": "SettingsWindow.DrawOverlay"
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "FiltersHeading": {
+        "message": "Filters",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay": {
+        "message": "Show successful price check",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay_HelpMarker": {
+        "message": "show successful price check",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToProcessInOverlay": {
+        "message": "Show failed to process error",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToProcessInOverlay_HelpMarker": {
+        "message": "show error where something went wrong unexpectedly",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToGetDataInOverlay": {
+        "message": "Show failed to get data error",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToGetDataInOverlay_HelpMarker": {
+        "message": "show error where the plugin couldn't connect to universalis to get the data - usually a problem with your connection or universalis is down",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoDataAvailableInOverlay": {
+        "message": "Show no data available warning",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoDataAvailableInOverlay_HelpMarker": {
+        "message": "show warning where there was no data from universalis available for the item",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoRecentDataAvailableInOverlay": {
+        "message": "Show no recent data available warning",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoRecentDataAvailableInOverlay_HelpMarker": {
+        "message": "show warning where there was no recent data from universalis available for the item within your threshold",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowVendorInOverlay": {
+        "message": "Show cheaper than vendor price warning",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowVendorInOverlay_HelpMarker": {
+        "message": "show warning that the market price is cheaper than what you can sell it to a vendor for",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowMinimumInOverlay": {
+        "message": "Show cheaper than minimum threshold warning",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowMinimumInOverlay_HelpMarker": {
+        "message": "show warning the price is below your minimum threshold",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowUnmarketableInOverlay": {
+        "message": "Show unmarketable warning",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowUnmarketableInOverlay_HelpMarker": {
+        "message": "show warning that the item can't be sold on the market board",
+        "description": "ConfigWindow.DrawOverlay"
     },
     "ShowInChat": {
-        "message": "Show in Chat",
-        "description": "SettingsWindow.DrawChat"
+        "message": "Show in chat",
+        "description": "ConfigWindow.DrawChat"
     },
     "ShowInChat_HelpMarker": {
         "message": "show price check results in chat",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel": {
+        "message": "Chat channel",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel_HelpMarker": {
+        "message": "set the chat channel to send messages",
+        "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors": {
-        "message": "Use Chat Colors",
-        "description": "SettingsWindow.DrawChat"
+        "message": "Use chat colors",
+        "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors_HelpMarker": {
         "message": "use different colors for chat based on result",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
     },
     "UseItemLinks": {
-        "message": "Use Item Links",
-        "description": "SettingsWindow.DrawChat"
+        "message": "Use item links",
+        "description": "ConfigWindow.DrawChat"
     },
     "UseItemLinks_HelpMarker": {
         "message": "use item links in chat results",
-        "description": "SettingsWindow.DrawChat"
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowSuccessInChat": {
+        "message": "Show successful price check",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowSuccessInChat_HelpMarker": {
+        "message": "show successful price check",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat": {
+        "message": "Show failed to process error",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat_HelpMarker": {
+        "message": "show error where something went wrong unexpectedly",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat": {
+        "message": "Show failed to get data error",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat_HelpMarker": {
+        "message": "show error where the plugin couldn't connect to universalis to get the data - usually a problem with your connection or universalis is down",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat": {
+        "message": "Show no data available warning",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat_HelpMarker": {
+        "message": "show warning where there was no data from universalis available for the item",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoRecentDataAvailableInChat": {
+        "message": "Show no recent data available warning",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoRecentDataAvailableInChat_HelpMarker": {
+        "message": "show warning where there was no recent data from universalis available for the item within your threshold",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowVendorInChat": {
+        "message": "Show cheaper than vendor price warning",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowVendorInChat_HelpMarker": {
+        "message": "show warning that the market price is cheaper than what you can sell it to a vendor for",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowMinimumInChat": {
+        "message": "Show cheaper than minimum threshold warning",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowMinimumInChat_HelpMarker": {
+        "message": "show warning the price is below your minimum threshold",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowUnmarketableInChat": {
+        "message": "Show unmarketable warning",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowUnmarketableInChat_HelpMarker": {
+        "message": "show warning that the item can't be sold on the market board",
+        "description": "ConfigWindow.DrawChat"
     },
     "ShowToast": {
-        "message": "Show Toast",
-        "description": "SettingsWindow.DrawToast"
+        "message": "Show toast",
+        "description": "ConfigWindow.DrawToast"
     },
     "ShowToast_HelpMarker": {
         "message": "show price check results in toasts",
-        "description": "SettingsWindow.DrawToast"
+        "description": "ConfigWindow.DrawToast"
     },
     "KeybindEnabled": {
-        "message": "Use Keybind",
-        "description": "SettingsWindow.DrawKeybind"
+        "message": "Enable keybind",
+        "description": "ConfigWindow.DrawKeybind"
     },
     "KeybindEnabled_HelpMarker": {
         "message": "toggle if keybind is used or just hover",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
+    },
+    "ShowKeybindInTitleBar": {
+        "message": "Show keybind in titlebar",
+        "description": "ConfigWindow.DrawKeybind"
+    },
+    "ShowKeybindInTitleBar_HelpMarker": {
+        "message": "toggle if keybind is displayed in titlebar",
+        "description": "ConfigWindow.DrawKeybind"
     },
     "ModifierKeybind": {
         "message": "Modifier",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "ModifierKeybind_HelpMarker": {
         "message": "set your modifier key (e.g. shift)",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "PrimaryKeybind": {
         "message": "Primary",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "PrimaryKeybind_HelpMarker": {
         "message": "set your primary key (e.g. None, Z)",
-        "description": "SettingsWindow.DrawKeybind"
+        "description": "ConfigWindow.DrawKeybind"
     },
     "RestrictInCombat": {
         "message": "Don't process in combat",
-        "description": "SettingsWindow.DrawFilters"
+        "description": "ConfigWindow.DrawFilters"
     },
     "RestrictInCombat_HelpMarker": {
         "message": "don't process price checks while in combat",
-        "description": "SettingsWindow.DrawFilters"
+        "description": "ConfigWindow.DrawFilters"
     },
     "RestrictInContent": {
         "message": "Don't process in content",
-        "description": "SettingsWindow.DrawFilters"
+        "description": "ConfigWindow.DrawFilters"
     },
     "RestrictInContent_HelpMarker": {
         "message": "don't process price checks while in content",
-        "description": "SettingsWindow.DrawFilters"
-    },
-    "ShowUnmarketable": {
-        "message": "Show Unmarketable",
-        "description": "SettingsWindow.DrawFilters"
-    },
-    "ShowUnmarketable_HelpMarker": {
-        "message": "toggle whether to show items unmarketable items",
-        "description": "SettingsWindow.DrawFilters"
-    },
-    "MinimumPrice": {
-        "message": "Minimum Price",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawFilters"
     },
     "MinimumPrice_HelpMarker": {
         "message": "set minimum price at which actual average will be displayed",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawThresholds"
     },
     "MaxUploadDays": {
         "message": "Max Upload Days",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawThresholds"
     },
     "MaxUploadDays_HelpMarker": {
         "message": "set maximum age to avoid using old data",
-        "description": "SettingsWindow.DrawThresholds"
+        "description": "ConfigWindow.DrawThresholds"
     },
     "ShowContextMenu": {
-        "message": "Show Context Menu",
-        "description": "SettingsWindow.DrawContextMenu"
+        "message": "Show context menu",
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "ShowContextPosition": {
         "message": "Set context menu item position",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "ShowContextPosition_HelpMarker": {
         "message": "show above or below the first matching item in the menu.",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "ShowAbove": {
         "message": "Show Above",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "ShowBelow": {
         "message": "Show Below",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "ShowAboveList": {
         "message": "Show Above",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "NoContextItems": {
         "message": "None.",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "ShowBelowList": {
         "message": "Show Below",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
     "DupeContextBelow": {
         "message": "This context item is already added!",
-        "description": "SettingsWindow.DrawContextMenu"
+        "description": "ConfigWindow.DrawContextMenu"
     },
-    "OpenGithub": {
-        "message": "Open Github",
-        "description": "SettingsWindow.DrawOther"
+    "TitleBarWithKeybind1": {
+        "message": "PriceCheck ({0})",
+        "description": "MainWindow.UpdateWindowTitle"
     },
-    "PrintHelp": {
-        "message": "Print Help",
-        "description": "SettingsWindow.DrawOther"
+    "TitleBarWithKeybind2": {
+        "message": "PriceCheck ({0}+{1})",
+        "description": "MainWindow.UpdateWindowTitle"
     },
-    "ImproveTranslate": {
-        "message": "Improve Translations",
-        "description": "SettingsWindow.DrawOther"
+    "PluginDisabled": {
+        "message": "PriceCheck is disabled.",
+        "description": "MainWindow.Draw"
+    },
+    "WaitingForItems": {
+        "message": "Waiting for items.",
+        "description": "MainWindow.Draw"
+    },
+    "ClearPricedItems": {
+        "message": "Clear items",
+        "description": "MainWindow.Draw"
     }
 }
