@@ -13,7 +13,7 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets the request timeout to universalis.
         /// </summary>
-        public int RequestTimeout { get; set; } = 5000;
+        public int RequestTimeout { get; set; } = 10000;
 
         /// <summary>
         /// Gets or sets a value indicating whether this is a fresh install of the plugin.
@@ -63,7 +63,7 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets a value indicating whether to show overlay on login.
         /// </summary>
-        public bool ShowOverlayByKeybind { get; set; } = true;
+        public bool ShowOverlayByKeybind { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to show keybind in title bar.
