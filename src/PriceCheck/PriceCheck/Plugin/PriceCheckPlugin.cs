@@ -49,7 +49,6 @@ namespace PriceCheck
                     this.pluginInterface = pluginInterface;
                     this.PluginService = new PluginService(pluginName, pluginInterface);
                     this.LoadConfig();
-                    this.LoadUI();
                     this.HandleFreshInstall();
                     this.PriceService = new PriceService(this);
                     this.CommandManager = new CommandManager(this);
@@ -58,6 +57,7 @@ namespace PriceCheck
                     this.ContextMenuManager = new ContextMenuManager(this);
                     this.HoveredItemManager = new HoveredItemManager(this);
                     this.PluginService.PluginInterface.ClientState.OnLogin += this.OnLogin;
+                    this.LoadUI();
                 }
                 catch (Exception ex)
                 {

@@ -43,25 +43,68 @@ namespace PriceCheck
         {
             try
             {
-                if (!this.plugin.IsKeyBindPressed() && !this.plugin.Configuration.AllowKeybindAfterHover) return;
-                if (Convert.ToUInt32(itemId) == this.ItemId) return;
+                // cancel in-flight request
+                if (this.plugin.ItemCancellationTokenSource != null)
+                {
+                    if (!this.plugin.ItemCancellationTokenSource.IsCancellationRequested)
+                        this.plugin.ItemCancellationTokenSource.Cancel();
+                    this.plugin.ItemCancellationTokenSource.Dispose();
+                }
+
+                // stop if invalid itemId
+                if (itemId == 0) return;
+
+                // capture itemId/quality
+                uint realItemId;
+                bool itemQuality;
                 if (itemId >= 1000000)
                 {
-                    this.ItemId = Convert.ToUInt32(itemId - 1000000);
-                    this.ItemQuality = true;
+                    realItemId = Convert.ToUInt32(itemId - 1000000);
+                    itemQuality = true;
                 }
                 else
                 {
-                    this.ItemId = Convert.ToUInt32(itemId);
-                    this.ItemQuality = false;
+                    realItemId = Convert.ToUInt32(itemId);
+                    itemQuality = false;
                 }
 
-                if (!this.plugin.IsKeyBindPressed()) return;
-                this.plugin.PriceService.ProcessItemAsync(this.ItemId, this.ItemQuality);
+                // if keybind without pre-click
+                if (this.plugin.Configuration.KeybindEnabled && !this.plugin.Configuration.AllowKeybindAfterHover)
+                {
+                    // call immediately
+                    if (!this.plugin.IsKeyBindPressed()) return;
+                    this.plugin.PriceService.ProcessItemAsync(realItemId, itemQuality);
+                    return;
+                }
+
+                // if keybind post-click
+                if (this.plugin.Configuration.KeybindEnabled && this.plugin.Configuration.AllowKeybindAfterHover)
+                {
+                    if (this.plugin.IsKeyBindPressed())
+                    {
+                        // call immediately
+                        this.plugin.PriceService.ProcessItemAsync(realItemId, itemQuality);
+                    }
+                    else
+                    {
+                        // save for next keybind press
+                        this.ItemId = realItemId;
+                        this.ItemQuality = itemQuality;
+                    }
+
+                    return;
+                }
+
+                // if no keybind
+                if (!this.plugin.Configuration.KeybindEnabled)
+                {
+                    this.plugin.PriceService.ProcessItemAsync(realItemId, itemQuality);
+                }
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Failed to price check.");
+                this.ItemId = 0;
                 this.plugin.ItemCancellationTokenSource = null;
             }
         }

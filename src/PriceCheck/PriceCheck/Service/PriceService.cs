@@ -68,18 +68,18 @@ namespace PriceCheck
         /// <param name="isHQ">indicator if item is hq.</param>
         public void ProcessItemAsync(uint itemId, bool isHQ)
         {
-            if (!this.plugin.ShouldPriceCheck()) return;
-            lock (this.locker)
+            try
             {
-                if (itemId == this.itemWIP && isHQ == this.itemHQWIP) return;
+                if (!this.plugin.ShouldPriceCheck()) return;
+
+                // reject if invalid itemId
                 if (itemId == 0)
                 {
                     this.plugin.ItemCancellationTokenSource = null;
                     return;
                 }
 
-                this.itemWIP = itemId;
-                this.itemHQWIP = isHQ;
+                // cancel if in-flight request
                 if (this.plugin.ItemCancellationTokenSource != null)
                 {
                     if (!this.plugin.ItemCancellationTokenSource.IsCancellationRequested)
@@ -87,16 +87,26 @@ namespace PriceCheck
                     this.plugin.ItemCancellationTokenSource.Dispose();
                 }
 
+                // create new cancel token
                 this.plugin.ItemCancellationTokenSource =
                     new CancellationTokenSource(this.plugin.Configuration.RequestTimeout * 2);
-            }
 
-            Task.Run(async () =>
+                // run price check
+                Task.Run(async () =>
+                {
+                    await Task.Delay(
+                                  this.plugin.Configuration.HoverDelay * 1000,
+                                  this.plugin.ItemCancellationTokenSource!.Token)
+                              .ConfigureAwait(false);
+                    this.plugin.PriceService.ProcessItem(itemId, isHQ);
+                });
+            }
+            catch (Exception ex)
             {
-                await Task.Delay(this.plugin.Configuration.HoverDelay * 1000, this.plugin.ItemCancellationTokenSource!.Token)
-                          .ConfigureAwait(false);
-                this.plugin.PriceService.ProcessItem(itemId, isHQ);
-            });
+                Logger.LogError(ex, "Failed to process item.");
+                this.plugin.ItemCancellationTokenSource = null;
+                this.plugin.HoveredItemManager.ItemId = 0;
+            }
         }
 
         private void ProcessItem(uint itemId, bool isHQ)

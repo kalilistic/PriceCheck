@@ -1,5 +1,5 @@
 using System;
-
+using Dalamud.DrunkenToad;
 using Dalamud.Interface;
 using Dalamud.Interface.Windowing;
 
@@ -27,10 +27,13 @@ namespace PriceCheck
             this.MainWindow = new MainWindow(this.Plugin);
             this.ConfigWindow = new ConfigWindow(this.Plugin);
 
-            // setup window system
-            this.WindowSystem = new WindowSystem("PriceCheckWindowSystem");
-            this.WindowSystem.AddWindow(this.MainWindow);
-            this.WindowSystem.AddWindow(this.ConfigWindow);
+            // setup window systems
+            this.MainWindowSystem = new WindowSystem("PriceCheckMainWindowSystem");
+            this.ConfigWindowSystem = new WindowSystem("PriceCheckConfigWindowSystem");
+
+            // add windows
+            this.MainWindowSystem.AddWindow(this.MainWindow);
+            this.ConfigWindowSystem.AddWindow(this.ConfigWindow);
 
             // add event listeners
             this.Plugin.PluginService.PluginInterface.UiBuilder.OnBuildUi += this.OnBuildUi;
@@ -47,7 +50,9 @@ namespace PriceCheck
         /// </summary>
         public ConfigWindow? ConfigWindow { get; }
 
-        private WindowSystem WindowSystem { get; }
+        private WindowSystem MainWindowSystem { get; }
+
+        private WindowSystem ConfigWindowSystem { get; }
 
         private PriceCheckPlugin Plugin { get; }
 
@@ -74,7 +79,8 @@ namespace PriceCheck
         {
             this.Plugin.PluginService.PluginInterface.UiBuilder.OnBuildUi -= this.OnBuildUi;
             this.Plugin.PluginService.PluginInterface.UiBuilder.OnOpenConfigUi -= this.OnOpenConfigUi;
-            this.WindowSystem.RemoveAllWindows();
+            this.MainWindowSystem.RemoveAllWindows();
+            this.ConfigWindowSystem.RemoveAllWindows();
         }
 
         private void OnBuildUi()
@@ -82,27 +88,33 @@ namespace PriceCheck
             // only show when logged in
             if (!this.Plugin.PluginService.ClientState.IsLoggedIn()) return;
 
-            // check if keybind is pressed
-            if (this.Plugin.IsKeyBindPressed())
-            {
-                if (this.Plugin.Configuration.ShowOverlay && this.Plugin.Configuration.ShowOverlayByKeybind && !this.MainWindow!.IsOpen)
-                {
-                    this.IsOpenByKeybind = true;
-                    this.MainWindow.IsOpen = true;
-                }
+            // draw config if open
+            this.ConfigWindowSystem.Draw();
 
+            // run keybind post-click check to use item id set in hover manager
+            if (this.Plugin.Configuration.KeybindEnabled && this.Plugin.Configuration.AllowKeybindAfterHover &&
+                this.Plugin.IsKeyBindPressed())
+            {
+                // call price check if item is set from previous hover
                 if (this.Plugin.HoveredItemManager.ItemId != 0)
                 {
                     this.Plugin.PriceService.ProcessItemAsync(this.Plugin.HoveredItemManager.ItemId, this.Plugin.HoveredItemManager.ItemQuality);
+                    this.Plugin.HoveredItemManager.ItemId = 0;
                 }
             }
-            else
+
+            // draw main window
+            if (this.Plugin.Configuration.HideOverlayElapsed != 0 &&
+                DateUtil.CurrentTime() - this.Plugin.PriceService.LastPriceCheck >
+                this.Plugin.Configuration.HideOverlayElapsed)
             {
-                this.IsOpenByKeybind = false;
+                if (!(this.Plugin.Configuration.ShowOverlayByKeybind && this.Plugin.IsKeyBindPressed()))
+                {
+                    return;
+                }
             }
 
-            // draw windows
-            this.WindowSystem.Draw();
+            this.MainWindowSystem.Draw();
         }
 
         private void OnOpenConfigUi(object sender, EventArgs e)

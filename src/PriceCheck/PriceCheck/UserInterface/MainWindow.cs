@@ -31,6 +31,12 @@ namespace PriceCheck
             }
         }
 
+        public override void OnClose()
+        {
+            this.plugin.Configuration.ShowOverlay = false;
+            this.plugin.SaveConfig();
+        }
+
         /// <summary>
         /// Open window on login depending on config.
         /// </summary>
@@ -72,14 +78,6 @@ namespace PriceCheck
         /// <inheritdoc />
         public override void Draw()
         {
-            if (!this.plugin.WindowManager.IsOpenByKeybind && this.plugin.Configuration.HideOverlayElapsed != 0 &&
-                DateUtil.CurrentTime() - this.plugin.PriceService.LastPriceCheck >
-                this.plugin.Configuration.HideOverlayElapsed)
-            {
-                this.IsOpen = false;
-                return;
-            }
-
             if (!this.plugin.Configuration.Enabled)
             {
                 ImGui.Text(Loc.Localize("PluginDisabled", "PriceCheck is disabled."));
