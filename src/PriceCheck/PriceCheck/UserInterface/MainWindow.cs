@@ -25,12 +25,13 @@ namespace PriceCheck
             this.Size = new Vector2(300f, 150f);
             this.SizeCondition = ImGuiCond.Appearing;
             this.UpdateWindowTitle();
-            if (this.plugin.PluginService.ClientState.IsLoggedIn())
+            if (PriceCheckPlugin.ClientState.IsLoggedIn)
             {
                 this.OpenOnLogin();
             }
         }
 
+        /// <inheritdoc />
         public override void OnClose()
         {
             this.plugin.Configuration.ShowOverlay = false;

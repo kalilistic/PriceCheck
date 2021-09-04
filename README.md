@@ -2,10 +2,6 @@
 
 Dalamud plugin to quickly check item prices. To check prices, hold your keybind and then hover over an item in your inventory or linked in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, reach out on discord or open an issue on GitHub. If you want to help add translations, you can submit updates on Crowdin.
 
-## Preview
-
-![image](assets/preview.png)<br>
-
 ## Commands
 
 **/pricecheck** or **/pcheck** to open overlay.<br>

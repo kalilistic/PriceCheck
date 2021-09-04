@@ -1,4 +1,3 @@
-using System;
 using Dalamud.DrunkenToad;
 using Dalamud.Interface;
 using Dalamud.Interface.Windowing;
@@ -36,8 +35,8 @@ namespace PriceCheck
             this.ConfigWindowSystem.AddWindow(this.ConfigWindow);
 
             // add event listeners
-            this.Plugin.PluginService.PluginInterface.UiBuilder.OnBuildUi += this.OnBuildUi;
-            this.Plugin.PluginService.PluginInterface.UiBuilder.OnOpenConfigUi += this.OnOpenConfigUi;
+            PriceCheckPlugin.PluginInterface.UiBuilder.Draw += this.Draw;
+            PriceCheckPlugin.PluginInterface.UiBuilder.OpenConfigUi += this.OpenConfigUi;
         }
 
         /// <summary>
@@ -77,16 +76,16 @@ namespace PriceCheck
         /// </summary>
         public void Dispose()
         {
-            this.Plugin.PluginService.PluginInterface.UiBuilder.OnBuildUi -= this.OnBuildUi;
-            this.Plugin.PluginService.PluginInterface.UiBuilder.OnOpenConfigUi -= this.OnOpenConfigUi;
+            PriceCheckPlugin.PluginInterface.UiBuilder.Draw -= this.Draw;
+            PriceCheckPlugin.PluginInterface.UiBuilder.OpenConfigUi -= this.OpenConfigUi;
             this.MainWindowSystem.RemoveAllWindows();
             this.ConfigWindowSystem.RemoveAllWindows();
         }
 
-        private void OnBuildUi()
+        private void Draw()
         {
             // only show when logged in
-            if (!this.Plugin.PluginService.ClientState.IsLoggedIn()) return;
+            if (!PriceCheckPlugin.ClientState.IsLoggedIn) return;
 
             // draw config if open
             this.ConfigWindowSystem.Draw();
@@ -117,7 +116,7 @@ namespace PriceCheck
             this.MainWindowSystem.Draw();
         }
 
-        private void OnOpenConfigUi(object sender, EventArgs e)
+        private void OpenConfigUi()
         {
             this.ConfigWindow!.IsOpen ^= true;
         }

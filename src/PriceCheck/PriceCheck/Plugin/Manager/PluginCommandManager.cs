@@ -5,32 +5,32 @@ namespace PriceCheck
     /// <summary>
     /// Manage plugin commands.
     /// </summary>
-    public class CommandManager
+    public class PluginCommandManager
     {
         private readonly PriceCheckPlugin plugin;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommandManager"/> class.
+        /// Initializes a new instance of the <see cref="PluginCommandManager"/> class.
         /// </summary>
         /// <param name="plugin">plugin.</param>
-        public CommandManager(PriceCheckPlugin plugin)
+        public PluginCommandManager(PriceCheckPlugin plugin)
         {
             this.plugin = plugin;
-            this.plugin.PluginService.PluginInterface.CommandManager.AddHandler("/pcheck", new CommandInfo(this.TogglePriceCheck)
+            PriceCheckPlugin.CommandManager.AddHandler("/pcheck", new CommandInfo(this.TogglePriceCheck)
             {
                 HelpMessage = "Show price check.",
                 ShowInHelp = true,
             });
-            this.plugin.PluginService.PluginInterface.CommandManager.AddHandler("/pricecheck", new CommandInfo(this.TogglePriceCheck)
+            PriceCheckPlugin.CommandManager.AddHandler("/pricecheck", new CommandInfo(this.TogglePriceCheck)
             {
                 ShowInHelp = false,
             });
-            this.plugin.PluginService.PluginInterface.CommandManager.AddHandler("/pcheckconfig", new CommandInfo(this.ToggleConfig)
+            PriceCheckPlugin.CommandManager.AddHandler("/pcheckconfig", new CommandInfo(this.ToggleConfig)
             {
                 HelpMessage = "Show price check config.",
                 ShowInHelp = true,
             });
-            this.plugin.PluginService.PluginInterface.CommandManager.AddHandler("/pricecheckconfig", new CommandInfo(this.ToggleConfig)
+            PriceCheckPlugin.CommandManager.AddHandler("/pricecheckconfig", new CommandInfo(this.ToggleConfig)
             {
                 ShowInHelp = false,
             });
@@ -39,12 +39,12 @@ namespace PriceCheck
         /// <summary>
         /// Dispose command manager.
         /// </summary>
-        public void Dispose()
+        public static void Dispose()
         {
-            this.plugin.PluginService.PluginInterface.CommandManager.RemoveHandler("/pcheck");
-            this.plugin.PluginService.PluginInterface.CommandManager.RemoveHandler("/pricecheck");
-            this.plugin.PluginService.PluginInterface.CommandManager.RemoveHandler("/pcheckconfig");
-            this.plugin.PluginService.PluginInterface.CommandManager.RemoveHandler("/pricecheckconfig");
+            PriceCheckPlugin.CommandManager.RemoveHandler("/pcheck");
+            PriceCheckPlugin.CommandManager.RemoveHandler("/pricecheck");
+            PriceCheckPlugin.CommandManager.RemoveHandler("/pcheckconfig");
+            PriceCheckPlugin.CommandManager.RemoveHandler("/pricecheckconfig");
         }
 
         private void ToggleConfig(string command, string args)

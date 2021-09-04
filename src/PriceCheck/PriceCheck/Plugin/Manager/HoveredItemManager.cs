@@ -28,7 +28,7 @@ namespace PriceCheck
         public HoveredItemManager(PriceCheckPlugin plugin)
         {
             this.plugin = plugin;
-            this.plugin.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged += this.HoveredItemChanged;
+            PriceCheckPlugin.GameGui.HoveredItemChanged += this.HoveredItemChanged;
         }
 
         /// <summary>
@@ -36,10 +36,10 @@ namespace PriceCheck
         /// </summary>
         public void Dispose()
         {
-            this.plugin.PluginService.PluginInterface.Framework.Gui.HoveredItemChanged -= this.HoveredItemChanged;
+            PriceCheckPlugin.GameGui.HoveredItemChanged -= this.HoveredItemChanged;
         }
 
-        private void HoveredItemChanged(object sender, ulong itemId)
+        private void HoveredItemChanged(object? sender, ulong itemId)
         {
             try
             {

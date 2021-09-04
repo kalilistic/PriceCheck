@@ -9,6 +9,7 @@ using CheapLoc;
 using Dalamud.DrunkenToad;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Colors;
+using Lumina.Excel.GeneratedSheets;
 
 namespace PriceCheck
 {
@@ -20,8 +21,6 @@ namespace PriceCheck
         private readonly PriceCheckPlugin plugin;
         private readonly List<PricedItem> pricedItems = new ();
         private readonly object locker = new ();
-        private uint itemWIP;
-        private bool itemHQWIP;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceService"/> class.
@@ -220,7 +219,7 @@ namespace PriceCheck
             // send toast
             if (this.plugin.Configuration.ShowToast)
             {
-                this.plugin.SendToast(pricedItem);
+                PriceCheckPlugin.SendToast(pricedItem);
             }
         }
 
@@ -235,9 +234,9 @@ namespace PriceCheck
             switch (pricedItem.Result)
             {
                 case ItemResult.Success:
-                    pricedItem.Message = (this.plugin.Configuration.ShowPrices
+                    pricedItem.Message = this.plugin.Configuration.ShowPrices
                                               ? pricedItem.MarketPrice.ToString("N0", CultureInfo.InvariantCulture)
-                                              : Loc.Localize("SellOnMarketboard", "Sell on marketboard")) ?? string.Empty;
+                                              : Loc.Localize("SellOnMarketboard", "Sell on marketboard");
                     pricedItem.OverlayColor = ImGuiColors.HealerGreen;
                     pricedItem.ChatColor = 45;
                     break;
@@ -298,7 +297,7 @@ namespace PriceCheck
             Logger.LogDebug($"LastPriceCheck={this.LastPriceCheck}");
 
             // look up item game data
-            var item = this.plugin.PluginService.GameData.Item(pricedItem.ItemId);
+            var item = PriceCheckPlugin.DataManager.GameData.Excel.GetSheet<Item>()?.GetRow(pricedItem.ItemId);
 
             if (item == null)
             {
@@ -323,7 +322,7 @@ namespace PriceCheck
             }
 
             // set worldId
-            var worldId = this.plugin.PluginService.ClientState.LocalPlayer.HomeWorldId();
+            var worldId = PriceCheckPlugin.ClientState.LocalPlayer?.HomeWorld.Id ?? 0;
             Logger.LogDebug($"worldId={worldId}");
             if (worldId == 0)
             {
