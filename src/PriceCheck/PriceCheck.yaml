@@ -12,4 +12,5 @@ repo_url: https://github.com/kalilistic/PriceCheck
 icon_url: https://github.com/goatcorp/DalamudPlugins/blob/api4/plugins/PriceCheck/images/icon.png
 image_urls:
     - https://github.com/goatcorp/DalamudPlugins/blob/api4/plugins/PriceCheck/images/image1.png
+    - https://github.com/goatcorp/DalamudPlugins/blob/api4/plugins/PriceCheck/images/image2.png
 dalamud_api_level: 4
