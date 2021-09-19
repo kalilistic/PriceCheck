@@ -1,6 +1,26 @@
 {
+    "AveragePrice": {
+        "message": "Prix moyen",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePrice": {
+        "message": "Prix moyen actuel",
+        "description": "PriceMode..cctor"
+    },
     "MinimumPrice": {
         "message": "Prix minimum",
+        "description": "PriceMode..cctor"
+    },
+    "MinimumPriceDesc": {
+        "message": "Le prix minimum dans les annonces en cours.",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPrice": {
+        "message": "Prix maximum",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPrice": {
+        "message": "Prix minimum actuel",
         "description": "PriceMode..cctor"
     },
     "ContextMenuItem": {
@@ -21,6 +41,10 @@
     },
     "FailedToGetData": {
         "message": "Impossible d'obtenir les données",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "FailedToProcess": {
+        "message": "Échec du traitement de l'objet",
         "description": "PriceService.SetFieldsByResult"
     },
     "NoDataAvailable": {
@@ -87,6 +111,14 @@
         "message": "afficher le prix ou voir les conseils",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "AllowKeybindAfterHover": {
+        "message": "Autoriser le raccourci clavier à être pressées après avoir survolé l'objet",
+        "description": "ConfigWindow.DrawGeneral"
+    },
+    "AllowKeybindAfterHover_HelpMarker": {
+        "message": "permet de maintenir le raccourci clavier après l'ouverture de l'infobulle de l'élément (désactiver pour l'ancien comportement)",
+        "description": "ConfigWindow.DrawGeneral"
+    },
     "HoverDelay": {
         "message": "Délai du survol",
         "description": "ConfigWindow.DrawGeneral"
@@ -103,12 +135,36 @@
         "message": "select price calculation to use",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "DisplayHeading": {
+        "message": "Affichage",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "ShowOverlay": {
         "message": "Afficher l'overlay",
         "description": "ConfigWindow.DrawOverlay"
     },
     "ShowOverlay_HelpMarker": {
         "message": "afficher les résultats de vérification des prix dans l'overlay",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin": {
+        "message": "Afficher l'overlay à la connexion",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin_HelpMarker": {
+        "message": "afficher la fenêtre de l'overlay à la connexion",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind": {
+        "message": "Afficher l'overlay avec un raccourci",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind_HelpMarker": {
+        "message": "afficher l'overlay quand un raccourci clavier est appuyé",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "StyleHeading": {
+        "message": "Style",
         "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors": {
@@ -135,6 +191,14 @@
         "message": "afficher les résultats de la vérification des prix dans la fenêtre de log",
         "description": "ConfigWindow.DrawChat"
     },
+    "ChatChannel": {
+        "message": "Canal de discussion",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel_HelpMarker": {
+        "message": "définir le canal de discussion pour envoyer des messages",
+        "description": "ConfigWindow.DrawChat"
+    },
     "UseChatColors": {
         "message": "Utiliser les couleurs dans la fenêtre de log",
         "description": "ConfigWindow.DrawChat"
@@ -149,6 +213,34 @@
     },
     "UseItemLinks_HelpMarker": {
         "message": "utiliser les liens d'objet dans les résultats de la fenêtre de log",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowSuccessInChat": {
+        "message": "Afficher les vérifications de prix réussies",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowSuccessInChat_HelpMarker": {
+        "message": "afficher les vérifications de prix réussies",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat": {
+        "message": "Afficher les échecs de traitement",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat_HelpMarker": {
+        "message": "afficher une erreur quand un problème inattendu se produit",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat": {
+        "message": "Afficher les erreur de récupération de données",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat": {
+        "message": "Afficher un avertissement quand il n'y a pas de donnée",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat_HelpMarker": {
+        "message": "afficher un avertissement quand il n'y a pas de données disponible pour l'objet sur Universalis",
         "description": "ConfigWindow.DrawChat"
     },
     "KeybindEnabled": {

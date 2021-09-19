@@ -1,6 +1,34 @@
 {
+    "AveragePrice": {
+        "message": "Средняя цена",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePrice": {
+        "message": "Текущая средняя цена",
+        "description": "PriceMode..cctor"
+    },
     "MinimumPrice": {
         "message": "Minimum Price",
+        "description": "PriceMode..cctor"
+    },
+    "MinimumPriceDesc": {
+        "message": "Минимальная цена в текущем списке.",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPrice": {
+        "message": "Максимальная цена",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPriceDesc": {
+        "message": "Максимальная цена в текущем списке.",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPrice": {
+        "message": "Текущая минимальная цена",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPriceDesc": {
+        "message": "Минимальная цена в текущем списке (обычные и качественные предметы).",
         "description": "PriceMode..cctor"
     },
     "ContextMenuItem": {
@@ -91,6 +119,10 @@
         "message": "show price or just show advice",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "AllowKeybindAfterHover": {
+        "message": "Разрешить нажатие горячей клавиши при наведении на предмет",
+        "description": "ConfigWindow.DrawGeneral"
+    },
     "HoverDelay": {
         "message": "Hover Delay",
         "description": "ConfigWindow.DrawGeneral"
@@ -107,12 +139,28 @@
         "message": "select price calculation to use",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "DisplayHeading": {
+        "message": "Отображение",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "ShowOverlay": {
         "message": "Show Overlay",
         "description": "ConfigWindow.DrawOverlay"
     },
     "ShowOverlay_HelpMarker": {
         "message": "show price check results in overlay window",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin": {
+        "message": "Показывать окно при входе",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind": {
+        "message": "Показывать окно по горячей клавише",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "StyleHeading": {
+        "message": "Стиль",
         "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors": {
@@ -131,8 +179,28 @@
         "message": "set max number of items in overlay at a time",
         "description": "ConfigWindow.DrawOverlay"
     },
+    "HideOverlayTimer": {
+        "message": "Скрыть таймер",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "HideOverlayTimer_HelpMarker": {
         "message": "Скрыть оверлей спустя x секунд после последней проверки цены. Вы можете выключить это, установив 0.",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "FiltersHeading": {
+        "message": "Фильтры",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay": {
+        "message": "Показать успешную проверку цены",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay_HelpMarker": {
+        "message": "показать успешную проверку цены",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowUnmarketableInOverlay": {
+        "message": "Показать предупреждение о неаукционном предмете",
         "description": "ConfigWindow.DrawOverlay"
     },
     "ShowInChat": {
@@ -141,6 +209,10 @@
     },
     "ShowInChat_HelpMarker": {
         "message": "show price check results in chat",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel": {
+        "message": "Чат-канал",
         "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors": {
@@ -157,6 +229,18 @@
     },
     "UseItemLinks_HelpMarker": {
         "message": "use item links in chat results",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat": {
+        "message": "Показывать уведомление о неудачном получении данных",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoRecentDataAvailableInChat": {
+        "message": "Показывать предупреждение об отсутствии недавней истории продаж",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowVendorInChat": {
+        "message": "Показывать предупреждение о цене ниже чем у торговцев",
         "description": "ConfigWindow.DrawChat"
     },
     "ShowToast_HelpMarker": {

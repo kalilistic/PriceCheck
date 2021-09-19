@@ -1,6 +1,42 @@
 {
+    "AveragePrice": {
+        "message": "Preço Médio",
+        "description": "PriceMode..cctor"
+    },
+    "AveragePriceDesc": {
+        "message": "O preço médio de venda no histórico de vendas recente com outliers removidos além de três desvios-padrão da média.",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePrice": {
+        "message": "Preço Médio Atual",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePriceDesc": {
+        "message": "O preço médio de venda no histórico de vendas recente com outliers removidos além de três desvios-padrão da média.",
+        "description": "PriceMode..cctor"
+    },
     "MinimumPrice": {
         "message": "Preço Mínimo",
+        "description": "PriceMode..cctor"
+    },
+    "MinimumPriceDesc": {
+        "message": "O preço mínimo em anúncios atuais.",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPrice": {
+        "message": "Preço Máximo",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPriceDesc": {
+        "message": "O preço mínimo em anúncios atuais.",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPrice": {
+        "message": "Preço Mínimo Atual",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPriceDesc": {
+        "message": "O preço mínimo nos anúncios atuais em itens normais e de alta qualidade.",
         "description": "PriceMode..cctor"
     },
     "ContextMenuItem": {
@@ -21,6 +57,10 @@
     },
     "FailedToGetData": {
         "message": "Falha ao obter dados",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "FailedToProcess": {
+        "message": "Falha ao processar o item",
         "description": "PriceService.SetFieldsByResult"
     },
     "NoDataAvailable": {
@@ -91,6 +131,14 @@
         "message": "mostrar preço ou apenas conselhos",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "AllowKeybindAfterHover": {
+        "message": "Permitir que a tecla de atalho seja pressionada após passar o mouse sobre o item",
+        "description": "ConfigWindow.DrawGeneral"
+    },
+    "AllowKeybindAfterHover_HelpMarker": {
+        "message": "permite que você segure o atalho após a dica de item ser aberta (desative para o modo legado)",
+        "description": "ConfigWindow.DrawGeneral"
+    },
     "HoverDelay": {
         "message": "Atraso de seleção",
         "description": "ConfigWindow.DrawGeneral"
@@ -107,12 +155,36 @@
         "message": "select price calculation to use",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "DisplayHeading": {
+        "message": "Exibição",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "ShowOverlay": {
         "message": "Mostrar overlay",
         "description": "ConfigWindow.DrawOverlay"
     },
     "ShowOverlay_HelpMarker": {
         "message": "mostrar resultados da busca de preços na janela de overlay",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin": {
+        "message": "Mostrar sobreposição no login",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin_HelpMarker": {
+        "message": "mostrar janela de sobreposição no login",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind": {
+        "message": "Mostrar sobreposição por atalho",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind_HelpMarker": {
+        "message": "mostrar janela de sobreposição quando o atalho estiver sendo pressionado",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "StyleHeading": {
+        "message": "Estilo",
         "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors": {
@@ -139,12 +211,88 @@
         "message": "ocultar sobreposição após x segundos desde a última verificação de preço - você pode definir como zero.",
         "description": "ConfigWindow.DrawOverlay"
     },
+    "FiltersHeading": {
+        "message": "Filtros",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay": {
+        "message": "Mostrar verificação de preço bem sucedida",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay_HelpMarker": {
+        "message": "mostrar verificação de preço bem sucedida",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToProcessInOverlay": {
+        "message": "Mostrar erro de falha ao processar",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToProcessInOverlay_HelpMarker": {
+        "message": "mostrar um erro quando alguma coisa deu errado de forma inesperada",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToGetDataInOverlay": {
+        "message": "Mostrar erro de falha ao obter dados",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToGetDataInOverlay_HelpMarker": {
+        "message": "mostrar erro quando o plugin não conseguir se conectar ao universalis para obter os dados - geralmente um problema com sua conexão ou universalis está offline",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoDataAvailableInOverlay": {
+        "message": "Mostrar alerta de dados indisponíveis",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoDataAvailableInOverlay_HelpMarker": {
+        "message": "mostrar aviso quando não houver dados do universalis disponíveis para o item",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoRecentDataAvailableInOverlay": {
+        "message": "Mostrar aviso de que não há de dados recentes disponíveis",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoRecentDataAvailableInOverlay_HelpMarker": {
+        "message": "mostrar aviso quando não houver dados recentes do universalis disponíveis para o item dentro do seu limite",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowVendorInOverlay": {
+        "message": "Mostrar aviso de preço mais barato que o de um vendedor",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowVendorInOverlay_HelpMarker": {
+        "message": "mostrar aviso de que o preço no mercado é mais barato do que o que você pode vender a um vendedor",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowMinimumInOverlay": {
+        "message": "Mostrar aviso de mais barato que o limite mínimo",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowMinimumInOverlay_HelpMarker": {
+        "message": "mostrar aviso de que o preço está abaixo do seu limite mínimo",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowUnmarketableInOverlay": {
+        "message": "Mostrar aviso de não comercializável",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowUnmarketableInOverlay_HelpMarker": {
+        "message": "mostrar aviso de que o item não pode ser vendido no mercado",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "ShowInChat": {
         "message": "Mostrar no chat",
         "description": "ConfigWindow.DrawChat"
     },
     "ShowInChat_HelpMarker": {
         "message": "mostrar resultados da busca de preços no chat",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel": {
+        "message": "Canal de chat",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel_HelpMarker": {
+        "message": "definir o canal de chat para enviar mensagens",
         "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors": {
@@ -163,6 +311,70 @@
         "message": "usar links de itens nos resultados no chat",
         "description": "ConfigWindow.DrawChat"
     },
+    "ShowSuccessInChat": {
+        "message": "Mostrar verificação de preço bem sucedida",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowSuccessInChat_HelpMarker": {
+        "message": "mostrar verificação de preço bem sucedida",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat": {
+        "message": "Mostrar erro de falha ao processar",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat_HelpMarker": {
+        "message": "mostrar um erro quando alguma coisa deu errado de forma inesperada",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat": {
+        "message": "Mostrar erro de falha ao obter dados",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat_HelpMarker": {
+        "message": "mostrar erro quando o plugin não conseguir se conectar ao universalis para obter os dados - geralmente um problema com sua conexão ou universalis está offline",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat": {
+        "message": "Mostrar alerta de dados indisponíveis",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat_HelpMarker": {
+        "message": "mostrar aviso quando não houver dados do universalis disponíveis para o item",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoRecentDataAvailableInChat": {
+        "message": "Mostrar aviso de que não há de dados recentes disponíveis",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoRecentDataAvailableInChat_HelpMarker": {
+        "message": "mostrar aviso quando não houver dados recentes do universalis disponíveis para o item dentro do seu limite",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowVendorInChat": {
+        "message": "Mostrar aviso de preço mais barato que o de um vendedor",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowVendorInChat_HelpMarker": {
+        "message": "mostrar aviso de que o preço no mercado é mais barato do que o que você pode vender a um vendedor",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowMinimumInChat": {
+        "message": "Mostrar aviso de mais barato que o limite mínimo",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowMinimumInChat_HelpMarker": {
+        "message": "mostrar aviso de que o preço está abaixo do seu limite mínimo",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowUnmarketableInChat": {
+        "message": "Mostrar aviso de não comercializável",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowUnmarketableInChat_HelpMarker": {
+        "message": "mostrar aviso de que o item não pode ser vendido no mercado",
+        "description": "ConfigWindow.DrawChat"
+    },
     "ShowToast": {
         "message": "Mostrar Toast",
         "description": "ConfigWindow.DrawToast"
@@ -177,6 +389,14 @@
     },
     "KeybindEnabled_HelpMarker": {
         "message": "alternar uso do atalho ou apenar passe do mouse",
+        "description": "ConfigWindow.DrawKeybind"
+    },
+    "ShowKeybindInTitleBar": {
+        "message": "Mostrar atalho na barra de título",
+        "description": "ConfigWindow.DrawKeybind"
+    },
+    "ShowKeybindInTitleBar_HelpMarker": {
+        "message": "alternar se o atalho é exibido na barra de título",
         "description": "ConfigWindow.DrawKeybind"
     },
     "ModifierKeybind": {
@@ -223,6 +443,10 @@
         "message": "definir idade máxima para evitar uso de dados antigos",
         "description": "ConfigWindow.DrawThresholds"
     },
+    "ShowContextMenu": {
+        "message": "Mostrar Menu de Contexto",
+        "description": "ConfigWindow.DrawContextMenu"
+    },
     "ShowContextPosition": {
         "message": "Definir posição do menu de contexto do item",
         "description": "ConfigWindow.DrawContextMenu"
@@ -255,12 +479,24 @@
         "message": "Este item de contexto já foi adicionado!",
         "description": "ConfigWindow.DrawContextMenu"
     },
+    "TitleBarWithKeybind1": {
+        "message": "PriceCheck ({0})",
+        "description": "MainWindow.UpdateWindowTitle"
+    },
+    "TitleBarWithKeybind2": {
+        "message": "PriceCheck ({0}+{1})",
+        "description": "MainWindow.UpdateWindowTitle"
+    },
     "PluginDisabled": {
         "message": "PriceCheckPlugin está desativado.",
         "description": "MainWindow.Draw"
     },
     "WaitingForItems": {
         "message": "Aguardando itens.",
+        "description": "MainWindow.Draw"
+    },
+    "ClearPricedItems": {
+        "message": "Limpar itens",
         "description": "MainWindow.Draw"
     }
 }

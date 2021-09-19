@@ -1,6 +1,34 @@
 {
+    "AveragePrice": {
+        "message": "平均价格",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePrice": {
+        "message": "当前平均价格",
+        "description": "PriceMode..cctor"
+    },
     "MinimumPrice": {
         "message": "最低售价",
+        "description": "PriceMode..cctor"
+    },
+    "MinimumPriceDesc": {
+        "message": "当前列表中的最低价格。",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPrice": {
+        "message": "最高价格",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPriceDesc": {
+        "message": "当前列表中的最高价格。",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPrice": {
+        "message": "当前最低价格",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPriceDesc": {
+        "message": "当前列表中的最低价格（包括普通和高品质）。",
         "description": "PriceMode..cctor"
     },
     "ContextMenuItem": {
@@ -21,6 +49,10 @@
     },
     "FailedToGetData": {
         "message": "获取数据失败",
+        "description": "PriceService.SetFieldsByResult"
+    },
+    "FailedToProcess": {
+        "message": "无法处理物品",
         "description": "PriceService.SetFieldsByResult"
     },
     "NoDataAvailable": {
@@ -107,12 +139,28 @@
         "message": "选择价格算法",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "DisplayHeading": {
+        "message": "显示",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "ShowOverlay": {
         "message": "Show Overlay",
         "description": "ConfigWindow.DrawOverlay"
     },
     "ShowOverlay_HelpMarker": {
         "message": "在叠加层显示价格结果",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin": {
+        "message": "登录时显示悬浮窗",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayOnLogin_HelpMarker": {
+        "message": "在登录时显示悬浮窗",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "StyleHeading": {
+        "message": "样式",
         "description": "ConfigWindow.DrawOverlay"
     },
     "UseOverlayColors": {
@@ -139,6 +187,46 @@
         "message": "在 X 秒后关闭价格浮窗，你可以将其设置为 0 以禁用该功能。",
         "description": "ConfigWindow.DrawOverlay"
     },
+    "FiltersHeading": {
+        "message": "过滤器",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay": {
+        "message": "显示成功的价格检查",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowSuccessInOverlay_HelpMarker": {
+        "message": "显示成功的价格检查",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToProcessInOverlay": {
+        "message": "显示处理失败信息",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToProcessInOverlay_HelpMarker": {
+        "message": "在发生异常时显示错误",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToGetDataInOverlay": {
+        "message": "显示数据获取失败信息",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowFailedToGetDataInOverlay_HelpMarker": {
+        "message": "在无法从 Universalis 获取数据时显示错误，这通常由于网络连接问题或 Universalis 服务器宕机引起",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoDataAvailableInOverlay": {
+        "message": "显示无可用数据信息",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoDataAvailableInOverlay_HelpMarker": {
+        "message": "在无法从 Universalis 取得有用数据时显示错误",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowNoRecentDataAvailableInOverlay": {
+        "message": "显示无最近数据信息",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "ShowInChat": {
         "message": "在聊天中显示",
         "description": "ConfigWindow.DrawChat"
@@ -161,6 +249,42 @@
     },
     "UseItemLinks_HelpMarker": {
         "message": "在聊天消息中使用物品链接",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowSuccessInChat": {
+        "message": "显示成功的价格检查",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowSuccessInChat_HelpMarker": {
+        "message": "显示成功的价格检查",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat": {
+        "message": "显示处理失败信息",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToProcessInChat_HelpMarker": {
+        "message": "在发生异常时显示错误",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat": {
+        "message": "显示数据获取失败信息",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowFailedToGetDataInChat_HelpMarker": {
+        "message": "在无法从 Universalis 获取数据时显示错误，这通常由于网络连接问题或 Universalis 服务器宕机引起",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat": {
+        "message": "显示无可用数据信息",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoDataAvailableInChat_HelpMarker": {
+        "message": "在无法从 Universalis 取得有用数据时显示错误",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowNoRecentDataAvailableInChat": {
+        "message": "显示无最近数据信息",
         "description": "ConfigWindow.DrawChat"
     },
     "ShowToast": {
