@@ -267,17 +267,17 @@ namespace PriceCheck
                     break;
                 case ItemResult.BelowVendor:
                     pricedItem.Message = Loc.Localize("BelowVendor", "Sell to vendor");
-                    pricedItem.OverlayColor = ImGuiColors2.ToadYellow;
+                    pricedItem.OverlayColor = ImGuiColors.DalamudYellow;
                     pricedItem.ChatColor = 25;
                     break;
                 case ItemResult.BelowMinimum:
                     pricedItem.Message = Loc.Localize("BelowMinimum", "Below minimum price");
-                    pricedItem.OverlayColor = ImGuiColors2.ToadYellow;
+                    pricedItem.OverlayColor = ImGuiColors.DalamudYellow;
                     pricedItem.ChatColor = 25;
                     break;
                 case ItemResult.Unmarketable:
                     pricedItem.Message = Loc.Localize("Unmarketable", "Can't sell on marketboard");
-                    pricedItem.OverlayColor = ImGuiColors2.ToadYellow;
+                    pricedItem.OverlayColor = ImGuiColors.DalamudYellow;
                     pricedItem.ChatColor = 25;
                     break;
                 default:

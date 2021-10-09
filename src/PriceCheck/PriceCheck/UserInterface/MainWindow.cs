@@ -24,6 +24,7 @@ namespace PriceCheck
             this.plugin = plugin;
             this.Size = new Vector2(300f, 150f);
             this.SizeCondition = ImGuiCond.Appearing;
+            this.RespectCloseHotkey = false;
             this.UpdateWindowTitle();
             if (PriceCheckPlugin.ClientState.IsLoggedIn)
             {

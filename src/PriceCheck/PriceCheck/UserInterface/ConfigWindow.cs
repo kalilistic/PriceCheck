@@ -239,7 +239,7 @@ namespace PriceCheck
 
         private void DrawOverlay()
         {
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("DisplayHeading", "Display"));
+            ImGui.TextColored(ImGuiColors.DalamudViolet, Loc.Localize("DisplayHeading", "Display"));
             ImGui.Spacing();
 
             var showOverlay = this.plugin.Configuration.ShowOverlay;
@@ -282,7 +282,7 @@ namespace PriceCheck
                                            "ShowOverlayByKeybind_HelpMarker",
                                            "show overlay window when keybind is being held"));
 
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("StyleHeading", "Style"));
+            ImGui.TextColored(ImGuiColors.DalamudViolet, Loc.Localize("StyleHeading", "Style"));
             ImGui.Spacing();
 
             var useOverlayColors = this.plugin.Configuration.UseOverlayColors;
@@ -323,7 +323,7 @@ namespace PriceCheck
             }
 
             ImGui.Spacing();
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("FiltersHeading", "Filters"));
+            ImGui.TextColored(ImGuiColors.DalamudViolet, Loc.Localize("FiltersHeading", "Filters"));
             ImGui.Spacing();
             var showSuccessInOverlay = this.plugin.Configuration.ShowSuccessInOverlay;
             if (ImGui.Checkbox(
@@ -432,7 +432,7 @@ namespace PriceCheck
 
         private void DrawChat()
         {
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("DisplayHeading", "Display"));
+            ImGui.TextColored(ImGuiColors.DalamudViolet, Loc.Localize("DisplayHeading", "Display"));
             ImGui.Spacing();
 
             var showInChat = this.plugin.Configuration.ShowInChat;
@@ -468,7 +468,7 @@ namespace PriceCheck
                 ImGui.EndCombo();
             }
 
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("StyleHeading", "Style"));
+            ImGui.TextColored(ImGuiColors.DalamudViolet, Loc.Localize("StyleHeading", "Style"));
             ImGui.Spacing();
 
             var useChatColors = this.plugin.Configuration.UseChatColors;
@@ -498,7 +498,7 @@ namespace PriceCheck
                 "use item links in chat results"));
 
             ImGui.Spacing();
-            ImGui.TextColored(ImGuiColors2.ToadViolet, Loc.Localize("FiltersHeading", "Filters"));
+            ImGui.TextColored(ImGuiColors.DalamudViolet, Loc.Localize("FiltersHeading", "Filters"));
             var showSuccessInChat = this.plugin.Configuration.ShowSuccessInChat;
             if (ImGui.Checkbox(
                 Loc.Localize("ShowSuccessInChat", "Show successful price check") + "###PriceCheck_ShowSuccessInChat_Checkbox",
