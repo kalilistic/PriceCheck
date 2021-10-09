@@ -310,15 +310,21 @@ namespace PriceCheck
 
         private void HandleFreshInstall()
         {
-            if (!this.Configuration.FreshInstall) return;
-            Chat.PluginPrintNotice(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
-            PrintHelpMessage();
-            this.Configuration.FreshInstall = false;
-            this.Configuration.ShowToast = true;
-            this.Configuration.RestrictInCombat = true;
-            this.Configuration.RestrictInContent = true;
-            this.SaveConfig();
-            this.WindowManager.ConfigWindow!.IsOpen = true;
+            try
+            {
+                if (!this.Configuration.FreshInstall) return;
+                Chat.PluginPrintNotice(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
+                PrintHelpMessage();
+                this.Configuration.FreshInstall = false;
+                this.Configuration.ShowToast = true;
+                this.Configuration.RestrictInCombat = true;
+                this.Configuration.RestrictInContent = true;
+                this.SaveConfig();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed fresh install.");
+            }
         }
 
         private void LoadConfig()
