@@ -3,8 +3,16 @@
         "message": "平均价格",
         "description": "PriceMode..cctor"
     },
+    "AveragePriceDesc": {
+        "message": "在最近销售历史中，移除超过平均值的三个标准差的物品。",
+        "description": "PriceMode..cctor"
+    },
     "CurrentAveragePrice": {
         "message": "当前平均价格",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePriceDesc": {
+        "message": "在最近销售历史中，移除超过平均值的三个标准差的物品。",
         "description": "PriceMode..cctor"
     },
     "MinimumPrice": {
@@ -123,6 +131,14 @@
         "message": "显示价格或仅显示建议",
         "description": "ConfigWindow.DrawGeneral"
     },
+    "AllowKeybindAfterHover": {
+        "message": "允许鼠标悬停项目后的快捷键",
+        "description": "ConfigWindow.DrawGeneral"
+    },
+    "AllowKeybindAfterHover_HelpMarker": {
+        "message": "允许您在物品提示工具打开后按住快捷键(禁用旧模式)",
+        "description": "ConfigWindow.DrawGeneral"
+    },
     "HoverDelay": {
         "message": "悬停延迟",
         "description": "ConfigWindow.DrawGeneral"
@@ -157,6 +173,14 @@
     },
     "ShowOverlayOnLogin_HelpMarker": {
         "message": "在登录时显示悬浮窗",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind": {
+        "message": "悬浮窗中显示快捷键",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowOverlayByKeybind_HelpMarker": {
+        "message": "按住快捷键时显示悬浮窗",
         "description": "ConfigWindow.DrawOverlay"
     },
     "StyleHeading": {
@@ -227,12 +251,48 @@
         "message": "显示无最近数据信息",
         "description": "ConfigWindow.DrawOverlay"
     },
+    "ShowNoRecentDataAvailableInOverlay_HelpMarker": {
+        "message": "当阈值范围内没有Universalis最新数据时显示警告",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowVendorInOverlay": {
+        "message": "显示比商店价格警告更低的价格",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowVendorInOverlay_HelpMarker": {
+        "message": "市场价格比您可以卖给商店的价格更低时显示警告。",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowMinimumInOverlay": {
+        "message": "显示比最小阈值更低的价格",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowBelowMinimumInOverlay_HelpMarker": {
+        "message": "显示比最小阈值更低的价格警告",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowUnmarketableInOverlay": {
+        "message": "显示不可交易警告",
+        "description": "ConfigWindow.DrawOverlay"
+    },
+    "ShowUnmarketableInOverlay_HelpMarker": {
+        "message": "显示不可交易警告",
+        "description": "ConfigWindow.DrawOverlay"
+    },
     "ShowInChat": {
         "message": "在聊天中显示",
         "description": "ConfigWindow.DrawChat"
     },
     "ShowInChat_HelpMarker": {
         "message": "在聊天中显示价格结果",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel": {
+        "message": "聊天频道",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel_HelpMarker": {
+        "message": "设置聊天频道以发送消息",
         "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors": {
@@ -287,6 +347,34 @@
         "message": "显示无最近数据信息",
         "description": "ConfigWindow.DrawChat"
     },
+    "ShowNoRecentDataAvailableInChat_HelpMarker": {
+        "message": "当阈值范围内没有Universalis最新数据时显示警告",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowVendorInChat": {
+        "message": "显示比商店价格警告更低的价格",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowVendorInChat_HelpMarker": {
+        "message": "市场价格比您可以卖给商店的价格更低时显示警告。",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowMinimumInChat": {
+        "message": "显示比最小阈值更低的价格",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowBelowMinimumInChat_HelpMarker": {
+        "message": "显示比最小阈值更低的价格警告",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowUnmarketableInChat": {
+        "message": "显示不可交易警告",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ShowUnmarketableInChat_HelpMarker": {
+        "message": "显示不可交易警告",
+        "description": "ConfigWindow.DrawChat"
+    },
     "ShowToast": {
         "message": "显示弹出提示",
         "description": "ConfigWindow.DrawToast"
@@ -301,6 +389,14 @@
     },
     "KeybindEnabled_HelpMarker": {
         "message": "切换是否使用快捷键或仅悬浮",
+        "description": "ConfigWindow.DrawKeybind"
+    },
+    "ShowKeybindInTitleBar": {
+        "message": "在标题栏中显示快捷键",
+        "description": "ConfigWindow.DrawKeybind"
+    },
+    "ShowKeybindInTitleBar_HelpMarker": {
+        "message": "切换在标题栏上快捷键的显示",
         "description": "ConfigWindow.DrawKeybind"
     },
     "ModifierKeybind": {
@@ -385,6 +481,10 @@
     },
     "WaitingForItems": {
         "message": "正在等待物品。",
+        "description": "MainWindow.Draw"
+    },
+    "ClearPricedItems": {
+        "message": "清除所有项目",
         "description": "MainWindow.Draw"
     }
 }
