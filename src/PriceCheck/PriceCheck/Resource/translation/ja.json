@@ -72,7 +72,7 @@
         "description": "PriceService.SetFieldsByResult"
     },
     "Unmarketable": {
-        "message": "マーケットボードで販売",
+        "message": "マーケット取引不可",
         "description": "PriceService.SetFieldsByResult"
     },
     "General": {
