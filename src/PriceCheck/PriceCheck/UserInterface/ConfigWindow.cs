@@ -40,7 +40,6 @@ namespace PriceCheck
             Keybind,
             Filters,
             Thresholds,
-            ContextMenu,
         }
 
         /// <inheritdoc/>
@@ -88,12 +87,6 @@ namespace PriceCheck
                 case Tab.Thresholds:
                 {
                     this.DrawThresholds();
-                    break;
-                }
-
-                case Tab.ContextMenu:
-                {
-                    this.DrawContextMenu();
                     break;
                 }
 
@@ -146,12 +139,6 @@ namespace PriceCheck
                 if (ImGui.BeginTabItem(Loc.Localize("Thresholds", "Thresholds") + "###PriceCheck_Thresholds_Tab"))
                 {
                     this.currentTab = Tab.Thresholds;
-                    ImGui.EndTabItem();
-                }
-
-                if (ImGui.BeginTabItem(Loc.Localize("ContextMenu", "Context Menu") + "###PriceCheck_ContextMenu_Tab"))
-                {
-                    this.currentTab = Tab.ContextMenu;
                     ImGui.EndTabItem();
                 }
 
@@ -736,19 +723,6 @@ namespace PriceCheck
             if (ImGui.InputInt("###PriceCheck_MaxUploadDays_Slider", ref maxUploadDays, 5, 5))
             {
                 this.plugin.Configuration.MaxUploadDays = Math.Abs(maxUploadDays);
-                this.plugin.SaveConfig();
-            }
-        }
-
-        private void DrawContextMenu()
-        {
-            var showContextMenu = this.plugin.Configuration.ShowContextMenu;
-            if (ImGui.Checkbox(
-                Loc.Localize("ShowContextMenu", "Show context menu") +
-                "###PriceCheck_ShowContextMenu_Checkbox",
-                ref showContextMenu))
-            {
-                this.plugin.Configuration.ShowContextMenu = showContextMenu;
                 this.plugin.SaveConfig();
             }
         }
