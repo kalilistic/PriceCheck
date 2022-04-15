@@ -12,14 +12,15 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Keys;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
+using Dalamud.Game.Gui.ContextMenus;
 using Dalamud.Game.Gui.Toast;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.IoC;
 using Dalamud.Plugin;
-using XivCommon;
 
+// ReSharper disable MemberInitializerValueIgnored
 namespace PriceCheck
 {
     /// <summary>
@@ -27,11 +28,6 @@ namespace PriceCheck
     /// </summary>
     public class PriceCheckPlugin : IDalamudPlugin
     {
-        /// <summary>
-        /// XivCommon library instance.
-        /// </summary>
-        public XivCommonBase XivCommon = null!;
-
         /// <summary>
         /// Cancellation token to terminate request if interrupted.
         /// </summary>
@@ -54,7 +50,6 @@ namespace PriceCheck
                     this.PriceService = new PriceService(this);
                     this.PluginCommandManager = new PluginCommandManager(this);
                     this.UniversalisClient = new UniversalisClient(this);
-                    this.XivCommon = new XivCommonBase(Hooks.ContextMenu);
                     this.ContextMenuManager = new ContextMenuManager(this);
                     this.HoveredItemManager = new HoveredItemManager(this);
                     ClientState.Login += this.Login;
@@ -129,6 +124,13 @@ namespace PriceCheck
         [PluginService]
         [RequiredVersion("1.0")]
         public static GameGui GameGui { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets context menu.
+        /// </summary>
+        [PluginService]
+        [RequiredVersion("1.0")]
+        public static ContextMenu ContextMenu { get; private set; } = null!;
 
         /// <inheritdoc />
         public string Name => "PriceCheck";
@@ -253,7 +255,6 @@ namespace PriceCheck
             try
             {
                 ClientState.Login -= this.Login;
-                this.XivCommon.Dispose();
                 this.WindowManager.Dispose();
                 PluginCommandManager.Dispose();
                 this.ContextMenuManager.Dispose();
@@ -267,7 +268,6 @@ namespace PriceCheck
                 Logger.LogError(ex, "Failed to dispose plugin properly.");
             }
 
-            PluginInterface.Dispose();
             GC.SuppressFinalize(this);
         }
 
