@@ -1,7 +1,43 @@
 {
+    "AveragePrice": {
+        "message": "Gjennomsnittspris",
+        "description": "PriceMode..cctor"
+    },
+    "AveragePriceDesc": {
+        "message": "Gjennomsnittlig salgspris for nylige salg, med priser som er mer enn tre standardavvik fra snittet fjernet.",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePrice": {
+        "message": "Gjeldende snittpris",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentAveragePriceDesc": {
+        "message": "Gjennomsnittlig salgspris for åpne salg, med priser som er mer enn tre standardavvik fra snittet fjernet.",
+        "description": "PriceMode..cctor"
+    },
     "MinimumPrice": {
         "message": "Minimum Price",
         "description": "PriceMode..cctor"
+    },
+    "MinimumPriceDesc": {
+        "message": "Minimumspris i åpne salg.",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPrice": {
+        "message": "Makspris",
+        "description": "PriceMode..cctor"
+    },
+    "MaximumPriceDesc": {
+        "message": "Makspris i åpne salg.",
+        "description": "PriceMode..cctor"
+    },
+    "CurrentMinimumPrice": {
+        "message": "Gjelende minimumspris",
+        "description": "PriceMode..cctor"
+    },
+    "ContextMenuItem": {
+        "message": "Sjekk markedspris",
+        "description": "ContextMenuManager..ctor"
     },
     "HelpMessage": {
         "message": "To check prices, hold your keybind and then hover over an item in your inventory or linked in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are averages from Universalis and will not match any specific listings you see on the market board. You can use /pcheck to open the overlay and /pcheckconfig to open settings. If you need help, reach out on discord or open an issue on GitHub. If you want to help add translations, you can submit updates on Crowdin. Links to both GitHub and Crowdin are available in settings.",
@@ -51,6 +87,10 @@
         "message": "Chat",
         "description": "ConfigWindow.DrawTabs"
     },
+    "Toast": {
+        "message": "Popup-melding",
+        "description": "ConfigWindow.DrawTabs"
+    },
     "Keybind": {
         "message": "Keybind",
         "description": "ConfigWindow.DrawTabs"
@@ -61,6 +101,10 @@
     },
     "Thresholds": {
         "message": "Thresholds",
+        "description": "ConfigWindow.DrawTabs"
+    },
+    "ContextMenu": {
+        "message": "Meny",
         "description": "ConfigWindow.DrawTabs"
     },
     "PluginEnabled": {
@@ -125,6 +169,10 @@
     },
     "ShowInChat_HelpMarker": {
         "message": "show price check results in chat",
+        "description": "ConfigWindow.DrawChat"
+    },
+    "ChatChannel": {
+        "message": "Chat-kanal",
         "description": "ConfigWindow.DrawChat"
     },
     "UseChatColors": {
