@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.Configuration;
+using Dalamud.ContextMenu;
 using Dalamud.Data;
 using Dalamud.DrunkenToad;
 using Dalamud.Game.ClientState;
@@ -12,7 +13,6 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Keys;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
-using Dalamud.Game.Gui.ContextMenus;
 using Dalamud.Game.Gui.Toast;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
@@ -33,6 +33,11 @@ namespace PriceCheck
         /// </summary>
         public CancellationTokenSource? ItemCancellationTokenSource;
 
+        /// <summary>
+        /// Context Menu Lib.
+        /// </summary>
+        public DalamudContextMenuBase ContextMenuBase = null!;
+
         private Localization localization = null!;
 
         /// <summary>
@@ -40,6 +45,8 @@ namespace PriceCheck
         /// </summary>
         public PriceCheckPlugin()
         {
+            this.ContextMenuBase = new DalamudContextMenuBase();
+
             Task.Run(() =>
             {
                 try
@@ -124,13 +131,6 @@ namespace PriceCheck
         [PluginService]
         [RequiredVersion("1.0")]
         public static GameGui GameGui { get; private set; } = null!;
-
-        /// <summary>
-        /// Gets context menu.
-        /// </summary>
-        [PluginService]
-        [RequiredVersion("1.0")]
-        public static ContextMenu ContextMenu { get; private set; } = null!;
 
         /// <inheritdoc />
         public string Name => "PriceCheck";
@@ -259,6 +259,7 @@ namespace PriceCheck
                 PluginCommandManager.Dispose();
                 this.ContextMenuManager.Dispose();
                 this.HoveredItemManager.Dispose();
+                this.ContextMenuBase.Dispose();
                 this.ItemCancellationTokenSource?.Dispose();
                 this.UniversalisClient.Dispose();
                 this.localization.Dispose();

@@ -1,8 +1,10 @@
 using System;
 
 using CheapLoc;
+using Dalamud.ContextMenu;
 using Dalamud.DrunkenToad;
-using Dalamud.Game.Gui.ContextMenus;
+using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 
 namespace PriceCheck
 {
@@ -12,6 +14,7 @@ namespace PriceCheck
     public class ContextMenuManager
     {
         private readonly PriceCheckPlugin plugin;
+        private readonly InventoryContextMenuItem inventoryContextMenuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextMenuManager"/> class.
@@ -20,7 +23,9 @@ namespace PriceCheck
         public ContextMenuManager(PriceCheckPlugin plugin)
         {
             this.plugin = plugin;
-            PriceCheckPlugin.ContextMenu.ContextMenuOpened += this.OnContextMenuOpened;
+            this.inventoryContextMenuItem = new InventoryContextMenuItem(
+                new SeString(new TextPayload(Loc.Localize("ContextMenuItem", "Check Marketboard Price"))), this.Selected);
+            this.plugin.ContextMenuBase.Functions.ContextMenu.OnOpenInventoryContextMenu += this.OnContextMenuOpened;
         }
 
         /// <summary>`
@@ -28,22 +33,22 @@ namespace PriceCheck
         /// </summary>
         public void Dispose()
         {
-            PriceCheckPlugin.ContextMenu.ContextMenuOpened -= this.OnContextMenuOpened;
+            this.plugin.ContextMenuBase.Functions.ContextMenu.OnOpenInventoryContextMenu -= this.OnContextMenuOpened;
         }
 
-        private void OnContextMenuOpened(ContextMenuOpenedArgs args)
+        private void OnContextMenuOpened(InventoryContextMenuOpenArgs args)
         {
             if (!this.plugin.Configuration.ShowContextMenu) return;
-            if (args.InventoryItemContext == null) return;
-            args.AddCustomItem(Loc.Localize("ContextMenuItem", "Check Marketboard Price"), this.Selected);
+            if (args.ItemId == 0) return;
+            args.AddCustomItem(this.inventoryContextMenuItem);
         }
 
-        private void Selected(CustomContextMenuItemSelectedArgs args)
+        private void Selected(InventoryContextMenuItemSelectedArgs args)
         {
             try
             {
-                if (args.ContextMenuOpenedArgs.InventoryItemContext == null) return;
-                this.plugin.PriceService.ProcessItemAsync(args.ContextMenuOpenedArgs.InventoryItemContext.Id, args.ContextMenuOpenedArgs.InventoryItemContext.IsHighQuality);
+                if (args.ItemId == 0) return;
+                this.plugin.PriceService.ProcessItemAsync(args.ItemId, args.ItemHq);
             }
             catch (Exception ex)
             {
