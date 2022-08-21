@@ -19,8 +19,8 @@ namespace PriceCheck
     public class PriceService
     {
         private readonly PriceCheckPlugin plugin;
-        private readonly List<PricedItem> pricedItems = new ();
-        private readonly object locker = new ();
+        private readonly List<PricedItem> pricedItems = new();
+        private readonly object locker = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceService"/> class.

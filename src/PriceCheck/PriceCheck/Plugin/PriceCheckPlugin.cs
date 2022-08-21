@@ -36,7 +36,7 @@ namespace PriceCheck
         /// <summary>
         /// Context Menu Lib.
         /// </summary>
-        public DalamudContextMenuBase ContextMenuBase = null!;
+        public DalamudContextMenu ContextMenu = null!;
 
         private Localization localization = null!;
 
@@ -45,7 +45,7 @@ namespace PriceCheck
         /// </summary>
         public PriceCheckPlugin()
         {
-            this.ContextMenuBase = new DalamudContextMenuBase();
+            this.ContextMenu = new DalamudContextMenu();
 
             Task.Run(() =>
             {
@@ -259,7 +259,7 @@ namespace PriceCheck
                 PluginCommandManager.Dispose();
                 this.ContextMenuManager.Dispose();
                 this.HoveredItemManager.Dispose();
-                this.ContextMenuBase.Dispose();
+                this.ContextMenu.Dispose();
                 this.ItemCancellationTokenSource?.Dispose();
                 this.UniversalisClient.Dispose();
                 this.localization.Dispose();

@@ -25,7 +25,7 @@ namespace PriceCheck
             this.plugin = plugin;
             this.inventoryContextMenuItem = new InventoryContextMenuItem(
                 new SeString(new TextPayload(Loc.Localize("ContextMenuItem", "Check Marketboard Price"))), this.Selected);
-            this.plugin.ContextMenuBase.Functions.ContextMenu.OnOpenInventoryContextMenu += this.OnContextMenuOpened;
+            this.plugin.ContextMenu.OnOpenInventoryContextMenu += this.OnContextMenuOpened;
         }
 
         /// <summary>`
@@ -33,7 +33,7 @@ namespace PriceCheck
         /// </summary>
         public void Dispose()
         {
-            this.plugin.ContextMenuBase.Functions.ContextMenu.OnOpenInventoryContextMenu -= this.OnContextMenuOpened;
+            this.plugin.ContextMenu.OnOpenInventoryContextMenu -= this.OnContextMenuOpened;
         }
 
         private void OnContextMenuOpened(InventoryContextMenuOpenArgs args)

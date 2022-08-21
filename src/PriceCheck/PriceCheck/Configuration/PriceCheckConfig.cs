@@ -143,12 +143,12 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets list of items to show above.
         /// </summary>
-        public List<byte> ShowContextAboveThis { get; set; } = new ();
+        public List<byte> ShowContextAboveThis { get; set; } = new();
 
         /// <summary>
         /// Gets or sets list of items to show below.
         /// </summary>
-        public List<byte> ShowContextBelowThis { get; set; } = new ();
+        public List<byte> ShowContextBelowThis { get; set; } = new();
 
         /// <summary>
         /// Gets or sets chat channel to use for price check messages.
