@@ -10,9 +10,9 @@
       },
       "Dalamud.DrunkenToad": {
         "type": "Direct",
-        "requested": "[1.2.0, )",
-        "resolved": "1.2.0",
-        "contentHash": "tyn7QTX48abk9mcyk4OOGdHCDA0uJl5k76s9r6ntMP4NIKSYLCchpB6o4pa350MpY7t+r0sr68C/YIoZSrWcSg==",
+        "requested": "[1.2.1, )",
+        "resolved": "1.2.1",
+        "contentHash": "kwub5Fwbtp88S+/y5Ce7fXzHGOz7ARKiu8mWbtonjRKqegOGObowUJoGZKPFDE2iTeDta8lDtNl/L5xaB9JCDw==",
         "dependencies": {
           "LiteDB": "5.0.11"
         }
