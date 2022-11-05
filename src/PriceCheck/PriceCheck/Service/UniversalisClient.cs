@@ -122,7 +122,7 @@ namespace PriceCheck
 
         private async Task<HttpResponseMessage> GetMarketBoardDataAsync(uint? worldId, ulong itemId)
         {
-            var request = Endpoint + "/" + worldId + "/" + itemId;
+            var request = Endpoint + worldId + "/" + itemId;
             Logger.LogDebug($"universalisRequest={request}");
             return await this.httpClient.GetAsync(new Uri(request));
         }
