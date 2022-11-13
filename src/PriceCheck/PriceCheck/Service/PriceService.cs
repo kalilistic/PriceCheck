@@ -369,10 +369,13 @@ namespace PriceCheck
                 marketPrice = pricedItem.IsHQ ? marketBoardData.MaximumPriceHQ : marketBoardData.MaximumPriceNQ;
             else if (this.plugin.Configuration.PriceMode == PriceMode.CurrentMinimumPrice.Index)
                 marketPrice = marketBoardData.CurrentMinimumPrice;
-            if (marketPrice == null)
-                marketPrice = 0;
-            else
-                marketPrice = Math.Round((double)marketPrice);
+            if (marketPrice is null or 0)
+            {
+                pricedItem.Result = ItemResult.NoDataAvailable;
+                return;
+            }
+
+            marketPrice = Math.Round((double)marketPrice);
             pricedItem.MarketPrice = (uint)marketPrice;
             Logger.LogDebug($"marketPrice={pricedItem.MarketPrice}");
 
