@@ -48,7 +48,7 @@
         "description": "PriceService.SetFieldsByResult"
     },
     "FailedToGetData": {
-        "message": "データの取得に失敗しました",
+        "message": "データの取得に失敗しました (universalis.app may be down)",
         "description": "PriceService.SetFieldsByResult"
     },
     "FailedToProcess": {

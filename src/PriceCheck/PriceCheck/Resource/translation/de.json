@@ -20,7 +20,7 @@
         "description": "PriceService.SetFieldsByResult"
     },
     "FailedToGetData": {
-        "message": "Failed to get data",
+        "message": "Failed to get data (universalis.app may be down)",
         "description": "PriceService.SetFieldsByResult"
     },
     "NoDataAvailable": {
