@@ -113,7 +113,7 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets the modifier key for key bind.
         /// </summary>
-        public ModifierKey.Enum ModifierKey { get; set; } = Dalamud.DrunkenToad.ModifierKey.Enum.VkShift;
+        public ModifierKey.Enum ModifierKey { get; set; } = PriceCheck.ModifierKey.Enum.VkShift;
 
         /// <summary>
         /// Gets or sets the primary key for key bind.

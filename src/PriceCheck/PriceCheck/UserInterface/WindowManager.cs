@@ -1,5 +1,7 @@
 using Dalamud.DrunkenToad;
+using Dalamud.DrunkenToad.Helpers;
 using Dalamud.Interface;
+using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 
 namespace PriceCheck
@@ -104,7 +106,7 @@ namespace PriceCheck
 
             // draw main window
             if (this.Plugin.Configuration.HideOverlayElapsed != 0 &&
-                DateUtil.CurrentTime() - this.Plugin.PriceService.LastPriceCheck >
+                UnixTimestampHelper.CurrentTime() - this.Plugin.PriceService.LastPriceCheck >
                 this.Plugin.Configuration.HideOverlayElapsed)
             {
                 if (!(this.Plugin.Configuration.ShowOverlayByKeybind && this.Plugin.IsKeyBindPressed()))

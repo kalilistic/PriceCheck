@@ -1,6 +1,7 @@
 using System;
 
 using Dalamud.DrunkenToad;
+using Dalamud.Logging;
 
 namespace PriceCheck
 {
@@ -103,7 +104,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Failed to price check.");
+                PluginLog.LogError(ex, "Failed to price check.");
                 this.ItemId = 0;
                 this.plugin.ItemCancellationTokenSource = null;
             }

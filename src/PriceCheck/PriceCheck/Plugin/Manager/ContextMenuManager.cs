@@ -5,6 +5,7 @@ using Dalamud.ContextMenu;
 using Dalamud.DrunkenToad;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Dalamud.Logging;
 
 namespace PriceCheck
 {
@@ -52,7 +53,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Failed to price check item via context menu.");
+                PluginLog.LogError(ex, "Failed to price check item via context menu.");
             }
         }
     }

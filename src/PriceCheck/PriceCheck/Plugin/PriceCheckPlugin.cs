@@ -8,6 +8,7 @@ using Dalamud.Configuration;
 using Dalamud.ContextMenu;
 using Dalamud.Data;
 using Dalamud.DrunkenToad;
+using Dalamud.DrunkenToad.Extensions;
 using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Keys;
@@ -18,7 +19,10 @@ using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.IoC;
+using Dalamud.Logging;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
+using NeatNoter.Localization;
 
 // ReSharper disable MemberInitializerValueIgnored
 namespace PriceCheck
@@ -38,14 +42,14 @@ namespace PriceCheck
         /// </summary>
         public DalamudContextMenu ContextMenu = null!;
 
-        private Localization localization = null!;
+        private LegacyLoc localization = null!;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceCheckPlugin"/> class.
         /// </summary>
         public PriceCheckPlugin()
         {
-            this.ContextMenu = new DalamudContextMenu();
+            this.ContextMenu = new DalamudContextMenu(PluginInterface);
 
             Task.Run(() =>
             {
@@ -53,7 +57,7 @@ namespace PriceCheck
                 {
                     this.LoadConfig();
                     this.HandleFreshInstall();
-                    this.localization = new Localization(PluginInterface, CommandManager);
+                    this.localization = new LegacyLoc(PluginInterface, CommandManager);
                     this.PriceService = new PriceService(this);
                     this.PluginCommandManager = new PluginCommandManager(this);
                     this.UniversalisClient = new UniversalisClient(this);
@@ -64,7 +68,7 @@ namespace PriceCheck
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "Failed to initialize plugin.");
+                    PluginLog.LogError(ex, "Failed to initialize plugin.");
                 }
             });
         }
@@ -81,58 +85,57 @@ namespace PriceCheck
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static ClientState ClientState { get; private set; } = null!;
+        public static IClientState ClientState { get; private set; } = null!;
 
         /// <summary>
         /// Gets chat gui.
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static ChatGui Chat { get; private set; } = null!;
+        public static IChatGui Chat { get; private set; } = null!;
 
         /// <summary>
         /// Gets command manager.
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static CommandManager CommandManager { get; private set; } = null!;
+        public static ICommandManager CommandManager { get; private set; } = null!;
 
         /// <summary>
         /// Gets toast gui.
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static ToastGui Toast { get; private set; } = null!;
+        public static IToastGui Toast { get; private set; } = null!;
 
         /// <summary>
         /// Gets toast gui.
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static KeyState KeyState { get; private set; } = null!;
+        public static IKeyState KeyState { get; private set; } = null!;
 
         /// <summary>
         /// Gets data manager.
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static DataManager DataManager { get; private set; } = null!;
+        public static IDataManager DataManager { get; private set; } = null!;
 
         /// <summary>
         /// Gets condition.
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static Condition Condition { get; private set; } = null!;
+        public static ICondition Condition { get; private set; } = null!;
 
         /// <summary>
         /// Gets game gui.
         /// </summary>
         [PluginService]
         [RequiredVersion("1.0")]
-        public static GameGui GameGui { get; private set; } = null!;
+        public static IGameGui GameGui { get; private set; } = null!;
 
-        /// <inheritdoc />
         public string Name => "PriceCheck";
 
         /// <summary>
@@ -175,7 +178,7 @@ namespace PriceCheck
         /// </summary>
         public static void PrintHelpMessage()
         {
-            Chat.PluginPrintNotice(Loc.Localize(
+            Chat.Print(Loc.Localize(
                                                     "HelpMessage",
                                                     "To check prices, hold your keybind and then hover over an item in your inventory or linked " +
                                                     "in chat. You can set your keybind (or disable it) in the PriceCheck settings. The prices are " +
@@ -266,7 +269,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Failed to dispose plugin properly.");
+                PluginLog.LogError(ex, "Failed to dispose plugin properly.");
             }
 
             GC.SuppressFinalize(this);
@@ -287,7 +290,6 @@ namespace PriceCheck
         public bool ShouldPriceCheck()
         {
             if (this.Configuration.Enabled &&
-                DataManager.IsDataReady &&
                 ClientState.LocalPlayer?.HomeWorld != null &&
                 !(this.Configuration.RestrictInCombat && Condition[ConditionFlag.InCombat]) &&
                 !(this.Configuration.RestrictInContent && DataManager.InContent(ClientState.TerritoryType)))
@@ -299,7 +301,7 @@ namespace PriceCheck
             return false;
         }
 
-        private void Login(object? sender, EventArgs e)
+        private void Login()
         {
             this.WindowManager.MainWindow?.OpenOnLogin();
         }
@@ -314,7 +316,7 @@ namespace PriceCheck
             try
             {
                 if (!this.Configuration.FreshInstall) return;
-                Chat.PluginPrintNotice(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
+                Chat.Print(Loc.Localize("InstallThankYou", "Thank you for installing PriceCheck!"));
                 PrintHelpMessage();
                 this.Configuration.FreshInstall = false;
                 this.Configuration.ShowToast = true;
@@ -324,7 +326,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Failed fresh install.");
+                PluginLog.LogError(ex, "Failed fresh install.");
             }
         }
 
@@ -336,7 +338,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                Logger.LogError("Failed to load config so creating new one.", ex);
+                PluginLog.LogError("Failed to load config so creating new one.", ex);
                 this.Configuration = new PluginConfig();
                 this.SaveConfig();
             }
