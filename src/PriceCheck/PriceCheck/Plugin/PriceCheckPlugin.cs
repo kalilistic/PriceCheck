@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.Configuration;
 using Dalamud.ContextMenu;
-using Dalamud.Data;
 using Dalamud.DrunkenToad;
+using Dalamud.DrunkenToad.Core;
 using Dalamud.DrunkenToad.Extensions;
-using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Keys;
-using Dalamud.Game.Command;
-using Dalamud.Game.Gui;
-using Dalamud.Game.Gui.Toast;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
@@ -227,11 +223,18 @@ namespace PriceCheck
                 payloadList.Add(new UIForegroundPayload(0));
             if (this.Configuration.ChatChannel == XivChatType.None)
             {
-                Chat.PluginPrint(payloadList);
+                Chat.Print(new XivChatEntry
+                {
+                    Message = BuildSeString(PluginInterface.InternalName, payloadList),
+                });
             }
             else
             {
-                Chat.PluginPrint(payloadList, this.Configuration.ChatChannel);
+                Chat.Print(new XivChatEntry
+                {
+                    Message = BuildSeString(PluginInterface.InternalName, payloadList),
+                    Type = this.Configuration.ChatChannel,
+                });
             }
         }
 
@@ -300,6 +303,25 @@ namespace PriceCheck
             this.ItemCancellationTokenSource = null;
             return false;
         }
+
+        private static SeString BuildSeString(string? pluginName, string message)
+        {
+            var basePayloads = BuildBasePayloads(pluginName);
+            var customPayloads = new List<Payload> { new TextPayload(message) };
+
+            return new SeString(basePayloads.Concat(customPayloads).ToList());
+        }
+
+        private static SeString BuildSeString(string? pluginName, IEnumerable<Payload> payloads)
+        {
+            var basePayloads = BuildBasePayloads(pluginName);
+            return new SeString(basePayloads.Concat(payloads).ToList());
+        }
+
+        private static IEnumerable<Payload> BuildBasePayloads(string? pluginName) => new List<Payload>
+        {
+            new UIForegroundPayload(0), new TextPayload($"[{pluginName}] "), new UIForegroundPayload(548),
+        };
 
         private void Login()
         {
