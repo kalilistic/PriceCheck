@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-using Dalamud.DrunkenToad;
 using Dalamud.Game.Text;
 
+// ReSharper disable UseCollectionExpression
 namespace PriceCheck
 {
     /// <summary>
@@ -118,7 +118,7 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets the primary key for key bind.
         /// </summary>
-        public PrimaryKey.Enum PrimaryKey { get; set; } = Dalamud.DrunkenToad.PrimaryKey.Enum.VkZ;
+        public PrimaryKey.Enum PrimaryKey { get; set; } = PriceCheck.PrimaryKey.Enum.VkZ;
 
         /// <summary>
         /// Gets or sets the minimum price to show.
@@ -143,12 +143,12 @@ namespace PriceCheck
         /// <summary>
         /// Gets or sets list of items to show above.
         /// </summary>
-        public List<byte> ShowContextAboveThis { get; set; } = new();
+        public List<byte> ShowContextAboveThis { get; set; } = new ();
 
         /// <summary>
         /// Gets or sets list of items to show below.
         /// </summary>
-        public List<byte> ShowContextBelowThis { get; set; } = new();
+        public List<byte> ShowContextBelowThis { get; set; } = new ();
 
         /// <summary>
         /// Gets or sets chat channel to use for price check messages.

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Numerics;
 
 using CheapLoc;
-using Dalamud.DrunkenToad;
 using Dalamud.DrunkenToad.Extensions;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Colors;

@@ -7,16 +7,16 @@ using Dalamud.Game.Command;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 
-namespace NeatNoter.Localization;
+namespace PriceCheck.Localization;
 
 public class LegacyLoc
 {
-    private readonly DalamudPluginInterface pluginInterface;
+    private readonly IDalamudPluginInterface pluginInterface;
     private readonly ICommandManager commandManager;
     private readonly string pluginName;
     private readonly Assembly assembly;
 
-    public LegacyLoc(DalamudPluginInterface pluginInterface, ICommandManager commandManager)
+    public LegacyLoc(IDalamudPluginInterface pluginInterface, ICommandManager commandManager)
     {
         this.pluginInterface = pluginInterface;
         this.commandManager = commandManager;

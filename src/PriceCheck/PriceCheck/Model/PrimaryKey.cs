@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dalamud.DrunkenToad
+namespace PriceCheck
 {
     /// <summary>
     /// Gets primary key.
@@ -11,7 +11,7 @@ namespace Dalamud.DrunkenToad
         /// Get primary key names.
         /// </summary>
         public static readonly string[] Names =
-        {
+        [
             "None",
             "0",
             "1",
@@ -48,8 +48,8 @@ namespace Dalamud.DrunkenToad
             "W",
             "X",
             "Y",
-            "Z",
-        };
+            "Z"
+        ];
 
         /// <summary>
         /// primary key enum.

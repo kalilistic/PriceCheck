@@ -1,8 +1,5 @@
 using System;
 
-using Dalamud.DrunkenToad;
-using Dalamud.Logging;
-
 namespace PriceCheck
 {
     /// <summary>
@@ -70,7 +67,7 @@ namespace PriceCheck
                 }
 
                 // if keybind without pre-click
-                if (this.plugin.Configuration.KeybindEnabled && !this.plugin.Configuration.AllowKeybindAfterHover)
+                if (this.plugin.Configuration is { KeybindEnabled: true, AllowKeybindAfterHover: false })
                 {
                     // call immediately
                     if (!this.plugin.IsKeyBindPressed()) return;
@@ -79,7 +76,7 @@ namespace PriceCheck
                 }
 
                 // if keybind post-click
-                if (this.plugin.Configuration.KeybindEnabled && this.plugin.Configuration.AllowKeybindAfterHover)
+                if (this.plugin.Configuration is { KeybindEnabled: true, AllowKeybindAfterHover: true })
                 {
                     if (this.plugin.IsKeyBindPressed())
                     {
@@ -104,7 +101,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                PluginLog.LogError(ex, "Failed to price check.");
+                PriceCheckPlugin.PluginLog.Error(ex, "Failed to price check.");
                 this.ItemId = 0;
                 this.plugin.ItemCancellationTokenSource = null;
             }

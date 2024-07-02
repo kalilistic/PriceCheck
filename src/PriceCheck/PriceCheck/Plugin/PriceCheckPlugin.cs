@@ -6,19 +6,15 @@ using System.Threading.Tasks;
 
 using CheapLoc;
 using Dalamud.Configuration;
-using Dalamud.ContextMenu;
-using Dalamud.DrunkenToad;
-using Dalamud.DrunkenToad.Core;
 using Dalamud.DrunkenToad.Extensions;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.IoC;
-using Dalamud.Logging;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using NeatNoter.Localization;
+using PriceCheck.Localization;
 
 // ReSharper disable MemberInitializerValueIgnored
 namespace PriceCheck
@@ -33,11 +29,6 @@ namespace PriceCheck
         /// </summary>
         public CancellationTokenSource? ItemCancellationTokenSource;
 
-        /// <summary>
-        /// Context Menu Lib.
-        /// </summary>
-        public DalamudContextMenu ContextMenu = null!;
-
         private LegacyLoc localization = null!;
 
         /// <summary>
@@ -45,8 +36,6 @@ namespace PriceCheck
         /// </summary>
         public PriceCheckPlugin()
         {
-            this.ContextMenu = new DalamudContextMenu(PluginInterface);
-
             Task.Run(() =>
             {
                 try
@@ -57,14 +46,13 @@ namespace PriceCheck
                     this.PriceService = new PriceService(this);
                     this.PluginCommandManager = new PluginCommandManager(this);
                     this.UniversalisClient = new UniversalisClient(this);
-                    this.ContextMenuManager = new ContextMenuManager(this);
                     this.HoveredItemManager = new HoveredItemManager(this);
                     ClientState.Login += this.Login;
                     this.LoadUI();
                 }
                 catch (Exception ex)
                 {
-                    PluginLog.LogError(ex, "Failed to initialize plugin.");
+                    PluginLog.Error(ex, "Failed to initialize plugin.");
                 }
             });
         }
@@ -73,64 +61,64 @@ namespace PriceCheck
         /// Gets pluginInterface.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
-        public static DalamudPluginInterface PluginInterface { get; private set; } = null!;
+        public static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets pluginInterface.
+        /// </summary>
+        [PluginService]
+        public static IPluginLog PluginLog { get; private set; } = null!;
 
         /// <summary>
         /// Gets client state.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static IClientState ClientState { get; private set; } = null!;
 
         /// <summary>
         /// Gets chat gui.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static IChatGui Chat { get; private set; } = null!;
 
         /// <summary>
         /// Gets command manager.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static ICommandManager CommandManager { get; private set; } = null!;
 
         /// <summary>
         /// Gets toast gui.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static IToastGui Toast { get; private set; } = null!;
 
         /// <summary>
         /// Gets toast gui.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static IKeyState KeyState { get; private set; } = null!;
 
         /// <summary>
         /// Gets data manager.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static IDataManager DataManager { get; private set; } = null!;
 
         /// <summary>
         /// Gets condition.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static ICondition Condition { get; private set; } = null!;
 
         /// <summary>
         /// Gets game gui.
         /// </summary>
         [PluginService]
-        [RequiredVersion("1.0")]
         public static IGameGui GameGui { get; private set; } = null!;
+
+        [PluginService]
+        public static IContextMenu ContextMenu { get; private set; } = null!;
 
         public string Name => "PriceCheck";
 
@@ -158,11 +146,6 @@ namespace PriceCheck
         /// Gets or sets window manager.
         /// </summary>
         public WindowManager WindowManager { get; set; } = null!;
-
-        /// <summary>
-        /// Gets or sets context Menu manager to handle item context menu.
-        /// </summary>
-        public ContextMenuManager ContextMenuManager { get; set; } = null!;
 
         /// <summary>
         /// Gets or sets hovered item manager to handle hover item events.
@@ -263,16 +246,14 @@ namespace PriceCheck
                 ClientState.Login -= this.Login;
                 this.WindowManager.Dispose();
                 PluginCommandManager.Dispose();
-                this.ContextMenuManager.Dispose();
                 this.HoveredItemManager.Dispose();
-                this.ContextMenu.Dispose();
                 this.ItemCancellationTokenSource?.Dispose();
                 this.UniversalisClient.Dispose();
                 this.localization.Dispose();
             }
             catch (Exception ex)
             {
-                PluginLog.LogError(ex, "Failed to dispose plugin properly.");
+                PluginLog.Error(ex, "Failed to dispose plugin properly.");
             }
 
             GC.SuppressFinalize(this);
@@ -348,7 +329,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                PluginLog.LogError(ex, "Failed fresh install.");
+                PluginLog.Error(ex, "Failed fresh install.");
             }
         }
 
@@ -360,7 +341,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                PluginLog.LogError("Failed to load config so creating new one.", ex);
+                PluginLog.Error("Failed to load config so creating new one.", ex);
                 this.Configuration = new PluginConfig();
                 this.SaveConfig();
             }

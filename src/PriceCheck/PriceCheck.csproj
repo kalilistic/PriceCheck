@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Version>2.6.1.0</Version>
+		<Version>2.7.0.0</Version>
 		<Title>PriceCheck</Title>
 		<Authors>kalilistic</Authors>
-		<TargetFramework>net7.0-windows</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
 		<LangVersion>latest</LangVersion>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -93,11 +93,9 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="DalamudPackager" Version="2.1.12" />
+		<PackageReference Include="DalamudPackager" Version="2.1.13" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="Dalamud.DrunkenToad" Version="1.7.2" />
-		<PackageReference Include="Dalamud.ContextMenu" Version="1.3.1" />
-		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -124,5 +122,8 @@
 		<EmbeddedResource Include="PriceCheck\Resource\translation\ru.json" />
 		<None Remove="PriceCheck\Resource\translation\zh.json" />
 		<EmbeddedResource Include="PriceCheck\Resource\translation\zh.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\DrunkenToad\DrunkenToad.csproj" />
 	</ItemGroup>
 </Project>

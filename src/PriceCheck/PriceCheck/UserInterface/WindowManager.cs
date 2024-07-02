@@ -1,6 +1,4 @@
-using Dalamud.DrunkenToad;
 using Dalamud.DrunkenToad.Helpers;
-using Dalamud.Interface;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 
@@ -93,7 +91,7 @@ namespace PriceCheck
             this.ConfigWindowSystem.Draw();
 
             // run keybind post-click check to use item id set in hover manager
-            if (this.Plugin.Configuration.KeybindEnabled && this.Plugin.Configuration.AllowKeybindAfterHover &&
+            if (this.Plugin.Configuration is { KeybindEnabled: true, AllowKeybindAfterHover: true } &&
                 this.Plugin.IsKeyBindPressed())
             {
                 // call price check if item is set from previous hover

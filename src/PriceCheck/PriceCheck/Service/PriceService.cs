@@ -6,13 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using CheapLoc;
-using Dalamud.DrunkenToad;
 using Dalamud.DrunkenToad.Helpers;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Colors;
-using Dalamud.Logging;
 using Lumina.Excel.GeneratedSheets;
 
+// ReSharper disable UseCollectionExpression
 namespace PriceCheck
 {
     /// <summary>
@@ -21,8 +20,8 @@ namespace PriceCheck
     public class PriceService
     {
         private readonly PriceCheckPlugin plugin;
-        private readonly List<PricedItem> pricedItems = new();
-        private readonly object locker = new();
+        private readonly List<PricedItem> pricedItems = new ();
+        private readonly object locker = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PriceService"/> class.
@@ -104,7 +103,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                PluginLog.LogError(ex, "Failed to process item.");
+                PriceCheckPlugin.PluginLog.Error(ex, "Failed to process item.");
                 this.plugin.ItemCancellationTokenSource = null;
                 this.plugin.HoveredItemManager.ItemId = 0;
             }
@@ -116,7 +115,7 @@ namespace PriceCheck
             if (itemId == 0) return;
 
             // create priced item
-            PluginLog.LogDebug($"Pricing itemId={itemId} hq={isHQ}");
+            PriceCheckPlugin.PluginLog.Debug($"Pricing itemId={itemId} hq={isHQ}");
             var pricedItem = new PricedItem
             {
                 ItemId = itemId,
@@ -176,7 +175,7 @@ namespace PriceCheck
                         if (this.plugin.Configuration.ShowUnmarketableInOverlay) this.AddItemToOverlay(pricedItem);
                         break;
                     default:
-                        PluginLog.LogError("Unrecognized item result.");
+                        PriceCheckPlugin.PluginLog.Error("Unrecognized item result.");
                         break;
                 }
             }
@@ -213,7 +212,7 @@ namespace PriceCheck
                         if (this.plugin.Configuration.ShowUnmarketableInChat) this.plugin.PrintItemMessage(pricedItem);
                         break;
                     default:
-                        PluginLog.LogError("Unrecognized item result.");
+                        PriceCheckPlugin.PluginLog.Error("Unrecognized item result.");
                         break;
                 }
             }
@@ -289,14 +288,14 @@ namespace PriceCheck
                     break;
             }
 
-            PluginLog.LogDebug($"Message={pricedItem.Message}");
+            PriceCheckPlugin.PluginLog.Debug($"Message={pricedItem.Message}");
         }
 
         private void PriceCheck(PricedItem pricedItem)
         {
             // record current time for window visibility
             this.LastPriceCheck = UnixTimestampHelper.CurrentTime();
-            PluginLog.LogDebug($"LastPriceCheck={this.LastPriceCheck}");
+            PriceCheckPlugin.PluginLog.Debug($"LastPriceCheck={this.LastPriceCheck}");
 
             // look up item game data
             var item = PriceCheckPlugin.DataManager.GameData.Excel.GetSheet<Item>()?.GetRow(pricedItem.ItemId);
@@ -304,17 +303,17 @@ namespace PriceCheck
             if (item == null)
             {
                 pricedItem.Result = ItemResult.FailedToProcess;
-                PluginLog.LogError($"Failed to retrieve game data for itemId {pricedItem.ItemId}.");
+                PriceCheckPlugin.PluginLog.Error($"Failed to retrieve game data for itemId {pricedItem.ItemId}.");
                 return;
             }
 
             // set fields from game data
             pricedItem.ItemName = pricedItem.IsHQ ? item.Name + " " + (char)SeIconChar.HighQuality : item.Name;
-            PluginLog.LogDebug($"ItemName={pricedItem.ItemName}");
+            PriceCheckPlugin.PluginLog.Debug($"ItemName={pricedItem.ItemName}");
             pricedItem.IsMarketable = item.ItemSearchCategory.Row != 0;
-            PluginLog.LogDebug($"IsMarketable={pricedItem.IsMarketable}");
+            PriceCheckPlugin.PluginLog.Debug($"IsMarketable={pricedItem.IsMarketable}");
             pricedItem.VendorPrice = item.PriceLow;
-            PluginLog.LogDebug($"VendorPrice={pricedItem.VendorPrice}");
+            PriceCheckPlugin.PluginLog.Debug($"VendorPrice={pricedItem.VendorPrice}");
 
             // check if marketable
             if (!pricedItem.IsMarketable)
@@ -325,7 +324,7 @@ namespace PriceCheck
 
             // set worldId
             var worldId = PriceCheckPlugin.ClientState.LocalPlayer?.HomeWorld.Id ?? 0;
-            PluginLog.LogDebug($"worldId={worldId}");
+            PriceCheckPlugin.PluginLog.Debug($"worldId={worldId}");
             if (worldId == 0)
             {
                 pricedItem.Result = ItemResult.FailedToProcess;
@@ -340,7 +339,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                PluginLog.LogError(ex, "Caught exception trying to get marketboard data.");
+                PriceCheckPlugin.PluginLog.Error(ex, "Caught exception trying to get marketboard data.");
                 marketBoardData = null;
             }
 
@@ -348,7 +347,7 @@ namespace PriceCheck
             if (marketBoardData == null)
             {
                 pricedItem.Result = ItemResult.FailedToGetData;
-                PluginLog.LogError("Failed to get marketboard data.");
+                PriceCheckPlugin.PluginLog.Error("Failed to get marketboard data.");
                 return;
             }
 
@@ -379,12 +378,12 @@ namespace PriceCheck
 
             marketPrice = Math.Round((double)marketPrice);
             pricedItem.MarketPrice = (uint)marketPrice;
-            PluginLog.LogDebug($"marketPrice={pricedItem.MarketPrice}");
+            PriceCheckPlugin.PluginLog.Debug($"marketPrice={pricedItem.MarketPrice}");
 
             // compare with date threshold
             var diffInSeconds = UnixTimestampHelper.CurrentTime() - pricedItem.LastUpdated;
             var diffInDays = diffInSeconds / 86400000;
-            PluginLog.LogDebug($"Max Days Check: diffDays={diffInDays} >= maxUpload={this.plugin.Configuration.MaxUploadDays}");
+            PriceCheckPlugin.PluginLog.Debug($"Max Days Check: diffDays={diffInDays} >= maxUpload={this.plugin.Configuration.MaxUploadDays}");
             if (diffInDays >= this.plugin.Configuration.MaxUploadDays)
             {
                 pricedItem.Result = ItemResult.NoRecentDataAvailable;
@@ -392,7 +391,7 @@ namespace PriceCheck
             }
 
             // compare with vendor price
-            PluginLog.LogDebug($"Vendor Check: vendorPrice={pricedItem.VendorPrice} >= marketPrice={pricedItem.MarketPrice}");
+            PriceCheckPlugin.PluginLog.Debug($"Vendor Check: vendorPrice={pricedItem.VendorPrice} >= marketPrice={pricedItem.MarketPrice}");
             if (pricedItem.VendorPrice >= pricedItem.MarketPrice)
             {
                 pricedItem.Result = ItemResult.BelowVendor;
@@ -400,7 +399,7 @@ namespace PriceCheck
             }
 
             // compare with price threshold
-            PluginLog.LogDebug($"Min Check: marketPrice={pricedItem.MarketPrice} < minPrice={this.plugin.Configuration.MinPrice}");
+            PriceCheckPlugin.PluginLog.Debug($"Min Check: marketPrice={pricedItem.MarketPrice} < minPrice={this.plugin.Configuration.MinPrice}");
             if (pricedItem.MarketPrice < this.plugin.Configuration.MinPrice)
             {
                 pricedItem.Result = ItemResult.BelowMinimum;

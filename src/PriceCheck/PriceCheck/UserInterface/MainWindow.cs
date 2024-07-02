@@ -2,7 +2,6 @@ using System.Linq;
 using System.Numerics;
 
 using CheapLoc;
-using Dalamud.DrunkenToad;
 using ImGuiNET;
 
 namespace PriceCheck
@@ -44,7 +43,7 @@ namespace PriceCheck
         /// </summary>
         public void OpenOnLogin()
         {
-            if (this.plugin.Configuration.ShowOverlay && this.plugin.Configuration.ShowOverlayOnLogin)
+            if (this.plugin.Configuration is { ShowOverlay: true, ShowOverlayOnLogin: true })
             {
                 this.IsOpen = true;
             }
@@ -55,7 +54,7 @@ namespace PriceCheck
         /// </summary>
         public void UpdateWindowTitle()
         {
-            if (this.plugin.Configuration.ShowKeybindInTitleBar && this.plugin.Configuration.KeybindEnabled)
+            if (this.plugin.Configuration is { ShowKeybindInTitleBar: true, KeybindEnabled: true })
             {
                 if (this.plugin.Configuration.PrimaryKey.Equals(PrimaryKey.Enum.VkNone))
                 {

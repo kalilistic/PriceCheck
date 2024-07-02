@@ -2,6 +2,8 @@ using System.Numerics;
 
 using Dalamud.Interface.Colors;
 
+// ReSharper disable RedundantDefaultMemberInitializer
+// ReSharper disable PropertyCanBeMadeInitOnly.Global
 namespace PriceCheck
 {
     /// <summary>

@@ -3,8 +3,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-using Dalamud.DrunkenToad;
-using Dalamud.Logging;
 using Newtonsoft.Json;
 
 namespace PriceCheck
@@ -59,7 +57,7 @@ namespace PriceCheck
             }
             catch (Exception ex)
             {
-                PluginLog.LogError(
+                PriceCheckPlugin.PluginLog.Error(
                     ex,
                     "Failed to retrieve data from Universalis for itemId {0} / worldId {1}.",
                     itemId,
@@ -68,11 +66,11 @@ namespace PriceCheck
                 return null;
             }
 
-            PluginLog.LogDebug($"universalisResponse={result}");
+            PriceCheckPlugin.PluginLog.Debug($"universalisResponse={result}");
 
             if (result.StatusCode != HttpStatusCode.OK)
             {
-                PluginLog.LogError(
+                PriceCheckPlugin.PluginLog.Error(
                     "Failed to retrieve data from Universalis for itemId {0} / worldId {1} with HttpStatusCode {2}.",
                     itemId,
                     worldId,
@@ -81,10 +79,10 @@ namespace PriceCheck
             }
 
             var json = JsonConvert.DeserializeObject<dynamic>(result.Content.ReadAsStringAsync().Result);
-            PluginLog.LogDebug($"universalisResponseBody={json}");
+            PriceCheckPlugin.PluginLog.Debug($"universalisResponseBody={json}");
             if (json == null)
             {
-                PluginLog.LogError(
+                PriceCheckPlugin.PluginLog.Error(
                     "Failed to deserialize Universalis response for itemId {0} / worldId {1}.",
                     itemId,
                     worldId);
@@ -107,12 +105,12 @@ namespace PriceCheck
                     MaximumPriceHQ = json.maxPriceHQ?.Value,
                     CurrentMinimumPrice = json.listings[0]?.pricePerUnit?.Value,
                 };
-                PluginLog.LogDebug($"marketBoardData={JsonConvert.SerializeObject(marketBoardData)}");
+                PriceCheckPlugin.PluginLog.Debug($"marketBoardData={JsonConvert.SerializeObject(marketBoardData)}");
                 return marketBoardData;
             }
             catch (Exception ex)
             {
-                PluginLog.LogError(
+                PriceCheckPlugin.PluginLog.Error(
                     ex,
                     "Failed to parse marketBoard data for itemId {0} / worldId {1}.",
                     itemId,
@@ -124,7 +122,7 @@ namespace PriceCheck
         private async Task<HttpResponseMessage> GetMarketBoardDataAsync(uint? worldId, ulong itemId)
         {
             var request = Endpoint + worldId + "/" + itemId;
-            PluginLog.LogDebug($"universalisRequest={request}");
+            PriceCheckPlugin.PluginLog.Debug($"universalisRequest={request}");
             return await this.httpClient.GetAsync(new Uri(request));
         }
     }
