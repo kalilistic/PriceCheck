@@ -1,0 +1,14 @@
+changelog_version: "1.0"
+
+stable:
+  - version: "2.7.1.0"
+    date: "2024-11-15"
+    is_critical: false
+    headline:
+    added:
+    changed:
+      - Update for api11.
+    deprecated:
+    fixed:
+    removed:
+    technical:

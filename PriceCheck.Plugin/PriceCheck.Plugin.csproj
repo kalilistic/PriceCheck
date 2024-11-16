@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<Version>2.7.0.0</Version>
-		<Title>PriceCheck</Title>
+		<Title>PriceCheck.Plugin</Title>
 		<Authors>kalilistic</Authors>
+		<Version>2.7.0.0</Version>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
 		<LangVersion>latest</LangVersion>
@@ -19,6 +19,10 @@
 		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <NoWarn>SA1600,CS1591,CS0618</NoWarn>
+		<AssemblyName>PriceCheck</AssemblyName>
+		<RootNamespace>PriceCheck</RootNamespace>
+		<PackageVersion>$(Version)</PackageVersion>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<DebugSymbols>true</DebugSymbols>
@@ -101,29 +105,17 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="PriceCheck\Resource\translation" />
-	</ItemGroup>
-	<ItemGroup>
 		<None Remove="PriceCheck\Resource\translation\de.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\de.json" />
 		<None Remove="PriceCheck\Resource\translation\es.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\es.json" />
 		<None Remove="PriceCheck\Resource\translation\fr.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\fr.json" />
 		<None Remove="PriceCheck\Resource\translation\it.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\it.json" />
 		<None Remove="PriceCheck\Resource\translation\ja.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\ja.json" />
 		<None Remove="PriceCheck\Resource\translation\no.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\no.json" />
 		<None Remove="PriceCheck\Resource\translation\pt.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\pt.json" />
 		<None Remove="PriceCheck\Resource\translation\ru.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\ru.json" />
 		<None Remove="PriceCheck\Resource\translation\zh.json" />
-		<EmbeddedResource Include="PriceCheck\Resource\translation\zh.json" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\DrunkenToad\DrunkenToad.csproj" />
+	  <ProjectReference Include="..\DrunkenToad\DrunkenToad.csproj" />
 	</ItemGroup>
 </Project>
