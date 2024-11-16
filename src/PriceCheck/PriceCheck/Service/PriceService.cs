@@ -9,7 +9,7 @@ using CheapLoc;
 using Dalamud.DrunkenToad.Helpers;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Colors;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 
 // ReSharper disable UseCollectionExpression
 namespace PriceCheck
@@ -298,7 +298,7 @@ namespace PriceCheck
             PriceCheckPlugin.PluginLog.Debug($"LastPriceCheck={this.LastPriceCheck}");
 
             // look up item game data
-            var item = PriceCheckPlugin.DataManager.GameData.Excel.GetSheet<Item>()?.GetRow(pricedItem.ItemId);
+            var item = PriceCheckPlugin.DataManager.GameData.Excel.GetSheet<Item>().GetRowOrDefault(pricedItem.ItemId);
 
             if (item == null)
             {
@@ -308,11 +308,11 @@ namespace PriceCheck
             }
 
             // set fields from game data
-            pricedItem.ItemName = pricedItem.IsHQ ? item.Name + " " + (char)SeIconChar.HighQuality : item.Name;
+            pricedItem.ItemName = pricedItem.IsHQ ? item.Value.Name.ExtractText() + " " + (char)SeIconChar.HighQuality : item.Value.Name.ExtractText();
             PriceCheckPlugin.PluginLog.Debug($"ItemName={pricedItem.ItemName}");
-            pricedItem.IsMarketable = item.ItemSearchCategory.Row != 0;
+            pricedItem.IsMarketable = item.Value.ItemSearchCategory.RowId != 0;
             PriceCheckPlugin.PluginLog.Debug($"IsMarketable={pricedItem.IsMarketable}");
-            pricedItem.VendorPrice = item.PriceLow;
+            pricedItem.VendorPrice = item.Value.PriceLow;
             PriceCheckPlugin.PluginLog.Debug($"VendorPrice={pricedItem.VendorPrice}");
 
             // check if marketable
@@ -323,7 +323,7 @@ namespace PriceCheck
             }
 
             // set worldId
-            var worldId = PriceCheckPlugin.ClientState.LocalPlayer?.HomeWorld.Id ?? 0;
+            var worldId = PriceCheckPlugin.ClientState.LocalPlayer?.HomeWorld.RowId ?? 0;
             PriceCheckPlugin.PluginLog.Debug($"worldId={worldId}");
             if (worldId == 0)
             {

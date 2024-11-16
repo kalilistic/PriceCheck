@@ -93,7 +93,7 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="DalamudPackager" Version="2.1.13" />
+		<PackageReference Include="DalamudPackager" Version="11.0.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
 			<PrivateAssets>all</PrivateAssets>
